@@ -1,0 +1,15 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+	<qresource>
+		<file>images/fileNew.png</file>
+		<file>images/fileOpen.png</file>
+		<file>images/fileSave.png</file>
+		<file>images/fileSaveAs.png</file>
+		<file>images/lineColor.png</file>
+		<file>images/lineThickness.png</file>
+		<file>images/clear.png</file>
+		<file>images/about.png</file>
+		<file>images/exit.png</file>
+		<file>images/appIcon.jpeg</file>
+	</qresource>
+</RCC>

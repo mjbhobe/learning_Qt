@@ -1,0 +1,21 @@
+# ignore data folder & all sub-folders
+data
+
+# ignore .vscode folder (Visual Studio code settings)
+.vscode
+
+# ignore obj files
+.o
+
+# ignore stash files
+.qmake.stash
+
+# ignore __pycache__
+__pycache__
+
+# ignore pyc files
+*.pyc
+
+# ignore pt (checkpoint) files
+*.pt
+

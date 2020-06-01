@@ -1,0 +1,10 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+	<qresource>
+		<file>images/fileNew.jpeg</file>
+		<file>images/fileOpen.jpeg</file>
+		<file>images/fileSave.jpeg</file>
+		<file>images/fileSaveAs.jpeg</file>
+		<file>images/appIcon.jpeg</file>
+	</qresource>
+</RCC>
