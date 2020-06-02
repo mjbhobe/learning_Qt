@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = step091.0.0
-DISTDIR = /home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09/.tmp/step091.0.0
+DISTDIR = /home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09/.tmp/step091.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath,/home/mjbhobe/anaconda3/envs/dlnlp/lib
 LIBS          = $(SUBLIBS) -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -1011,7 +1011,7 @@ moc_Line.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QDataStream \
 		Line.h \
 		moc_predefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc
-	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Line.h -o moc_Line.cpp
+	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Line.h -o moc_Line.cpp
 
 moc_Doodle.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QDataStream \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qdatastream.h \
@@ -1327,7 +1327,7 @@ moc_Doodle.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QDataStream
 		Doodle.h \
 		moc_predefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc
-	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Doodle.h -o moc_Doodle.cpp
+	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Doodle.h -o moc_Doodle.cpp
 
 moc_DrawWindow.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMainWindow \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmainwindow.h \
@@ -1651,7 +1651,7 @@ moc_DrawWindow.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMai
 		DrawWindow.h \
 		moc_predefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc
-	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DrawWindow.h -o moc_DrawWindow.cpp
+	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DrawWindow.h -o moc_DrawWindow.cpp
 
 moc_MainWindow.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMainWindow \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmainwindow.h \
@@ -1759,7 +1759,7 @@ moc_MainWindow.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMai
 		MainWindow.h \
 		moc_predefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc
-	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/code/C++/Qt/LearnQt/Tutorial/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step09 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.h -o moc_MainWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
