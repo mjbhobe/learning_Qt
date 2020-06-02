@@ -13,14 +13,14 @@
 
 int main(int argc, char **argv)
 {
-  QApplication app(argc, argv);
+   QApplication app(argc, argv);
 
-  // create the GUI
-  QMainWindow mainWindow;
-  mainWindow.setWindowTitle("Qt Scribble Tutorial - Step01");
-  mainWindow.setStyleSheet("background-color: white;");
-  mainWindow.resize(640, 480);
-  mainWindow.show();
+   // create the GUI
+   QMainWindow mainWindow;
+   mainWindow.setWindowTitle("Qt Scribble Tutorial - Step01");
+   mainWindow.setStyleSheet("background-color: white;");
+   mainWindow.resize(640, 480);
+   mainWindow.show();
 
-  return app.exec();
+   return app.exec();
 }

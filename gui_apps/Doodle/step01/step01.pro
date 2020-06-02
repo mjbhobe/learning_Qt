@@ -4,13 +4,8 @@
 
 TEMPLATE = app
 TARGET = step01
-INCLUDEPATH += .
-win32 {
-  CONFIG += console
-}
-CONFIG += c++17
-QT += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+include(../common.pro)
 
 # Input
 SOURCES += step01.cc

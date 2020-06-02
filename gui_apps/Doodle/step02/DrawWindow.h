@@ -4,15 +4,16 @@
 
 #include <QMainWindow>
 
-class DrawWindow  : public QMainWindow {
-    Q_OBJECT
-  public:
-    DrawWindow();
-  protected:
-    // operating system events
-    void closeEvent(QCloseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
+class DrawWindow : public QMainWindow
+{
+   Q_OBJECT
+ public:
+   DrawWindow();
+
+ protected:
+   // operating system events
+   void closeEvent(QCloseEvent *event);
+   void mousePressEvent(QMouseEvent *event);
 };
 
-
-#endif  // __DrawWindow_hxx__
+#endif // __DrawWindow_hxx__

@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -std=gnu++1y -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I. -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++
+CXXFLAGS      = -pipe -pedantic -Wall -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I. -I. -I. -I/home/mjbhobe/anaconda3/envs/dlnlp/include -I../common -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtXml -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtSql -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I. -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++
 QMAKE         = /home/mjbhobe/anaconda3/envs/dlnlp/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = step041.0.0
 DISTDIR = /home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04/.tmp/step041.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath,/home/mjbhobe/anaconda3/envs/dlnlp/lib
-LIBS          = $(SUBLIBS) -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lstdc++ -lm -lgmpxx -lgmp -lQt5Widgets -lQt5Gui -lQt5Xml -lQt5Sql -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -50,9 +50,11 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = DrawWindow.cc \
+SOURCES       = ../common/common.cc \
+		DrawWindow.cc \
 		step04.cc moc_DrawWindow.cpp
-OBJECTS       = DrawWindow.o \
+OBJECTS       = common.o \
+		DrawWindow.o \
 		step04.o \
 		moc_DrawWindow.o
 DIST          = /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/spec_pre.prf \
@@ -217,6 +219,7 @@ DIST          = /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/spec_pre.prf
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/exclusive_builds.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/toolchain.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_pre.prf \
+		../common.pro \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/resolve_config.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_post.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/warn_on.prf \
@@ -232,7 +235,9 @@ DIST          = /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/spec_pre.prf
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/exceptions.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/yacc.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/lex.prf \
-		step04.pro DrawWindow.h DrawWindow.cc \
+		step04.pro ../common/common.hxx \
+		DrawWindow.h ../common/common.cc \
+		DrawWindow.cc \
 		step04.cc
 QMAKE_TARGET  = step04
 DESTDIR       = 
@@ -407,6 +412,7 @@ Makefile: step04.pro /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++/qmake.
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/exclusive_builds.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/toolchain.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_pre.prf \
+		../common.pro \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/resolve_config.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_post.prf \
 		/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/warn_on.prf \
@@ -425,6 +431,8 @@ Makefile: step04.pro /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++/qmake.
 		step04.pro \
 		/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Widgets.prl \
 		/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Gui.prl \
+		/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Xml.prl \
+		/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Sql.prl \
 		/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Core.prl
 	$(QMAKE) -o Makefile step04.pro
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/spec_pre.prf:
@@ -589,6 +597,7 @@ Makefile: step04.pro /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++/qmake.
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/exclusive_builds.prf:
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/toolchain.prf:
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_pre.prf:
+../common.pro:
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/resolve_config.prf:
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/default_post.prf:
 /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/warn_on.prf:
@@ -607,6 +616,8 @@ Makefile: step04.pro /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++/qmake.
 step04.pro:
 /home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Widgets.prl:
 /home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Gui.prl:
+/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Xml.prl:
+/home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Sql.prl:
 /home/mjbhobe/anaconda3/envs/dlnlp/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile step04.pro
@@ -623,8 +634,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DrawWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents DrawWindow.cc step04.cc $(DISTDIR)/
+	$(COPY_FILE) --parents ../common/common.hxx DrawWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../common/common.cc DrawWindow.cc step04.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -654,7 +665,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/data/dummy.cpp
-	g++ -pipe -O2 -std=gnu++1y -Wall -W -dM -E -o moc_predefs.h /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/data/dummy.cpp
+	g++ -pipe -pedantic -Wall -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_DrawWindow.cpp
 compiler_moc_header_clean:
@@ -765,7 +776,7 @@ moc_DrawWindow.cpp: /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMai
 		DrawWindow.h \
 		moc_predefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc
-	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04 -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DrawWindow.h -o moc_DrawWindow.cpp
+	/home/mjbhobe/anaconda3/envs/dlnlp/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/mjbhobe/anaconda3/envs/dlnlp/mkspecs/linux-g++ -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04 -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/step04 -I/home/mjbhobe/anaconda3/envs/dlnlp/include -I/home/mjbhobe/code/python/pydata-book-master/learning-ml/git_projects/learning_Qt/gui_apps/Doodle/common -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtXml -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtSql -I/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DrawWindow.h -o moc_DrawWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -780,6 +791,72 @@ compiler_lex_clean:
 compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
+
+common.o: ../common/common.cc ../common/common.hxx \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QTextStream \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qtextstream.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qiodevice.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qglobal.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qconfig-bootstrapped.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qconfig.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qtcore-config.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qsystemdetection.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qprocessordetection.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qcompilerdetection.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qtypeinfo.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qsysinfo.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qlogging.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qflags.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qatomic.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qbasicatomic.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qatomic_bootstrap.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qgenericatomic.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qatomic_cxx11.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qatomic_msvc.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qglobalstatic.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qmutex.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qnumeric.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qversiontagging.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qobject.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qobjectdefs.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qnamespace.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qobjectdefs_impl.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qstring.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qchar.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qbytearray.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qrefcount.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qarraydata.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qstringbuilder.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qlist.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qalgorithms.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qiterator.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qhashfunctions.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qpair.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qbytearraylist.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qstringlist.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qregexp.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qstringmatcher.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qcoreevent.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qscopedpointer.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qmetatype.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qvarlengtharray.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qcontainerfwd.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qobject_impl.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qlocale.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qvariant.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qmap.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qdebug.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qhash.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qvector.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qpoint.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qset.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qcontiguouscache.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qsharedpointer.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qshareddata.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qsharedpointer_impl.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/gmpxx.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/gmp.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o common.o ../common/common.cc
 
 DrawWindow.o: DrawWindow.cc DrawWindow.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMainWindow \
