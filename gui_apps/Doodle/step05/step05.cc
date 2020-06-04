@@ -3,7 +3,7 @@
 // of line width & color.
 // 	- double left mouse click - set line width
 //  - double right mouse click - set line color
-//    (NOTE: this is a really horrible GUI design!! Purpose of this code is not
+//    (NOTE: this is an absolutely horrible GUI design!! Purpose of this code is not
 //     to present a good GUI design, rather to be able to set line width & color.
 //     This flaw will be corrected in further tutorials).
 //
@@ -18,11 +18,11 @@
 
 int main(int argc, char **argv)
 {
-  QApplication app(argc, argv);
+   QApplication app(argc, argv);
 
-  // create the GUI
-  DrawWindow mainWindow;
-  mainWindow.show();
+   // create the GUI
+   DrawWindow mainWindow;
+   mainWindow.show();
 
-  return app.exec();
+   return app.exec();
 }
