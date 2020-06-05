@@ -1,82 +1,132 @@
 # PyQt5 Doodle Tutorial
 
-## Step 3 - Handling Operating System Events
-In the previous step of the tutorial, we created the basic top level window for the application.
-In this step we will add code to handle operating system (OS) events.
+## Step 3 - Painting in the window
+In the previous step of the tutorial, we have seen how you can handle events sent by the underlying
+operating system (OS) tp your main window. Specifically, we handled the `mouse press` and the `close`
+events in our `DrawWindow` class by providing event handler functions. In this step, we will illustrate how to handle `paint` messages.
 
-Most GUI applications are event based. When you interact with a GUI application, your actions (e.g. pressing the left mouse button or dragging the mouse across the client area, selecting a menu item, clicking on a toolbar button, closing the window etc.) result in the underlying operating system sending your main window `events` - the event is specific to the action you have just taken. For example, when the mouse is pressed over the window a `mouse press event` will be sent to the main window, when the window is closed, a `close event` will be sent and so on.
+Before we start, create a new sub-directory `step03` under our _root folder_ and copy `step02/drawWindow.py` to `step03/drawWindow.py`. Also copy `step02/step02.py` to `step03/step03.py`.
 
-Each GUI application has an _event processing loop_, which scans for all events sent to the main window by the underlying OS. It _may choose_ to _handle_ certain events, while most events are _ignored_. _Handling an event_ usually involves providing an _event handling_ function in your window class, which the _event processing loop_ will _automatically_ call. The _ignored_ events fall back to the OS, which provides a reasonable default behavior.
+### Handling `paint` events
+When a window needs to be re-painted (for example when part of the client area that was hidden before is now unhidden), the OS will send your window a `paint` event. This event can be handled by providing a event handler with signature `def paintEvent(self, e: QPaintEvent) -> None` in your `DrawWindow` class. Paint events are, what I call, _lazy events_ as they are sent to your window only when repainting is required. Also, multiple `paint` events are usually combined into one `paint` event by the OS to optimize painting.
 
-The _event processing loop_ is part of our `app.exec_()` call, which (if you recall) is the last function you call in your `main()` function. This _kicks in_ the event processing loop for our main window - the nitty-gritties are handled internally by PyQt and the good news is that we need not be concerned with the low level implementation. Also, this works across all operating systems on which PyQt is supported.
+The operating system usually handles re-painting of the title bar, borders etc., but leaves painting of the client area of the window to us, if we choose to do so. What you code in the `paintEvent(...)` event handler _defines_ how you _handle_ a `paint` event.
 
-In this step we will add code to handle `mouse press` and `close` events. Specifically,
-- When the _left mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "left mouse button was pressed".
-- Similarly, when the _right mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "right mouse button was clicked".
-- When the window is closed, e.g. by clicking the `X` button on the title bar, we will _handle_ this event and ask the user if she wants to quit the application. Should she confirm, the window is closed and application exits.
+ You can also force a `paint` event to be sent to your window by calling `update()` anywhere in your code. Calling `update()` effectively calls your `paintEvent(...)` function immediately. <span style="background-color: pink">**WARNING: you SHOULD NOT call `update()` in the `paintEvent(...)` function as that will lead to infinite looping!!**</span>
 
-This is obviously very rudimentary behavior, but suffices for the purpose of illustrating how OS events can be handled. In the following steps, we will add more relevant behavior (e.g. drawing lines as the mouse is dragged across the window and so on).
+### Handling Mouse Press events
+In this step, we will modify the mouse press event to actually do some work. Every time the user _left mouse presses_ on the client area, we will _capture_ the mouse co-ordinates and save this to a `points[]` list so we can iterate over it and paint all the points where the user pressed the left mous button.
 
-For a comprehensive coverage see [Event Handlers Qt Documentation](https://doc.qt.io/qtforpython/overviews/eventsandfilters.html)
-
-### Handling `mousePress` Events
-To handle both the left and right mouse press events, we __must__ add the following function to the implementation of our `DrawWindow` class (in the `drawWindow.py` module).
-
-__NOTE:__ The function signature must be exactly as shown below. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), which are available in Python 3.
+First let's modify the `DrawWindow.__init__()` method slightly - here is the code.
 
 ```python
-class MainWindow(QMainWindow):
-    # other functions & initializers omitted...
+# step03/drawWindow.py
+class DrawWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(QMainWindow, self).__init__(*args, **kwargs)
+        self.setWindowTitle("PyQt5 Doodle - Step03: Drawing points")
+        self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100,100,640,480))
+        # --- new lines added below
+        self.modified = False
+        self.points = []
+```
+We have added 2 class attributes to the class:
+-  `self.points`, is a `list` which saves the co-ordinates [i.e. `(x, y)` location] where the left mouse is pressed. As we press the left mouse at different `(x,y)` locations within the client area, each location will get added to this list.
+- `self.modified`, is a `boolean` flag to detect if the doodle has been _modified_ or not. Every time a new point is added to `self.points` list, the doodle is flagged as modified and `self.modified` is set to `True`
+
+Here is the code to handle the `mouse press` event:
+- when the `left` mouse button is pressed, we save the point where it was pressed in the `self.points` list
+- when the `right` mouse button is pressed, we clear the list of points saved.
+
+```python
+# step03/drawWindow.py
+class DrawWindow(QMainWindow):
+    ...
+    # other methods omitted for brevity
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
         if e.button() == Qt.LeftButton:
-            QMessageBox.information(self, "PyQt Doodle",
-                                    "You have pressed the LEFT mouse button")
+            # user pressed left mouse button - save point where
+            # the mouse left button was clicked
+            pt = QPoint(e.pos().x(), e.pos().y())
+            self.points.append(pt)
+            # flag doodle as modified
+            self.modified = True
         elif e.button() == Qt.RightButton:
-            QMessageBox.information(self, "PyQt Doodle",
-                                    "You have pressed the RIGHT mouse button")        
+            # user pressed right mouse button - clear display of
+            # any points saved previously
+            self.points = []
+            # flag the doodle as not modified
+            self.modified = False
+
+        # force repaint NOW!
+        self.update()
 ```
+__Notice that the last call in the method is `self.update()`__. This call _forces_ a repaint of the window
 
-When the mouse button is pressed over the window, an instance of `QMouseEvent` event is sent to the window. This event encapsulates additional information, like which mouse button was pressed, co-ordinates of mouse position relative to the window receiving the event and the screen and so on.
+### Handling the `paint` event
+PyQt5's 2D graphics engine is based on the `QtGui.QPainter` class, which can draw all kinds of shapes (rectangles, polygons, lines etc.), images and text. `QPainter` is used to draw on a _paint device_, which could be a class derived from `QWidget`, a `QPixmap` or a `QImage`. Incidentally, `QMainWindow` is derived from `QWidget` so can be used as a _paint device_ on which `QPainter` can draw.
 
-In this step, we are interested in knowing which mouse button was pressed. The `button()` method of the `QMouseEvent` returns a value of type `Qt.MouseButton`, which can take several values like `Qt.LeftButton`, `Qt.RightButton`, `QtMiddleButton`. We check which mouse button was pressed and inform the user accordingly. We use the `QMessageBox.information(...)` function to do so.
+All drawing must be handled in overloaded `paintEvent(self, e: QPaintEvent)` method of the `DrawWindow` class. Drawing is always done between calls to `QPainter.begin(...)` and `QPainter.end(...)`. The `begin()` call initializes the `QPainter` with default parameters (e.g. default pen & brush), while the `end()` call does the cleanup of any memory allocations that happen behind the scene.
 
-Running `step01.py` as we did in Step01 produces the following output when the left mouse button is pressed over the client area of the window:
+<span style=background-color:pink>__NOTE: if you forget the `begin()` and `end()` calls, you wont see any of your custom drawings.__ This is often a mistake newbies can make, which can be really frustrating!</span>
 
-![Left Mouse Press](./images/Step02-LeftMousePress.png)
+The `begin()` call must be passed a parameter, which is an instance of the _paint device_ on which you intend to draw. In our case, we want to draw on our `DrawWindow`, hence we pass in `self`
 
-Similarly, when the right mouse button is pressed over the client area of the window, you'll observe the following:
-
-![Right Mouse Press](./images/Step02-RightMousePress.png)
-
-### Handling the `close` event
-To handle the close event, you guessed it, we need to add another funtion to our `DrawWindow` class implementation. Add the following method to our class:
+Here's our `paintEvent(...)` method:
 
 ```python
-def closeEvent(self, e: QCloseEvent) -> None:
-    # ask user is she/he wants to quit
-    resp = QMessageBox.question(self, "Confirm Close",
-                                "This will close the application.\nOk to quit?",
-                                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-    if resp == QMessageBox.Yes:
-        e.accept()
-    else:
-        e.ignore()
+# step03/drawWindow.py
+class DrawWindow(QMainWindow):
+    ...
+    # other methods omitted for brevity
+    def paintEvent(self, e: QPaintEvent) -> None:
+        painter = QPainter()
+        painter.begin(self)
+        try:
+            font = QFont("Monospace", 10)
+            painter.setFont(font)
 
+            if len(self.points) > 0:
+                for pt in self.points:
+                    pos = f"({pt.x()},{pt.y()})"
+                    painter.drawText(pt.x(), pt.y(), pos)
+        finally:
+            painter.end()
 ```
-A few points to note:
-- The event handler function should be called `def closeEvent(self, e: QCloseEvent) -> None`
-- The first thing we do is ask the user if she wants to close the window & exit the application. We use the `QMessageBox.question(...)` call for the same.
-- If the user clicks `Yes` on the message box displayed, we accept the event `e.accept()`. Accepting a `close` event usually implies closing the window and quitting the application.
-- Conversely, if the user clicks the `No` button, we ignore the event `e.ignore()`. Ignoring an event means _don't process this event_, which in our case would imply _don't quit the application yet_.
+We iterate over the points, if any, that we have _accumulated_ in the `self.points[]` list and display the co-ordinates of the point at the point's location.
 
-After adding this new method to the `DrawWindow` class, run `step01.py`. When the main window is displayed, click on the `X` button on the title bar. You should see the following message box.
+__NOTE:__ I have use the `try/finally` block to ensure that `end()` is _always_ called, even if the painting code throws some sort of error/exception. This is not required, but a good practice to follow.
 
-![Close Event](./images/Step02-CloseClick.png)
+If you can run `step03/step03.py` now. Once the window comes up, left-mouse click all around the client area and you should see something like the screen-shot below. If you right-mouse click, all the points will disappear!
 
-- Clicking on the `No` button will do nothing (as our event is ignored)
-- Clicking on the `Yes` button will close the main window and exit the application.
+![Left Mouse Press](./images/Step03-LeftMousePress.png)
 
-This completes Step2 of our tutorial. In the next step, we will add code to draw text in the client area when the mouse button is pressed.
+### Customizing the `closeEvent()` function
+There is one small change we need to make to the `closeEvent()` method. See the code below:
+
+```python
+# step03/drawWindow.py
+class DrawWindow(QMainWindow):
+    ...
+    # other methods hidden for brevity
+    def closeEvent(self, e):
+        if self.modified:
+            resp = QMessageBox.question(self, "Confirm Close",
+                                        "This will close the application.\nOk to quit?",
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if resp == QMessageBox.Yes:
+                e.accept()
+            else:
+                e.ignore()
+        else:
+            e.accept()
+```
+Notice that the `QMessageBox.question(...)` call is now called only if `self.modified` is `True` (i.e. when the drawing is _modified_). If drawing is not modified, we just `accept()` the event, which closes the window _without_ asking the user.
+
+<hr/>
+
+<span style="color:blue">This completes Step3 of our tutorial</span>, where we demonstrated how `paint()` events can be handled. In the next step we will start drawing doodles.<br/>
 
 __NOTE:__ I am writing this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On Windows the window will show the _native_ Windows look & feel and likewise on a Mac - there is no change in the code above!

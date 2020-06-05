@@ -35,7 +35,7 @@ class DrawWindow(QMainWindow):
         else:
             e.accept()
 
-    def paintEvent(self, e):
+    def paintEvent(self, e: QPaintEvent) -> None:
         painter = QPainter()
         painter.begin(self)
         try:

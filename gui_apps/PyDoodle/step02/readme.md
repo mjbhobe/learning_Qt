@@ -1,6 +1,6 @@
 # PyQt5 Doodle Tutorial
 
-## Step 2 - Handling Operating System Events
+## Step 3 - Handling Operating System Events
 In the previous step of the tutorial, we created the basic top level window for the application.
 In this step we will add code to handle operating system (OS) events.
 
@@ -19,14 +19,20 @@ This is obviously very rudimentary behavior, but suffices for the purpose of ill
 
 For a comprehensive coverage see [Event Handlers Qt Documentation](https://doc.qt.io/qtforpython/overviews/eventsandfilters.html)
 
-### Handling `mousePress` Events
-To handle both the left and right mouse press events, we __must__ add the following function to the implementation of our `DrawWindow` class (in the `drawWindow.py` module).
+### Coding the changes
+1. Create a separate folder `step02` in the root folder and copy `step01/drawWindow.py` to this folder - this will serve as a _starter_ file, which we will modify here.
+2. Similarly copy `step01/step01.py` to `step02/step02.py`
+3. In the following text, we will be modifying `drawWindow.py` and `step02.py` in the `step02` directory.
+
+#### Handling `mousePress` Events
+To handle both the left and right mouse press events, we __must__ add the following function to the implementation of our `DrawWindow` class (in the `step02/drawWindow.py` module).
 
 __NOTE:__ The function signature must be exactly as shown below. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), which are available in Python 3.
 
 ```python
+# step02/drawWindow.py - main window class
 class MainWindow(QMainWindow):
-    # other functions & initializers omitted...
+    # other functions & initializers (omitted for brevity)
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
         if e.button() == Qt.LeftButton:
@@ -41,7 +47,9 @@ When the mouse button is pressed over the window, an instance of `QMouseEvent` e
 
 In this step, we are interested in knowing which mouse button was pressed. The `button()` method of the `QMouseEvent` returns a value of type `Qt.MouseButton`, which can take several values like `Qt.LeftButton`, `Qt.RightButton`, `QtMiddleButton`. We check which mouse button was pressed and inform the user accordingly. We use the `QMessageBox.information(...)` function to do so.
 
-Running `step01.py` as we did in Step01 produces the following output when the left mouse button is pressed over the client area of the window:
+__We don't need to make any changes to `step02.py`__. This is just a copy of `step01/step01.py`.
+
+Running `step02/step02.py` will display the following output when the left mouse button is pressed over the client area of the window:
 
 ![Left Mouse Press](./images/Step02-LeftMousePress.png)
 
@@ -49,19 +57,25 @@ Similarly, when the right mouse button is pressed over the client area of the wi
 
 ![Right Mouse Press](./images/Step02-RightMousePress.png)
 
-### Handling the `close` event
-To handle the close event, you guessed it, we need to add another funtion to our `DrawWindow` class implementation. Add the following method to our class:
+#### Handling the `close` event
+To handle the close event, you guessed it, we need to add another funtion to our `DrawWindow` class implementation.
+
+Add the following method to our `DrawWindow` class in `step02/drawWindow.py` file:
 
 ```python
-def closeEvent(self, e: QCloseEvent) -> None:
-    # ask user is she/he wants to quit
-    resp = QMessageBox.question(self, "Confirm Close",
-                                "This will close the application.\nOk to quit?",
-                                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-    if resp == QMessageBox.Yes:
-        e.accept()
-    else:
-        e.ignore()
+# step02/drawWindow.py
+class MainWindow(QMainWindow):
+    # rest of the functions omitted for brevity...
+
+    def closeEvent(self, e: QCloseEvent) -> None:
+        # ask user is she/he wants to quit
+        resp = QMessageBox.question(self, "Confirm Close",
+                                    "This will close the application.\nOk to quit?",
+                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if resp == QMessageBox.Yes:
+            e.accept()
+        else:
+            e.ignore()
 
 ```
 A few points to note:
@@ -77,6 +91,8 @@ After adding this new method to the `DrawWindow` class, run `step01.py`. When th
 - Clicking on the `No` button will do nothing (as our event is ignored)
 - Clicking on the `Yes` button will close the main window and exit the application.
 
-This completes Step2 of our tutorial. In the next step, we will add code to draw text in the client area when the mouse button is pressed.
+<hr/>
+
+<span style="color:blue">This completes Step2 of our tutorial.</span> In the next step, we will add code to draw text in the client area when the mouse button is pressed.
 
 __NOTE:__ I am writing this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On Windows the window will show the _native_ Windows look & feel and likewise on a Mac - there is no change in the code above!
