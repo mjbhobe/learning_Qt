@@ -1,6 +1,6 @@
 """
 // ===================================================================================
-// step05.py: adds ability to change color & thickness of the squiggle
+// step06.py: drawing multiple squiggles in window, each with own attribute
 //  application handles left mouse press & drag, right mouse press events
 //   - draws a squiggle in the client window when left mouse is pressed & dragged
 //   - if ctrl + left mouse press - display dialog to set new pen thickness

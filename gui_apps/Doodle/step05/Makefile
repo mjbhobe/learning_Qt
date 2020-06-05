@@ -1179,8 +1179,9 @@ common.o: ../common/common.cc ../common/common.hxx \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/gmp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o common.o ../common/common.cc
 
-DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QColorDialog \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qcolordialog.h \
+DrawWindow.o: DrawWindow.cc DrawWindow.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMainWindow \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmainwindow.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qtwidgetsglobal.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtguiglobal.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qglobal.h \
@@ -1206,7 +1207,6 @@ DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidg
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qversiontagging.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtgui-config.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qtwidgets-config.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qdialog.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qwidget.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qwindowdefs.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qobjectdefs.h \
@@ -1281,16 +1281,10 @@ DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidg
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qfiledevice.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qvector2d.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtouchdevice.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QInputDialog \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qinputdialog.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qlineedit.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qframe.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextcursor.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextformat.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qpen.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextoption.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMessageBox \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmessagebox.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qtabwidget.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qicon.h \
+		Line.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/QList \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/QtGui \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/QtGuiDepends \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QtCore \
@@ -1409,9 +1403,13 @@ DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidg
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/qtcoreversion.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qabstracttextdocumentlayout.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextlayout.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextformat.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qpen.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextoption.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qglyphrun.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qrawfont.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qfontdatabase.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextcursor.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtextdocument.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qaccessible.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qaccessiblebridge.h \
@@ -1424,7 +1422,6 @@ DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidg
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtCore/QRect \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qsurface.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qsurfaceformat.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qicon.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qbitmap.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qclipboard.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qdesktopservices.h \
@@ -1501,12 +1498,18 @@ DrawWindow.o: DrawWindow.cc /home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidg
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtexttable.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qvalidator.h \
 		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/qtguiversion.h \
-		DrawWindow.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMainWindow \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmainwindow.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qtabwidget.h \
-		Line.h \
-		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtGui/QList
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QApplication \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qapplication.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qdesktopwidget.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QColorDialog \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qcolordialog.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qdialog.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QInputDialog \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qinputdialog.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qlineedit.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qframe.h \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/QMessageBox \
+		/home/mjbhobe/anaconda3/envs/dlnlp/include/qt/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DrawWindow.o DrawWindow.cc
 
 Line.o: Line.cc Line.h \

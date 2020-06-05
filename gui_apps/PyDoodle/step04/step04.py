@@ -1,14 +1,15 @@
 """
-// ============================================================================
-// step04.py: drawing in the main window
-//     application handles the left & right mouse click Events & close event
-//         - traces a line in the client window
+// ================================================================================
+// step04.py: drawing a squiggle in the main window
+//  application handles left mouse press & drag, right mouse press events
+//   - draws a squiggle in the client window when left mouse is pressed & dragged
+//   - erases the squiggle when the right mouse is pressed
 //
-// Tutorial - Qt Scribble Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
-// Created by Manish Bhobe.
+// Tutorial - PyQt5 Doodle Application
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
-// ============================================================================
+// =================================================================================
 """
 import sys
 from PyQt5.QtCore import *

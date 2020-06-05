@@ -12,30 +12,25 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from squiggle import *
 
 class DrawWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("PyQt5 Doodle - Step05: Drawing a Squiggle & set width + color")
+        self.setWindowTitle("PyQt5 Doodle - Step06: Drawing multiple Squiggle & set width + color")
         self.setStyleSheet("background-color: white")
         self.setGeometry(QRect(100,100,640,480))
         self.modified = False
-        self.points = []
+        self.squiggles = []
         self.dragging = False
         self.penColor = QColor(qRgb(0, 65, 255))
         self.penWidth = 3
+        self.currSquiggle = None
         self.setMouseTracking(True)
 
-    def drawSquiggle(self, painter):
-        if len(self.points) > 0:
-            #print(f"In drawLine() function - drawing points {self.points}")
-            pen = QPen(self.penColor, self.penWidth)
-            painter.setPen(pen)
-            lastPt = None
-            for i, pt in enumerate(self.points):
-                if i > 0:
-                    painter.drawLine(lastPt, pt)
-                lastPt = pt
+    def drawSquiggles(self, painter: QPainter) -> None:
+        for squiggle in self.squiggles:
+            squiggle.draw(painter)
 
     # operating system Events
     def closeEvent(self, e):
@@ -57,7 +52,7 @@ class DrawWindow(QMainWindow):
         try:
             painter.begin(self)
             painter.setRenderHint(QPainter.Antialiasing, True)
-            self.drawSquiggle(painter)
+            self.drawSquiggles(painter)
         finally:
             painter.end()
 
@@ -73,12 +68,12 @@ class DrawWindow(QMainWindow):
                 if ok:  # user clicked Ok on QInputDialog
                     self.penWidth = newWidth                
             else:
-                # clear any previous doodle(s)
-                self.points = []
-                # start a new doodle
+                # start a new line
+                self.currSquiggle = Squiggle(self.penWidth, self.penColor)
+                self.squiggles.append(self.currSquiggle)
                 pt = QPoint(e.pos().x(), e.pos().y())
                 #print(f"Got mousePressEvent at ({pt.x()}, {pt.y()})")
-                self.points.append(pt)
+                self.currSquiggle.append(pt)
                 self.modified = True
                 self.dragging = True
         elif e.button() == Qt.RightButton:
@@ -89,7 +84,9 @@ class DrawWindow(QMainWindow):
                 if newColor.isValid():
                     self.penColor = newColor
             else:
-                self.points = []
+                for squiggle in self.squiggles:
+                    squiggle = None
+                self.squiggles = []
                 self.modified = False
                 self.update()
 
@@ -98,8 +95,9 @@ class DrawWindow(QMainWindow):
             NOTE: you must call setMouseTracking(True) so window can receive mouse drag events
         """
         if (e.buttons() == Qt.LeftButton) and (self.dragging):
+            assert self.currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
             pt = QPoint(e.pos().x(), e.pos().y())
-            self.points.append(pt)
+            self.currSquiggle.append(pt)
             self.update()
         else:
             e.accept()
@@ -107,8 +105,9 @@ class DrawWindow(QMainWindow):
     def mouseReleaseEvent(self, e: QMouseEvent) -> None:
         """ handler for mouse (left or right button) released events """
         if (e.button() == Qt.LeftButton) and (self.dragging):
+            assert self.currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
             pt = QPoint(e.pos().x(), e.pos().y())
-            self.points.append(pt)
+            self.currSquiggle.append(pt)
             #print(f"Got mouseReleaseEvent event at ({pt.x()}, {pt.y()})")
             self.dragging = False
             self.update()

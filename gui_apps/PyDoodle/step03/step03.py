@@ -5,9 +5,9 @@
 //       - left mouse click: displays the client co-ordinates where clicked
 //       - right mouse click: clears the drawing canvas
 //
-// Tutorial - Qt Scribble Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
-// Created by Manish Bhobe.
+// Tutorial - PyQt5 Doodle Application
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
 """

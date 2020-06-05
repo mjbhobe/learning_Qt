@@ -2,9 +2,9 @@
 // ============================================================================
 // drawWindow.py: custom QMainWindow derived class for main window
 //
-// Tutorial - Qt Scribble Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
-// Created by Manish Bhobe.
+// Tutorial - PyQt5 Doodle Application
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
 """
@@ -16,27 +16,15 @@ from PyQt5.QtWidgets import *
 class DrawWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("PyQt5 Doodle - Step04: Drawing lines")
+        self.setWindowTitle("PyQt5 Doodle - Step04: Drawing a Squiggle")
         self.setStyleSheet("background-color: white")
         self.setGeometry(QRect(100,100,640,480))
         self.modified = False
-        self.image = QImage()
         self.points = []
         self.dragging = False
-        self.penColor = QColor(qRgb(0, 65, 255))
+        self.penColor = QColor(qRgb(0, 85, 255))
         self.penWidth = 3
         self.setMouseTracking(True)
-
-    def drawLine(self, painter):
-        if len(self.points) > 0:
-            #print(f"In drawLine() function - drawing points {self.points}")
-            pen = QPen(self.penColor, self.penWidth)
-            painter.setPen(pen)
-            lastPt = None
-            for i, pt in enumerate(self.points):
-                if i > 0:
-                    painter.drawLine(lastPt, pt)
-                lastPt = pt
 
     # operating system Events
     def closeEvent(self, e):
@@ -51,18 +39,31 @@ class DrawWindow(QMainWindow):
         else:
             e.accept()
 
-    def paintEvent(self, e):
+    def drawSquiggle(self, painter):
+        if len(self.points) > 0:
+            #print(f"In drawLine() function - drawing points {self.points}")
+            pen = QPen(self.penColor, self.penWidth)
+            painter.setPen(pen)
+            lastPt = None
+            for i, pt in enumerate(self.points):
+                if i > 0:
+                    painter.drawLine(lastPt, pt)
+                lastPt = pt
+
+    def paintEvent(self, e: QPaintEvent) -> None:
         painter = QPainter()
-        painter.begin(self)
-        self.drawLine(painter)
-        painter.end()
+        try:
+            painter.begin(self)
+            painter.setRenderHint(QPainter.Antialiasing, True)
+            self.drawSquiggle(painter)
+        finally:
+            painter.end()
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
         if e.button() == Qt.LeftButton:
-            # clear out any line drawn
+            # clear any previous doodle(s)
             self.points = []
-            self.update()
-            # start a new line
+            # start a new doodle
             pt = QPoint(e.pos().x(), e.pos().y())
             #print(f"Got mousePressEvent at ({pt.x()}, {pt.y()})")
             self.points.append(pt)
@@ -71,7 +72,7 @@ class DrawWindow(QMainWindow):
         elif e.button() == Qt.RightButton:
             self.points = []
             self.modified = False
-            self.update()
+        self.update()
 
     def mouseMoveEvent(self, e: QMouseEvent) -> None:
         if (e.buttons() == Qt.LeftButton):

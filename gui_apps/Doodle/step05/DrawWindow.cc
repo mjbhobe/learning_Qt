@@ -1,6 +1,7 @@
 // DrawWindow.cc: implements DrawWindow class
 #include "DrawWindow.h"
 #include "Line.h"
+#include <QApplication>
 #include <QColorDialog>
 #include <QInputDialog>
 #include <QMessageBox>
@@ -65,17 +66,37 @@ void DrawWindow::mousePressEvent(QMouseEvent *event)
 {
    if (event->button() == Qt::LeftButton) {
       // left mouse button pressed
-      delete _line;
-      _line = nullptr;
-      clearImage();
-      _lastPt = event->pos();
-      _dragging = true;
-      _modified = true;
-      _line = new Line(_penWidth, _penColor);
-      _line->addPoint(event->pos());
+      if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+         // display message box & get new width of pen
+         bool ok;
+         int newPenWidth = QInputDialog::getInt(this, AppTitle, QString("Enter new pen width (2-12):"),
+                                                _line->penWidth(), 2, 12, 1, &ok);
+         if (ok) {
+            qDebug() << "New pen width selected: " << newPenWidth;
+            _penWidth = newPenWidth;
+         }
+      } else {
+         delete _line;
+         _line = nullptr;
+         clearImage();
+         _lastPt = event->pos();
+         _dragging = true;
+         _modified = true;
+         _line = new Line(_penWidth, _penColor);
+         _line->addPoint(event->pos());
+      }
    } else if (event->button() == Qt::RightButton) {
-      clearImage();
-      _modified = false;
+      if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+         // if Ctrl key is also pressed, display standard color
+         // dialog & get new pen color
+         QColor color = QColorDialog::getColor(_penColor, this);
+         if (color.isValid())
+            _penColor = color;
+
+      } else {
+         clearImage();
+         _modified = false;
+      }
    }
 }
 
@@ -93,25 +114,6 @@ void DrawWindow::mouseReleaseEvent(QMouseEvent *event)
       drawLineTo(event->pos());
       _line->addPoint(event->pos());
       _dragging = false;
-   }
-}
-
-void DrawWindow::mouseDoubleClickEvent(QMouseEvent *event)
-{
-   if (event->button() == Qt::LeftButton) {
-      // display message box & get width of pen
-      bool ok;
-      int newPenWidth = QInputDialog::getInt(this, AppTitle, QString("Enter new pen width (2-12):"),
-                                             _line->penWidth(), 2, 12, 1, &ok);
-      if (ok) {
-         qDebug() << "New pen width selected: " << newPenWidth;
-         _penWidth = newPenWidth;
-      }
-   } else if (event->button() == Qt::RightButton) {
-      // display standard color dialog & get new pen color
-      QColor color = QColorDialog::getColor(_penColor, this);
-      if (color.isValid())
-         _penColor = color;
    }
 }
 

@@ -1,10 +1,10 @@
 """
 // ============================================================================
-// line.py: represents one line in the Doodle, with its own color & width
+// squiggle.py: represents one squiggle in the Doodle, with its own color & width
 //
-// Tutorial - Qt Scribble Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
-// Created by Manish Bhobe.
+// Tutorial - PyQt5 Doodle Application
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
 """
@@ -13,7 +13,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-class Line(QObject):
+class Squiggle(QObject):
     def __init__(self, penWidth=3, penColor=QColor(qRgb(0,65,255))):
         super(QObject, self).__init__()
         self.penWidth = min(max(2, penWidth), 12)
