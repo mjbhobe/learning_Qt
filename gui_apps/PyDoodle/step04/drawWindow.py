@@ -3,7 +3,7 @@
 // drawWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -61,21 +61,23 @@ class DrawWindow(QMainWindow):
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
         if e.button() == Qt.LeftButton:
-            # clear any previous doodle(s)
+            # clear the previous squiggle
             self.points = []
-            # start a new doodle
+            # start a new squiggle
             pt = QPoint(e.pos().x(), e.pos().y())
             #print(f"Got mousePressEvent at ({pt.x()}, {pt.y()})")
+            qDebug(f"Got a Left-Mouse-Button-Pressed event at ({pt.x()}, {pt.y()})")
             self.points.append(pt)
             self.modified = True
             self.dragging = True
         elif e.button() == Qt.RightButton:
+            qDebug("Got a Right-Mouse-Button-Pressed event")
             self.points = []
             self.modified = False
-        self.update()
+            self.update()
 
     def mouseMoveEvent(self, e: QMouseEvent) -> None:
-        if (e.buttons() == Qt.LeftButton):
+        if (e.buttons() == Qt.LeftButton) and (self.dragging):
             pt = QPoint(e.pos().x(), e.pos().y())
             #print(f"Got mouseMoveEvent event at ({pt.x()}, {pt.y()})")
             self.points.append(pt)

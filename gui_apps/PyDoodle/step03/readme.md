@@ -63,7 +63,7 @@ class DrawWindow(QMainWindow):
         # force repaint NOW!
         self.update()
 ```
-__Notice that the last call in the method is `self.update()`__. This call _forces_ a repaint of the window
+**Notice that the last call in the method is `self.update()`**. This call _forces_ a repaint of the window
 
 ### Handling the `paint` event
 PyQt5's 2D graphics engine is based on the `QtGui.QPainter` class, which can draw all kinds of shapes (rectangles, polygons, lines etc.), images and text. `QPainter` is used to draw on a _paint device_, which could be a class derived from `QWidget`, a `QPixmap` or a `QImage`. Incidentally, `QMainWindow` is derived from `QWidget` so can be used as a _paint device_ on which `QPainter` can draw.
@@ -129,4 +129,4 @@ Notice that the `QMessageBox.question(...)` call is now called only if `self.mod
 
 <span style="color:blue">This completes Step3 of our tutorial</span>, where we demonstrated how `paint()` events can be handled. In the next step we will start drawing doodles.<br/>
 
-__NOTE:__ I am writing this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On Windows the window will show the _native_ Windows look & feel and likewise on a Mac - there is no change in the code above!
+__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.

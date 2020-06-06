@@ -95,4 +95,4 @@ After adding this new method to the `DrawWindow` class, run `step01.py`. When th
 
 <span style="color:blue">This completes Step2 of our tutorial.</span> In the next step, we will add code to draw text in the client area when the mouse button is pressed.
 
-__NOTE:__ I am writing this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On Windows the window will show the _native_ Windows look & feel and likewise on a Mac - there is no change in the code above!
+__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
