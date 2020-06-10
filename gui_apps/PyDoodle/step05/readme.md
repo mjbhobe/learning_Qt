@@ -111,6 +111,7 @@ If you run the code now and do the following steps:
 
 - Enter new value of pen (between 2 & 12) or spin the `spinBox` to choose a new value. Click `OK` to accept the new value.
 - Now drag the mouse in the client area, line with chosen thickness will be drawn, as shown below.
+
 ![Squiggle With New Pen Thickness](./images/Step05-DrawSquiggleNewThick.png)
 
 ### Changing the `penColor`
