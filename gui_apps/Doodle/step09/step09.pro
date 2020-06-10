@@ -6,16 +6,7 @@ TEMPLATE = app
 TARGET = step09
 INCLUDEPATH += .
 
-CONFIG += c++17
-win32 {
-   CONFIG += console
-}
-QT += core gui 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-QMAKE_CXXFLAGS += -pedantic
-# disable qDebug() output in release builds
-CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
+include(../common.pro)
 
 # Input
 HEADERS += Line.h Doodle.h DrawWindow.h MainWindow.h

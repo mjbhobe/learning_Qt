@@ -5,11 +5,8 @@
 TEMPLATE = app
 TARGET = step08
 INCLUDEPATH += .
-win32 {
-	CONFIG += console
-}
-QT += core gui widgets
-CONFIG += c++17
+
+include(../common.pro)
 
 # Input
 HEADERS += Line.h Doodle.h DrawWindow.h MainWindow.h 

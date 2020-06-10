@@ -3,7 +3,7 @@
 // drawWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -61,17 +61,23 @@ class DrawWindow(QMainWindow):
         finally:
             painter.end()
 
+    def getKeyModifiers(self, modifiers):
+        ctrlPressed = True if modifiers & Qt.ControlModifier else False
+        altPressed = True if modifiers & Qt.AltModifier else False
+        shiftPressed = True if modifiers & Qt.ShiftModifier else False
+        return (ctrlPressed, altPressed, shiftPressed)
+
     def mousePressEvent(self, e: QMouseEvent) -> None:
         """ handler for mouse press (left or right button) events """
         if e.button() == Qt.LeftButton:
-            if (QApplication.keyboardModifiers() & Qt.ControlModifier):
+            if (e.modifiers() & Qt.ControlModifier):
                 # if Ctrl key is also pressed with mouse press, display
                 # dialog to change pen thickness
                 newWidth, ok = QInputDialog.getInt(self, "Pen Width",
                                             "Enter new pen width (2-12):",
                                             self.penWidth, 2, 12)
                 if ok:  # user clicked Ok on QInputDialog
-                    self.penWidth = newWidth                
+                    self.penWidth = newWidth
             else:
                 # clear any previous doodle(s)
                 self.points = []
@@ -82,7 +88,7 @@ class DrawWindow(QMainWindow):
                 self.modified = True
                 self.dragging = True
         elif e.button() == Qt.RightButton:
-            if (QApplication.keyboardModifiers() & Qt.ControlModifier):
+            if (e.modifiers() == Qt.ControlModifier):
                 # if Ctrl key is also pressed with mouse press, display
                 # dialog to change pen color
                 newColor = QColorDialog.getColor(self.penColor, self)
@@ -114,4 +120,3 @@ class DrawWindow(QMainWindow):
             self.update()
         else:
             e.accept()
-
