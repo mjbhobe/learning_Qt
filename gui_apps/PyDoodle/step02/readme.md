@@ -12,7 +12,9 @@ Now imagine that the _event processing loop_ in our `app.exec()` call has code t
 
 Any `PyQt` class derived from `QWidget` class can _handle events_. Our `MainWindow` class derives from `QMainWindow`, which derives from `QWidget`, so it can _handle events_. _Handling an event_ means overloading a function, with a specific function signature in our derived class. As you can imagine, `QWidget` will have code (generic) to reasonably handle all possible OS events. When we provide an _event handler_ in our derived class, the magic of _inheritance_ results in _our_ function getting called. We can choose to _ignore_ and event; in which case we _will not_ overload the _event handler_ function. In this case (you guessed it!), the `QWidget` provided code will get called, which provides reasonable default response.
 
-Ok, enough theory. Let's get to the code now. In this step we will provide event handlers for the `mouse press` and `close` events. Specifically,
+Ok, enough theory. Let's get to the code now. 
+
+In this step we will provide event handlers for the `mouse press` and `close` events. Specifically,
 - When the _left mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "left mouse button was pressed".
 - Similarly, when the _right mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "right mouse button was clicked".
 - When the window is closed, e.g. by clicking the `X` button on the title bar, we will _handle_ this event and ask the user if she wants to quit the application. Should she confirm, the window is closed. Since this is the _main window_ of our application, the application will also close.
@@ -33,7 +35,7 @@ def mousePressEvent(self, e : QMouseEvent) -> None:
     # function implementation....
 ```
 
-__NOTE:__ The function signature must be exactly as shown above. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), which are available in Python 3.
+__NOTE:__ The function signature must be exactly as shown above. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), available in Python 3.
 
 Add the following code to your `MainWindow` class in `step02/mainWindow.py` module.
 
