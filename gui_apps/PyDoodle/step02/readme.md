@@ -1,36 +1,44 @@
 # PyQt5 Doodle Tutorial
 
-## Step 3 - Handling Operating System Events
+## Step 2 - Handling Operating System Events
 In the previous step of the tutorial, we created the basic top level window for the application.
 In this step we will add code to handle operating system (OS) events.
 
-Most GUI applications are event based. When you interact with a GUI application, your actions (e.g. pressing the left mouse button or dragging the mouse across the client area, selecting a menu item, clicking on a toolbar button, closing the window etc.) result in the underlying operating system sending your main window `events` - the event is specific to the action you have just taken. For example, when the mouse is pressed over the window a `mouse press event` will be sent to the main window, when the window is closed, a `close event` will be sent and so on.
+Most GUI applications are event based. When you interact with a GUI application, your actions (e.g. pressing the left mouse button or dragging the mouse across the client area, selecting a menu item, clicking on a toolbar button, closing the window etc.) result in the underlying operating system sending your main window a specific `event`. For example, when the mouse is pressed over the window a `mouse press event` will be sent to the main window, when the window is closed, a `close event` will be sent, when a part of the window needs to be re-drawn a `paint` event is sent and so on.
 
-Each GUI application has an _event processing loop_, which scans for all events sent to the main window by the underlying OS. It _may choose_ to _handle_ certain events, while most events are _ignored_. _Handling an event_ usually involves providing an _event handling_ function in your window class, which the _event processing loop_ will _automatically_ call. The _ignored_ events fall back to the OS, which provides a reasonable default behavior.
+Each `event` may include additional information specific to that event. For example, the `mouse press` will include information like the `(X,Y)` co-ordinates where the mouse was clicked; the `paint` event would include information about the _area_ of the window that needs to be re-painted and so on.
 
-The _event processing loop_ is part of our `app.exec_()` call, which (if you recall) is the last function you call in your `main()` function. This _kicks in_ the event processing loop for our main window - the nitty-gritties are handled internally by PyQt and the good news is that we need not be concerned with the low level implementation. Also, this works across all operating systems on which PyQt is supported.
+Now imagine that the _event processing loop_ in our `app.exec()` call has code that reads these events from the OS. Further, depending on the event received, it _cracks open_ the additional information _enclosed_ with the event. This information is the _packaged_ in an event specific `PyQt` class which is then _dispatched_ to our main window. For example, a `mouse press` event will enclose event specific information in a `QMouseEvent` instance, from which you can get the `(X, Y)` co-ordinates of the mouse click and other information that we will discuss later. A `paint` event will have information in a `QPaintEvent`, which will have information on which area needs to be re-painted and so on.
 
-In this step we will add code to handle `mouse press` and `close` events. Specifically,
+Any `PyQt` class derived from `QWidget` class can _handle events_. Our `MainWindow` class derives from `QMainWindow`, which derives from `QWidget`, so it can _handle events_. _Handling an event_ means overloading a function, with a specific function signature in our derived class. As you can imagine, `QWidget` will have code (generic) to reasonably handle all possible OS events. When we provide an _event handler_ in our derived class, the magic of _inheritance_ results in _our_ function getting called. We can choose to _ignore_ and event; in which case we _will not_ overload the _event handler_ function. In this case (you guessed it!), the `QWidget` provided code will get called, which provides reasonable default response.
+
+Ok, enough theory. Let's get to the code now. In this step we will provide event handlers for the `mouse press` and `close` events. Specifically,
 - When the _left mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "left mouse button was pressed".
 - Similarly, when the _right mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "right mouse button was clicked".
-- When the window is closed, e.g. by clicking the `X` button on the title bar, we will _handle_ this event and ask the user if she wants to quit the application. Should she confirm, the window is closed and application exits.
+- When the window is closed, e.g. by clicking the `X` button on the title bar, we will _handle_ this event and ask the user if she wants to quit the application. Should she confirm, the window is closed. Since this is the _main window_ of our application, the application will also close.
 
-This is obviously very rudimentary behavior, but suffices for the purpose of illustrating how OS events can be handled. In the following steps, we will add more relevant behavior (e.g. drawing lines as the mouse is dragged across the window and so on).
+This is obviously very rudimentary behavior, but suffices for the purpose of illustrating how OS events can be handled in a `PyQt5` application. In the following steps, we will add relevant behavior (e.g. drawing lines as the mouse is dragged across the window and so on).
 
 For a comprehensive coverage see [Event Handlers Qt Documentation](https://doc.qt.io/qtforpython/overviews/eventsandfilters.html)
 
 ### Coding the changes
-1. Create a separate folder `step02` in the root folder and copy `step01/drawWindow.py` to this folder - this will serve as a _starter_ file, which we will modify here.
+1. Create a separate folder `step02` in the root folder and copy `step01/mainWindow.py` to this folder - this will serve as a _starter_ file, which we will modify here.
 2. Similarly copy `step01/step01.py` to `step02/step02.py`
-3. In the following text, we will be modifying `drawWindow.py` and `step02.py` in the `step02` directory.
 
 #### Handling `mousePress` Events
-To handle both the left and right mouse press events, we __must__ add the following function to the implementation of our `DrawWindow` class (in the `step02/drawWindow.py` module).
-
-__NOTE:__ The function signature must be exactly as shown below. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), which are available in Python 3.
+To handle both the left and right mouse press events, we __must__ provide a function with the following signature in our `MainWindow` class
 
 ```python
-# step02/drawWindow.py - main window class
+def mousePressEvent(self, e : QMouseEvent) -> None:
+    # function implementation....
+```
+
+__NOTE:__ The function signature must be exactly as shown above. We are using [Function Annotations](https://www.python.org/dev/peps/pep-3107/), which are available in Python 3.
+
+Add the following code to your `MainWindow` class in `step02/mainWindow.py` module.
+
+```python
+# step02/mainWindow.py - main window class
 class MainWindow(QMainWindow):
     # other functions & initializers (omitted for brevity)
 
@@ -43,9 +51,9 @@ class MainWindow(QMainWindow):
                                     "You have pressed the RIGHT mouse button")        
 ```
 
-When the mouse button is pressed over the window, an instance of `QMouseEvent` event is sent to the window. This event encapsulates additional information, like which mouse button was pressed, co-ordinates of mouse position relative to the window receiving the event and the screen and so on.
+The `QMouseEvent` includes additional information, like _which mouse button_ was pressed, where the button was pressed etc. In this step the _which button_ information suffices. This is detected using the `e.button()` call, which returns values like `Qt.LeftButton`, `Qt.RightButton`, `Qt.MiddleButton` which are self explanatory. We check which mouse button was pressed and inform the user accordingly. We use the `QMessageBox.information(...)` function to do so as shown above.
 
-In this step, we are interested in knowing which mouse button was pressed. The `button()` method of the `QMouseEvent` returns a value of type `Qt.MouseButton`, which can take several values like `Qt.LeftButton`, `Qt.RightButton`, `QtMiddleButton`. We check which mouse button was pressed and inform the user accordingly. We use the `QMessageBox.information(...)` function to do so.
+You can get more information about using `QMessageBox` [here](https://www.tutorialspoint.com/pyqt/pyqt_qmessagebox.htm)
 
 __We don't need to make any changes to `step02.py`__. This is just a copy of `step01/step01.py`.
 
@@ -58,12 +66,17 @@ Similarly, when the right mouse button is pressed over the client area of the wi
 ![Right Mouse Press](./images/Step02-RightMousePress.png)
 
 #### Handling the `close` event
-To handle the close event, you guessed it, we need to add another funtion to our `DrawWindow` class implementation.
-
-Add the following method to our `DrawWindow` class in `step02/drawWindow.py` file:
+To handle the `close event`, we __must__ provide a function with the following signature in our `MainWindow` class
 
 ```python
-# step02/drawWindow.py
+def closeEvent(self, e : QCloseEvent) -> None:
+    # function implementation....
+```
+
+Add the following method to our `MainWindow` class in `step02/mainWindow.py` file:
+
+```python
+# step02/mainWindow.py
 class MainWindow(QMainWindow):
     # rest of the functions omitted for brevity...
 
@@ -79,12 +92,13 @@ class MainWindow(QMainWindow):
 
 ```
 A few points to note:
-- The event handler function should be called `def closeEvent(self, e: QCloseEvent) -> None`
 - The first thing we do is ask the user if she wants to close the window & exit the application. We use the `QMessageBox.question(...)` call for the same.
 - If the user clicks `Yes` on the message box displayed, we accept the event `e.accept()`. Accepting a `close` event usually implies closing the window and quitting the application.
 - Conversely, if the user clicks the `No` button, we ignore the event `e.ignore()`. Ignoring an event means _don't process this event_, which in our case would imply _don't quit the application yet_.
 
-After adding this new method to the `DrawWindow` class, run `step01.py`. When the main window is displayed, click on the `X` button on the title bar. You should see the following message box.
+**NOTE:** the `e.ignore()` is another way you can _programattically_ ignore an event. This call us usually used in an event handler, where you want to ignore the event in response to a specific condition. In our case, we ignore the event if user chooses `No`. 
+
+After adding this new method to the `MainWindow` class, run `step01.py`. When the main window is displayed, click on the `X` button on the title bar. You should see the following message box.
 
 ![Close Event](./images/Step02-CloseClick.png)
 
