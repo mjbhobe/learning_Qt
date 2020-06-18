@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 // ============================================================================
 // drawWindow.py: custom QMainWindow derived class for main window
@@ -12,39 +13,21 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from squiggle import *
+from squiggle import Squiggle
+from doodle import Doodle
 
-class DrawWindow(QMainWindow):
+class DrawWindow(QWidget):
     def __init__(self, *args, **kwargs):
-        super(QMainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("PyQt5 Doodle - Step06: Drawing multiple Squiggles with own pen width & color")
+        super(QWidget, self).__init__(*args, **kwargs)
         self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
-        self.modified = False
-        self.squiggles = []
-        self.dragging = False
-        self.penColor = QColor(qRgb(0, 65, 255))
-        self.penWidth = 3
-        self.currSquiggle = None
+        self.__doodle = Doodle()
+        self.__dragging = False
+        self.__currSquiggle = None
         self.setMouseTracking(True)
-
-    def drawSquiggles(self, painter: QPainter) -> None:
-        for squiggle in self.squiggles:
-            squiggle.draw(painter)
-
-    # operating system Events
-    def closeEvent(self, e):
-        """ called just before the main window closes """
-        if self.modified:
-            resp = QMessageBox.question(self, "Confirm Close",
-                                        "This will close the application.\nOk to quit?",
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            if resp == QMessageBox.Yes:
-                e.accept()
-            else:
-                e.ignore()
-        else:
-            e.accept()
+        
+    @property
+    def doodle(self):
+        return self.__doodle
 
     def paintEvent(self, e: QPaintEvent) -> None:
         """ handler for paint events """
@@ -52,7 +35,7 @@ class DrawWindow(QMainWindow):
         try:
             painter.begin(self)
             painter.setRenderHint(QPainter.Antialiasing, True)
-            self.drawSquiggles(painter)
+            self.doodle.draw(painter)
         finally:
             painter.end()
 
@@ -64,53 +47,50 @@ class DrawWindow(QMainWindow):
                 # dialog to change pen thickness
                 newWidth, ok = QInputDialog.getInt(self, "Pen Width",
                                             "Enter new pen width (2-12):",
-                                            self.penWidth, 2, 12)
+                                            self.doodle.defPenWidth, 2, 12)
                 if ok:  # user clicked Ok on QInputDialog
-                    self.penWidth = newWidth                
+                    self.doodle.defPenWidth = newWidth                
             else:
                 # start a new line
-                #self.currSquiggle = Squiggle(self.penWidth, self.penColor)
-                self.currSquiggle = Squiggle()
-                self.currSquiggle.penWidth = self.penWidth
-                self.currSquiggle.penColor = self.penColor
-                self.squiggles.append(self.currSquiggle)
+                #self.__currSquiggle = Squiggle(self.penWidth, self.penColor)
+                self.__currSquiggle = Squiggle()
+                self.__currSquiggle.penWidth = self.doodle.defPenWidth
+                self.__currSquiggle.penColor = self.doodle.defPenColor
+                self.doodle.append(self.__currSquiggle)
                 pt = QPoint(e.pos().x(), e.pos().y())
-                self.currSquiggle.append(pt)
-                self.modified = True
-                self.dragging = True
+                self.__currSquiggle.append(pt)
+                self.doodle.modified = True
+                self.__dragging = True
         elif e.button() == Qt.RightButton:
             if (e.modifiers() & Qt.ControlModifier):
                 # if Ctrl key is also pressed with mouse press, display
                 # dialog to change pen color
-                newColor = QColorDialog.getColor(self.penColor, self)
+                newColor = QColorDialog.getColor(self.doodle.defPenColor, self)
                 if newColor.isValid():
-                    self.penColor = newColor
+                    self.doodle.defPenColor = newColor
             else:
-                for squiggle in self.squiggles:
-                    squiggle = None
-                self.squiggles = []
-                self.modified = False
+                self.doodle.clear()
                 self.update()
 
     def mouseMoveEvent(self, e: QMouseEvent) -> None:
         """ handler for mouse drag (left or right button) events
             NOTE: you must call setMouseTracking(True) so window can receive mouse drag events
         """
-        if (e.buttons() == Qt.LeftButton) and (self.dragging):
-            assert self.currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
+        if (e.buttons() == Qt.LeftButton) and (self.__dragging):
+            assert self.__currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
             pt = QPoint(e.pos().x(), e.pos().y())
-            self.currSquiggle.append(pt)
+            self.__currSquiggle.append(pt)
             self.update()
         else:
             e.accept()
 
     def mouseReleaseEvent(self, e: QMouseEvent) -> None:
         """ handler for mouse (left or right button) released events """
-        if (e.button() == Qt.LeftButton) and (self.dragging):
-            assert self.currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
+        if (e.button() == Qt.LeftButton) and (self.__dragging):
+            assert self.__currSquiggle != None, "FATAL: self.currLine is None, when expecting valid!"
             pt = QPoint(e.pos().x(), e.pos().y())
-            self.currSquiggle.append(pt)
-            self.dragging = False
+            self.__currSquiggle.append(pt)
+            self.__dragging = False
             self.update()
         else:
             e.accept()

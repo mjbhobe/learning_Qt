@@ -1,16 +1,85 @@
 # PyQt5 Doodle Tutorial
 
-## Step 5 - Changing the Squiggle's Attributes
-Our Doodle application appears to be shaping up nicely. So far:
+## Step 6 - Adding multiple Squiggles
+What we have achieved so far
 - We created a custom main window for our application
 - Added event handlers to underlying operating system events
     - Added `mouse event` handlers to accumulate points for our squiggle
     - Added a `paint event` handler to draw the squiggle
     - Added `close event` handler to check if it was Ok to close the application.
+    - We also leveregad the `mouse events` to change our pen width & color
+But we have been able to draw just one line so far - very limiting from the Doodling point of view. In this step we will make several changes to our code that will allow us to draw multiple squiggles, each with their own thickness & color. This will enable us to draw sufficiently complex Doodles, like the one shown below:
+
+![I love PyQt](./images/Step06-ILoveQt.png)
+
+Let's begin
+
+## Separating the `squiggle` into its own class
+We'll create a separate class for the Squiggle, which will enable us to create several squiggles and set pen width and color separately for each squiggle.
+
+- Create a new file `squiggle.py` in the `step06` folder & add the following code:
+
+```python
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+class Squiggle(QObject):
+    """
+    class for a Squiggle in the doodle
+    """
+    def __init__(self, penWidth=3, penColor=QColor(qRgb(0,65,255))):
+        super(QObject, self).__init__()
+        self.__penWidth = 1
+        self.__penColor = qRgb(0,0,0)
+        # the squiggle has its own pen width & color
+        self.penWidth = penWidth
+        self.penColor = penColor
+        self.points = []
+
+    @property
+    def penWidth(self):
+        return self.__penWidth
+
+    @penWidth.setter
+    def penWidth(self, penWidth):
+        newWidth = min(max(2, penWidth), 12)
+        if (penWidth < 2) or (penWidth > 12):
+            qDebug(f"WARNING: incorrect value for penWidth ({penWidth}). Expecting value between 2 & 12. Set to {newWidth}")
+        if self.penWidth != newWidth:
+            self.__penWidth = newWidth
+
+    @property
+    def penColor(self):
+        return self.__penColor
+
+    @penColor.setter
+    def penColor(self, penColor):
+        if self.penColor != penColor:
+            self.__penColor = penColor
+
+    def numPoints(self):
+        return len(self.points)
+
+    def append(self, pt: QPoint) -> None:
+        self.points.append(pt)
+
+    def draw(self, painter: QPainter) -> None:
+        # squiggle has it's own method to draw on QPainter
+        if self.numPoints() > 0:
+            pen = QPen(self.penColor, self.penWidth)
+            painter.setPen(pen)
+            lastPt = None
+            for i, pt in enumerate(self.points):
+                if i > 0:
+                    painter.drawLine(lastPt, pt)
+                lastPt = pt
+```
+
+
+<span style="background-color:yellow; color:black"><b>TODO:</b>Complete Tutorial above....</span>
 
 However, our squiggle was painted with the pen thickness and color that we set in the `DrawWindow.__init__(...)` method and there were no means provided to change these through the user interface. In this step, we will give the user the ability to change the squiggle's pen width and color.
-
-Before we start, create a new sub-directory `step05` under our _root folder_ and copy `step04/drawWindow.py` to `step05/drawWindow.py`. Also copy `step04/step04.py` to `step05/step05.py`.
 
 ## Using pre-canned or common dialogs
 PyQt5 makes available several _pre-canned_ dialogs, which you can use out of the box. Several dialogs are available, for example:
@@ -102,7 +171,7 @@ if (e.modifiers() == Qt.ControlModifier):
 ```
 So our `QInputDialog` is displayed only if `Ctrl+left-mouse-press` event is received.
 
-Run `step05.py` now and do the following steps:
+If you run the code now and do the following steps:
 - Draw a squiggle. It will be drawn in the default pen thickness (`= 3`). Somwhat like shown  below (from `Step04`):
 
 ![Default Pen Width](./images/Step04-DrawSquiggle.png)

@@ -3,19 +3,20 @@
 */
 
 body {
-    font-family: Roboto, Arial, Verdana, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
-    font-size: 15px;
+    font-family: Arial, Roboto, Verdana, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+    font-size: 16.02px;
+    display: block;
     line-height: 1.6;
 }
 
 /* code listings */
 code {
-    font-family: Menlo, Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
+    font-family: Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
     font-size: 14px;
 }
 
 pre * {
-    font-family: Menlo, Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
+    font-family: Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
     font-size: 14px;
     line-height: 20px;
 }

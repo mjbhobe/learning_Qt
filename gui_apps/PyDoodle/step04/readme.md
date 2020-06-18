@@ -20,6 +20,8 @@ The `mouse drag` event is sent to your event handler class when the mouse is _dr
 
 A `mouse release` event is sent when the mouse button is released. This is the _oppisite_ of the `mouse press` event. A `mouse release` event will be sent when either the left or the right mouse button is released _after_ it is first pressed.
 
+Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/drawWindow.py` to `step04/drawWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.
+
 ### Coding the events
 
 Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/drawWindow.py` to `step04/drawWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.

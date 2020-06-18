@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 // ============================================================================
 // squiggle.py: represents one squiggle in the Doodle, with its own color & width
@@ -19,7 +20,7 @@ class Squiggle(QObject):
     def __init__(self, penWidth=3, penColor=QColor(qRgb(0,65,255))):
         super(QObject, self).__init__()
         self.__penWidth = 1
-        self.__penColor = qRgb(0,0,0)
+        self.__penColor = QColor(qRgb(0,0,0))
         # the squiggle has its own pen width & color
         self.penWidth = penWidth
         self.penColor = penColor
@@ -42,7 +43,7 @@ class Squiggle(QObject):
         return self.__penColor
 
     @penColor.setter
-    def penColor(self, penColor):
+    def penColor(self, penColor : QColor) -> None:
         if self.penColor != penColor:
             self.__penColor = penColor
 
@@ -63,3 +64,9 @@ class Squiggle(QObject):
                 if i > 0:
                     painter.drawLine(lastPt, pt)
                 lastPt = pt
+                
+
+
+    
+
+            
