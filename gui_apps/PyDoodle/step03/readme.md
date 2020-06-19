@@ -1,27 +1,33 @@
 # PyQt5 Doodle Tutorial
 
 ## Step 3 - Painting in the window
-In the previous step of the tutorial, we have seen how you can handle events sent by the underlying
-operating system (OS) tp your main window. Specifically, we handled the `mouse press` and the `close`
-events in our `DrawWindow` class by providing event handler functions. In this step, we will illustrate how to handle `paint` messages.
+In the previous step of the tutorial, we have seen how you can handle events sent by the underlying operating system (OS) to your main window. Specifically, we handled the `mouse press` and the `close` events in our `MainWindow` class by providing event handler functions. In this step, we will illustrate how to handle the `paint` event.
 
-Before we start, create a new sub-directory `step03` under our _root folder_ and copy `step02/drawWindow.py` to `step03/drawWindow.py`. Also copy `step02/step02.py` to `step03/step03.py`.
+Before we start, create a new sub-directory `step03` under our _root folder_ and copy `step02/mainWidow.py` to `step03/mainWidow.py`. Also copy `step02/step02.py` to `step03/step03.py`.
 
 ### Handling `paint` events
-When a window needs to be re-painted (for example when part of the client area that was hidden before is now unhidden), the OS will send your window a `paint` event. This event can be handled by providing a event handler with signature `def paintEvent(self, e: QPaintEvent) -> None` in your `DrawWindow` class. Paint events are, what I call, _lazy events_ as they are sent to your window only when repainting is required. Also, multiple `paint` events are usually combined into one `paint` event by the OS to optimize painting.
+When a window needs to be re-painted (for example when part of the client area that was hidden before is now unhidden), the OS will send your window a `paint` event. 
 
-The operating system usually handles re-painting of the title bar, borders etc., but leaves painting of the client area of the window to us, if we choose to do so. What you code in the `paintEvent(...)` event handler _defines_ how you _handle_ a `paint` event.
+To handle this event, we must overload the following event handler in our `MainWindow` class:
 
- You can also force a `paint` event to be sent to your window by calling `update()` anywhere in your code. Calling `update()` effectively calls your `paintEvent(...)` function immediately. <span style="background-color: pink">**WARNING: you SHOULD NOT call `update()` in the `paintEvent(...)` function as that will lead to infinite looping!!**</span>
+ ```python
+ def paintEvent(self, e: QPaintEvent) -> None:
+     ## implementation...
+ ``` 
+ Paint events are, what I call, _lazy events_ as they are sent to your window only when repainting is required. Also, multiple `paint` events are usually combined into one `paint` event by the OS to optimize painting.
+
+ You can also force a `paint` event to be sent to your window by calling `update()` function anywhere in your code. Calling `update()` effectively calls your `paintEvent(...)` function immediately. 
+ 
+ <span style="background-color: salmon; color:black">**WARNING: you SHOULD NOT call `update()` in the `paintEvent(...)` function as that will lead to infinite looping!!**</span>
 
 ### Handling Mouse Press events
 In this step, we will modify the mouse press event to actually do some work. Every time the user _left mouse presses_ on the client area, we will _capture_ the mouse co-ordinates and save this to a `points[]` list so we can iterate over it and paint all the points where the user pressed the left mous button.
 
-First let's modify the `DrawWindow.__init__()` method slightly - here is the code.
+First let's modify the `MainWindow.__init__()` method slightly - here is the code.
 
 ```python
-# step03/drawWindow.py
-class DrawWindow(QMainWindow):
+# step03/mainWidow.py
+class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step03: Drawing points")
@@ -40,8 +46,8 @@ Here is the code to handle the `mouse press` event:
 - when the `right` mouse button is pressed, we clear the list of points saved.
 
 ```python
-# step03/drawWindow.py
-class DrawWindow(QMainWindow):
+# step03/mainWidow.py
+class MainWindow(QMainWindow):
     ...
     # other methods omitted for brevity
 
@@ -68,17 +74,17 @@ class DrawWindow(QMainWindow):
 ### Handling the `paint` event
 PyQt5's 2D graphics engine is based on the `QtGui.QPainter` class, which can draw all kinds of shapes (rectangles, polygons, lines etc.), images and text. `QPainter` is used to draw on a _paint device_, which could be a class derived from `QWidget`, a `QPixmap` or a `QImage`. Incidentally, `QMainWindow` is derived from `QWidget` so can be used as a _paint device_ on which `QPainter` can draw.
 
-All drawing must be handled in overloaded `paintEvent(self, e: QPaintEvent)` method of the `DrawWindow` class. Drawing is always done between calls to `QPainter.begin(...)` and `QPainter.end(...)`. The `begin()` call initializes the `QPainter` with default parameters (e.g. default pen & brush), while the `end()` call does the cleanup of any memory allocations that happen behind the scene.
+All drawing must be handled in overloaded `paintEvent(self, e: QPaintEvent)` method of the `MainWindow` class. Drawing is always done between calls to `QPainter.begin(...)` and `QPainter.end(...)`. The `begin()` call initializes the `QPainter` with default parameters (e.g. default pen & brush), while the `end()` call does the cleanup of any memory allocations that happen behind the scene.
 
-<span style=background-color:pink>__NOTE: if you forget the `begin()` and `end()` calls, you wont see any of your custom drawings.__ This is often a mistake newbies can make, which can be really frustrating!</span>
+<span style="background-color:salmon; color:black">__NOTE: if you forget the `begin()` and `end()` calls, you wont see any of your custom drawings.__ This is often a mistake newbies can make, which can be really frustrating!</span>
 
-The `begin()` call must be passed a parameter, which is an instance of the _paint device_ on which you intend to draw. In our case, we want to draw on our `DrawWindow`, hence we pass in `self`
+The `begin()` call must be passed a parameter, which is an instance of the _paint device_ on which you intend to draw. In our case, we want to draw on our `MainWindow`, hence we pass in `self`
 
 Here's our `paintEvent(...)` method:
 
 ```python
-# step03/drawWindow.py
-class DrawWindow(QMainWindow):
+# step03/mainWidow.py
+class MainWindow(QMainWindow):
     ...
     # other methods omitted for brevity
     def paintEvent(self, e: QPaintEvent) -> None:
@@ -107,15 +113,15 @@ If you can run `step03/step03.py` now. Once the window comes up, left-mouse clic
 There is one small change we need to make to the `closeEvent()` method. See the code below:
 
 ```python
-# step03/drawWindow.py
-class DrawWindow(QMainWindow):
+# step03/mainWidow.py
+class MainWindow(QMainWindow):
     ...
     # other methods hidden for brevity
     def closeEvent(self, e):
         if self.modified:
             resp = QMessageBox.question(self, "Confirm Close",
-                                        "This will close the application.\nOk to quit?",
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                       "This will close the application.\nOk to quit?",
+                       QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if resp == QMessageBox.Yes:
                 e.accept()
             else:

@@ -11,12 +11,12 @@ body {
 
 /* code listings */
 code {
-    font-family: Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
+    font-family: "Source Code Pro Medium", Consolas, 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
     font-size: 14px;
 }
 
 pre * {
-    font-family: Consolas, "Source Code Pro Medium", 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
+    font-family: "Source Code Pro Medium", Consolas, 'SF Mono', Hack, monospace, 'Droid Sans Fallback';
     font-size: 14px;
     line-height: 20px;
 }

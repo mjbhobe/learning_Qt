@@ -15,12 +15,12 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from drawWindow import *
+from mainWindow import *
 
 def main():
     app = QApplication(sys.argv)
 
-    mainWindow = DrawWindow()
+    mainWindow = MainWindow()
     mainWindow.show()
 
     sys.exit(app.exec_())
