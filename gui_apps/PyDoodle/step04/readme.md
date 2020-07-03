@@ -1,18 +1,14 @@
 # PyQt5 Doodle Tutorial
 
 ## Step 4 - Drawing a Squiggle
-So far we have built up our GUI nicely. We have progressively developed an application that handles
-mouse press messages and paint messages. Now we will "connect-the-dots", so to speak, and begin the
-actual doodling process. In this step, we will show you how to draw a squiggle - a wavy line that
-will follow your mouse-drag actions.
+So far we have built up our GUI nicely. We have progressively developed an application that handles mouse press messages and paint messages. Now we will "connect-the-dots", so to speak, and begin the actual doodling process. In this step, we will show you how to draw a squiggle - a wavy line that will follow your mouse-drag actions.
 
 To draw a squiggle, we'll need to _handle_ the following messages:
 - `mouse press event` - for the left mouse button, which will _initiate_ the operation
 - `mouse drag event` - for the left mouse button, which will actually draw the squiggle
 - `mouse release event` - which will _end_ the squiggle draw process
 
-We have already seen how to handle the `mouse press` event before. In this step, we will be modifying our `mouse press`
-event handler to _initiate_ the operation of drawing a squiggle. The `mouse drag` and `mouse release` events are new to this step. These are explained below.
+We have already seen how to handle the `mouse press` event before. In this step, we will be modifying our `mouse press` event handler to _initiate_ the operation of drawing a squiggle. The `mouse drag` and `mouse release` events are new to this step. These are explained below.
 
 The `mouse drag` event is sent to your event handler class when the mouse is _dragged_ after a `mouse press`. For example, when you press the left mouse button & then drag the mouse across the window _keeping the left mouse button pressed_. Similarly, you will also receive the `mouse drag` event if you _drag_ the right mouse button.
 
@@ -20,18 +16,15 @@ The `mouse drag` event is sent to your event handler class when the mouse is _dr
 
 A `mouse release` event is sent when the mouse button is released. This is the _oppisite_ of the `mouse press` event. A `mouse release` event will be sent when either the left or the right mouse button is released _after_ it is first pressed.
 
-Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/drawWindow.py` to `step04/drawWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.
-
 ### Coding the events
-
-Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/drawWindow.py` to `step04/drawWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.
+Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/mainWindow.py` to `step04/mainWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.
 
 #### Modifying the `__init__()` function
-First, we need to make some modifications to the _constructor_ of our `DrawWindow` class. The modified `__init__()` function is shown below:
+First, we need to make some modifications to the _constructor_ of our `MainWindow` class. The modified `__init__()` function is shown below:
 
 ```python
-# step04/drawWindow.py
-class DrawWindow(QMainWindow):
+# step04/mainWindow.py
+class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step04: Drawing a Squiggle")
@@ -48,7 +41,7 @@ class DrawWindow(QMainWindow):
 We have added the last 4 lines in the code above:
 - `self.dragging = False` : adds a boolean attribute `dragging` to the class as a flag that helps us determine if the mouse is being dragged (=True) or not (=False). You'll see how this is used when we code the `mouse` events.
 - `self.penColor` and `self.penWidth` are two attributes that determine the squiggle's color and thickness respectively.
-- The last line enables mouse tracking, as explained above. If you forget to add this, our `DrawWindow` will not receive any events when the mouse is _dragged_.
+- The last line enables mouse tracking, as explained above. If you forget to add this, our `MainWindow` will not receive any events when the mouse is _dragged_.
 
 #### Modifying the `mouse press` function
 We will modify the `mouse press` function as follows:
@@ -57,8 +50,8 @@ We will modify the `mouse press` function as follows:
 
 Here are the changes:
 ```python
-# step04/drawWindow.py
-class DrawWindow(QMainWindow):
+# step04/mainWindow.py
+class MainWindow(QMainWindow):
     ...
     # other functions omitted for brevity
     def mousePressEvent(self, e: QMouseEvent) -> None:
@@ -81,8 +74,8 @@ This function is almost similar to the one in the previous step - when the left 
 To _handle_ the `mouse drag` event, we need to overload the `def mouseMoveEvent(self, e: QMouseEvent) -> None:` function in our class. Here is the code:
 
 ```python
-# step04/drawWindow.py
-class DrawWindow(QMainWindow):
+# step04/mainWindow.py
+class MainWindow(QMainWindow):
     ...
     # other functions omitted for brevity
     def mouseMoveEvent(self, e: QMouseEvent) -> None:
@@ -100,8 +93,8 @@ The first line check if the left mouse is already pressed and we are dragging ->
 The `mouse release` event is where we _stop_ drawing the squiggle. To _handle_ the `mouse release` event, we need to overload the `def mouseReleaseEvent(self, e: QMouseEvent) -> None` function in our class. Here is the code:
 
 ```python
-# step04/drawWindow.py
-class DrawWindow(QMainWindow):
+# step04/mainWindow.py
+class MainWindow(QMainWindow):
     ...
     # other functions omitted for brevity
     def mouseReleaseEvent(self, e: QMouseEvent) -> None:
@@ -120,8 +113,8 @@ Apart from saving the point where the mouse was released, this function sets the
 So far, the mouse events have _collected_ all the points that form the squiggle. Drawing the squiggle is left to our `paintEvent()` handler. This code is shown below:
 
 ```python
-# step04/drawWindow.py
-class DrawWindow(QMainWindow):
+# step04/mainWindow.py
+class MainWindow(QMainWindow):
     ...
     # other functions omitted for brevity
     def drawSquiggle(self, painter):
