@@ -1,23 +1,23 @@
 # PyQt5 Doodle Tutorial
 
 ## Step 3 - Painting in the window
-In the previous step of the tutorial, we have seen how you can handle events sent by the underlying operating system (OS) to your main window. Specifically, we handled the `mouse press` and the `close` events in our `MainWindow` class by providing event handler functions. In this step, we will illustrate how to handle the `paint` event.
+In the previous step of the tutorial, we have seen how to handle events sent by the underlying operating system (OS) to your main window. Specifically, we handled the `mouse press` and the `close` events in our `MainWindow` class by providing event handler functions. In this step, we will illustrate how to handle the `paint` event.
 
 Before we start, create a new sub-directory `step03` under our _root folder_ and copy `step02/mainWidow.py` to `step03/mainWidow.py`. Also copy `step02/step02.py` to `step03/step03.py`.
 
 ### Handling `paint` events
-When a window needs to be re-painted (for example when part of the client area that was hidden before is now unhidden), the OS will send your window a `paint` event. 
+When a window needs to be re-painted (for example when part of the client area that was hidden before is now unhidden), the OS will send your window a `paint` event.
 
 To handle this event, we must overload the following event handler in our `MainWindow` class:
 
  ```python
  def paintEvent(self, e: QPaintEvent) -> None:
      ## implementation...
- ``` 
+ ```
  Paint events are, what I call, _lazy events_ as they are sent to your window only when repainting is required. Also, multiple `paint` events are usually combined into one `paint` event by the OS to optimize painting.
 
- You can also force a `paint` event to be sent to your window by calling `update()` function anywhere in your code. Calling `update()` effectively calls your `paintEvent(...)` function immediately. 
- 
+ You can also force a `paint` event to be sent to your window by calling `update()` function anywhere in your code. Calling `update()` effectively calls your `paintEvent(...)` function immediately.
+
  <span style="background-color: salmon; color:black">**WARNING: you SHOULD NOT call `update()` in the `paintEvent(...)` function as that will lead to infinite looping!!**</span>
 
 ### Handling Mouse Press events

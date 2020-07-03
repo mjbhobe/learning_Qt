@@ -1,13 +1,13 @@
 # PyQt5 Doodle Tutorial
 
 ## Step 1 - Creating the basic window
-In this step, we will create the basic window within which the doodles will be drawn. Our main window will be a class derived from the `PyQt5.QtWidgets.QMainWindow` class. 
+In this step, we will create the basic window within which the doodles will be drawn. Our main window will be a class derived from the `PyQt5.QtWidgets.QMainWindow` class.
 
 In this step, the application does nothing else but display the main window, which can be minimized, maximized, resized and moved around. In the subsequent steps, we will gradually add more and more functionality to the application.
 
 ### Coding Steps
 1. First create a **root directory** under which we will create sub-directories for each step of this tutorial. This folder could be created anywhere on your disk. For example, I have created a directory named `PyDoodle` under a `code` directory off my `home` directory in my Ubuntu Linux machine.<br/>
-<span style="background-color:salmon; color:black">So my root directory is `~/code/PyDoodle`. **Henceforth, I'll refer to this directory as the `root directory`.</span>
+<span style="background-color:salmon; color:black">So my root directory is `~/code/PyDoodle`. **Henceforth, I'll refer to this directory as the `root directory`.**</span>
 2. Next create a sub-folder `step01` under the `root directory`.
 3. Fire up your favorite code editor (I use Atom) and create a new file, named `mainWindow.py`, in the `step01` directory. We will define our `QMainWindow` derived class in this file as below:
 
