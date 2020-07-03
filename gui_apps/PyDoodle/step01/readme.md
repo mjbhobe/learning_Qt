@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: white")
         self.setGeometry(QRect(100,100,640,480))
 
+
 ```
 
 For this step, just the constructor `__init__()` method is enough. In this method, we define some customizations for the main window:
