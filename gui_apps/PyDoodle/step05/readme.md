@@ -8,9 +8,9 @@ Our Doodle application appears to be shaping up nicely. So far:
     - Added a `paint event` handler to draw the squiggle
     - Added `close event` handler to check if it was Ok to close the application.
 
-However, our squiggle was painted with the pen thickness and color that we set in the `DrawWindow.__init__(...)` method and there were no means provided to change these through the user interface. In this step, we will give the user the ability to change the squiggle's pen width and color.
+However, our squiggle was painted with the pen thickness and color that we set in the `MainWindow.__init__(...)` method and there were no means provided to change these through the user interface. In this step, we will give the user the ability to change the squiggle's pen width and color.
 
-Before we start, create a new sub-directory `step05` under our _root folder_ and copy `step04/drawWindow.py` to `step05/drawWindow.py`. Also copy `step04/step04.py` to `step05/step05.py`.
+Before we start, create a new sub-directory `step05` under our _root folder_ and copy `step04/mainWindow.py` to `step05/mainWindow.py`. Also copy `step04/step04.py` to `step05/step05.py`.
 
 ## Using pre-canned or common dialogs
 PyQt5 makes available several _pre-canned_ dialogs, which you can use out of the box. Several dialogs are available, for example:
@@ -65,7 +65,7 @@ approach in this step. We'll display this dialog in the `left mouse press` event
 Let's modify our `mousePressEvent(...)` function as shown below:
 
 ```python
-class DrawWindow(QMainWindow):
+class MainWindow(QMainWindow):
     ...
     # other functions hidden for brevity...
     def mousePressEvent(self, e: QMouseEvent) -> None:
