@@ -1,6 +1,6 @@
 """
 // ============================================================================
-// drawWindow.py: custom QMainWindow derived class for main window
+// mainWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
 // Based on a similar tutorial for Borland ObjectWindows Library (OWL)
@@ -13,10 +13,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-class DrawWindow(QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("PyQt5 Doodle - Step05: Drawing a Squiggle & set width + color")
+        self.setWindowTitle("PyQt5 Doodle - Step05: Maining a Squiggle & set width + color")
         self.setStyleSheet("background-color: white")
         self.setGeometry(QRect(100,100,640,480))
         self.modified = False
