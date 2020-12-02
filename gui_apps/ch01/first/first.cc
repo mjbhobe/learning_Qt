@@ -27,7 +27,10 @@ void showCenteredOnDesktop(QWidget &window)
 
 int main(int argc, char **argv)
 {
+   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    QApplication app(argc, argv);
+   QFont font("SF UI Text", 10);
+   QApplication::setFont(font);
 
    // create & show the GUI
    QWidget window;

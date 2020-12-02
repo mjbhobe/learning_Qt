@@ -28,7 +28,7 @@ class SigSlotWidget(CenteredOnDesktopWidget):
 
         # setup Gui
         self.setWindowTitle("PyQt: Signals & Slots - 2")
-        
+
         # build the layout
         # top row - just the prompt
         self.prompt_label = QLabel("Spin the spinbox below & see the " +
@@ -68,6 +68,8 @@ class SigSlotWidget(CenteredOnDesktopWidget):
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = SigSlotWidget()
     w.show()

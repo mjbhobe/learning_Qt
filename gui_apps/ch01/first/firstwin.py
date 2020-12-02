@@ -44,6 +44,8 @@ class FirstWin(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = FirstWin()
     CenteredOnDesktopWidget.centerShow(w)

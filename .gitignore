@@ -1,5 +1,7 @@
 # ignore data folder & all sub-folders
 data
+debug
+release
 
 # ignore .vscode folder (Visual Studio code settings)
 .vscode
@@ -18,4 +20,3 @@ __pycache__
 
 # ignore pt (checkpoint) files
 *.pt
-

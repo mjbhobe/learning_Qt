@@ -51,9 +51,11 @@ class SigSlotWidget(CenteredOnDesktopWidget):
                 QMessageBox.No | QMessageBox.Yes, QMessageBox.No)
         if resp == QMessageBox.Yes:
             QApplication.instance().quit()
-                
+
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = SigSlotWidget()
     w.show()

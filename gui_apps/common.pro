@@ -8,6 +8,7 @@ INCLUDEPATH += .
 
 win32 {
   CONFIG += console
+  LIBS += -lUser32 -lGdi32 -lKernel32
 }
 CONFIG += c++17
 

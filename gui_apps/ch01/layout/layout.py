@@ -47,6 +47,8 @@ class LayoutWidget(CenteredOnDesktopWidget):
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = LayoutWidget()
     w.show()

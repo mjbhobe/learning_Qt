@@ -19,7 +19,11 @@ void centerWidgetOnDesktop(QWidget &window)
 
 int main(int argc, char **argv)
 {
+   // @see: https://doc.qt.io/archives/qt-5.6/qtlabscontrols-highdpi.html
+   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    QApplication app(argc, argv);
+   QFont font("Segoe UI", 12);
+   QApplication::setFont(font);
 
    // build your GUI here....
    QWidget window;

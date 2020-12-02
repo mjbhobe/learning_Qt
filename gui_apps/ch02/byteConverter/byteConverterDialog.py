@@ -28,7 +28,7 @@ class ByteConverterDialog(QDialog):
 
         # setup Gui
         self.setWindowTitle("PyQt: Byte Converter")
-        
+
         # build the layout
         # top row - prompt
         self.prompt = QLabel("Type in a decimal number (8 digits max) into\n" +
@@ -129,6 +129,8 @@ class ByteConverterDialog(QDialog):
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = ByteConverterDialog()
     w.decEdit.setText("75")

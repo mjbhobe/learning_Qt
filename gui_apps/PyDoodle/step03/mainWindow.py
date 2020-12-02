@@ -3,7 +3,7 @@
 // mainWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         painter = QPainter()
         painter.begin(self)
         try:
-            font = QFont("Monospace", 10)
+            font = QFont("Monospace", 12)
             painter.setFont(font)
 
             if len(self.points) > 0:

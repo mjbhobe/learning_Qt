@@ -35,6 +35,8 @@ class First(CenteredOnDesktopWidget):
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     w = First()
     w.show()

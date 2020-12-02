@@ -3,7 +3,7 @@
 // step01.py: creating the basic Doodle PyQt application
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -14,6 +14,8 @@ from mainWindow import *
 
 def main():
     app = QApplication(sys.argv)
+    font = QFont("Segoe UI", 12)
+    app.setFont(font)
 
     mainWindow = MainWindow()
     mainWindow.show()
