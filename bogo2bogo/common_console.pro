@@ -14,10 +14,12 @@ QT -= gui widgets
 
 # greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QMAKE_CXXFLAGS += -pedantic -Wall
+QMAKE_CXXFLAGS += -pedantic -Wall -I../common_files
 #QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
 INCLUDEPATH += C:/Dev/msys64/mingw64/include
-QMAKE_LIBS += -LC:/Dev/msys64/mingw64/lib -lgmp -lstdc++ -lm
+INCLUDEPATH += C:/Dev\GNULibs/gmp-6.2.1/bin/include
+QMAKE_LIBS += -LC:/Dev/msys64/mingw64/lib -lstdc++ -lm
+QMAKE_LIBS += -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -lgmp -lgmpxx
 #LIBS += -lgmpxx -lgmp
 
 # disable qDebug() output in release builds

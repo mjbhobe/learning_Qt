@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>472</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>101</width>
+       <width>161</width>
        <height>25</height>
       </rect>
      </property>
@@ -57,7 +57,7 @@
       <rect>
        <x>10</x>
        <y>70</y>
-       <width>84</width>
+       <width>161</width>
        <height>25</height>
       </rect>
      </property>
@@ -66,7 +66,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="osComboBox">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -180,8 +180,8 @@
      <rect>
       <x>220</x>
       <y>250</y>
-      <width>231</width>
-      <height>191</height>
+      <width>331</width>
+      <height>261</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -189,25 +189,25 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Quotes</string>
      </attribute>
-     <widget class="QComboBox" name="comboBox_2">
+     <widget class="QComboBox" name="quotesCombo">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>181</width>
+        <width>301</width>
         <height>27</height>
        </rect>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QTextEdit" name="quoteEdit">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>50</y>
-        <width>181</width>
-        <height>101</height>
+        <width>301</width>
+        <height>171</height>
        </rect>
       </property>
      </widget>
@@ -221,8 +221,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>201</width>
-        <height>141</height>
+        <width>301</width>
+        <height>211</height>
        </rect>
       </property>
      </widget>

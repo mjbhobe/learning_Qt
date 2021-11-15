@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # SigSlots.py - signals & slots
-import sys, os, pathlib
+import sys
+import os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
+import mypyqt5_utils as utils
+
 
 class Dialog(QDialog):
     def __init__(self, parent: QWidget = None):
@@ -18,6 +25,7 @@ class Dialog(QDialog):
 
     def setupUi(self):
         pass
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget = None):
@@ -38,10 +46,14 @@ class MainWindow(QMainWindow):
         dlg.setModal(True)
         dlg.exec()
 
+
 def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+
+    if darkdetect.isDark():
+        utils.setDarkPalette(app)
 
     # create the main main window
     mainWin = MainWindow()
@@ -49,6 +61,7 @@ def main():
     mainWin.show()
 
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     main()

@@ -13,6 +13,11 @@ import qdarkstyle
 # to detect dark themes (@see: https://pypi.org/project/darkdetect/)
 import darkdetect
 
+# thisPath = pathlib.Path(__file__)
+# print(thisPath.parents[0], thisPath.parents[1], os.path.join(thisPath.parents[1], 'common_files'))
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
+import mypyqt5_utils as utils
+
 
 class ImageViewer(QMainWindow):
     def __init__(self, parent: QWidget = None):
@@ -260,7 +265,7 @@ def main():
     if darkdetect.isDark():
         # apply dark stylesheet
         # app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
-        setDarkPalette(app)
+        utils.setDarkPalette(app)
 
     w = ImageViewer()
     w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer")

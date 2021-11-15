@@ -9,17 +9,16 @@ INCLUDEPATH += .
 CONFIG += console
 CONFIG += c++17
 
-QT += core 
+QT += core
 QT -= gui widgets
 
 # greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -pedantic -Wall
 #QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
-INCLUDEPATH += /home/mjbhobe/anaconda3/envs/dlnlp/include
-LIBS +=  -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lstdc++ -lm 
+INCLUDEPATH += C:\\Dev\\GNULibs\\gmp-6.2.1\\bin\\include
+LIBS +=  -LC:\\Dev\\GNULibs\\gmp-6.2.1\\bin\\lib -lstdc++ -lm -lgmpxx -lgmp
 #LIBS += -lgmpxx -lgmp
 
 # disable qDebug() output in release builds
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
-

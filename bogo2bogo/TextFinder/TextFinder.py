@@ -3,24 +3,17 @@
 import sys
 import os
 import pathlib
-# import PySide2
-# from PySide2.QtCore import *
-# from PySide2.QtGui import *
-# from PySide2.QtWidgets import *
-# # from PyQt6 import uic
-# from PySide2.QtUiTools import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
-import qdarkstyle
 # to detect dark themes (@see: https://pypi.org/project/darkdetect/)
 import darkdetect
 
-import TextFinderForm
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
+import mypyqt5_utils as utils
 
-# uiLoader = QUiLoader()
+import TextFinderForm
 
 
 class TextFinder(QWidget):
@@ -58,13 +51,13 @@ def main():
     app = QApplication(sys.argv)
     font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
     app.setFont(font)  # QApplication.font("QMenu"))
+    app.setStyle("Fusion")
+
     if darkdetect.isDark():
-        # apply dark stylesheet
-        app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
-        # setDarkPalette(app)
+        utils.setDarkPalette(app)
 
     w = TextFinder()
-    w.setFont(QApplication.font("QMenu"))
+    w.setFont(font)
     w.show()
 
     return app.exec_()

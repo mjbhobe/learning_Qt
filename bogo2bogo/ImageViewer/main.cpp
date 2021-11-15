@@ -11,8 +11,10 @@ int main(int argc, char *argv[])
   a.setFont(QApplication::font("QMenu"));
   a.setStyle("Fusion");
 
+#ifdef Q_OS_WINDOWS
   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
     setWinDarkPalette(&a);
+#endif
 
   ImageViewer w;
   w.setFont(QApplication::font("QMenu"));
