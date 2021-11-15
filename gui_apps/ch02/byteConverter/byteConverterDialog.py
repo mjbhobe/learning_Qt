@@ -1,26 +1,21 @@
 # byteConverterDialog.py: dialog interface, built manually
 import sys
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-class CenteredOnDesktopWidget(QWidget):
-    """
-    custom widget that centers itself on screen when shown
-    derive your widget (usually top window) from this widget
-    """
-    def __init__(self, *args, **kwargs):
-        super(CenteredOnDesktopWidget, self).__init__(*args, **kwargs)
+USING_PYQT6 = True if PYQT_VERSION_STR.startswith('6') else False
 
-    def show(self):
-        """
-        shows the widget centered on desktop
-        """
-        super(CenteredOnDesktopWidget,self).show()
-        screenSize = QApplication.desktop().screenGeometry()
-        left = (screenSize.width() - self.width()) // 2
-        top  = (screenSize.height() - self.height()) // 2
-        self.move(left, top)
+p = pathlib.Path(__file__)
+# print(f"Current file's path is {str(p)}")
+p.parents[2]
+# print(f"p.parents[2] = {str(p.parents[2])}")
+sys.path.append(str(p.parents[2]))
+import globalvars
+globalvars.USING_PYQT6 = USING_PYQT6
+import utils
+
 
 class ByteConverterDialog(QDialog):
     def __init__(self, *args, **kwargs):
@@ -42,13 +37,13 @@ class ByteConverterDialog(QDialog):
         self.binEdit = QLineEdit()
         # set validators for line edits
         #self.decValidator = QIntValidator(0, 999, self.decEdit)
-        decExpr = QRegExp(r'[0-9]{0,8}') # just 0-255
+        decExpr = QRegExp(r'[0-9]{0,8}')  # just 0-255
         self.decValidator = QRegExpValidator(decExpr, self.decEdit)
         self.decEdit.setValidator(self.decValidator)
-        hexExpr = QRegExp(r'[0-9a-fA-F]{1,2}') # upto 2 chars only!
+        hexExpr = QRegExp(r'[0-9a-fA-F]{1,2}')  # upto 2 chars only!
         self.hexValidator = QRegExpValidator(hexExpr, self.hexEdit)
         self.hexEdit.setValidator(self.hexValidator)
-        binExpr = QRegExp(r'[0-1]{1,8}') # upto 8 chars only!
+        binExpr = QRegExp(r'[0-1]{1,8}')  # upto 8 chars only!
         self.binValidator = QRegExpValidator(binExpr, self.binEdit)
         self.binEdit.setValidator(self.binValidator)
         # bottom row - hgap - push button
@@ -56,7 +51,7 @@ class ByteConverterDialog(QDialog):
         self.btnQuit.setToolTip("Quit Application")
 
         # to begin with, let's allow editing in ONLY The decEdit
-        #self.hexEdit.setReadOnly(True)
+        # self.hexEdit.setReadOnly(True)
         self.setReadOnly(self.hexEdit)
         self.setReadOnly(self.binEdit)
 
@@ -84,7 +79,7 @@ class ByteConverterDialog(QDialog):
         # setup signals & slots
         self.decEdit.textChanged.connect(self.decChanged)
         self.hexEdit.textChanged.connect(self.hexChanged)
-        #self.binEdit.textChanged.connect(self.binChanged)
+        # self.binEdit.textChanged.connect(self.binChanged)
         self.btnQuit.clicked.connect(QApplication.instance().quit)
 
     def decChanged(self):
@@ -114,7 +109,8 @@ class ByteConverterDialog(QDialog):
             self.binEdit.setText("")
 
     def setReadOnly(self, lineEdit, mode=True):
-        assert type(lineEdit) == type(self.decEdit), "Expecting QLineEdit as arg to setReadOnly"
+        assert type(lineEdit) == type(
+            self.decEdit), "Expecting QLineEdit as arg to setReadOnly"
         # @see: https://stackoverflow.com/questions/23915700/how-to-make-a-qlineedit-not-editable-in-windows
         # we need to set lineEdit to read only & modify the palette as well
         lineEditPalette = lineEdit.palette()
@@ -127,15 +123,19 @@ class ByteConverterDialog(QDialog):
         lineEdit.setReadOnly(mode)
         lineEdit.setPalette(lineEditPalette)
 
+
 def main():
     app = QApplication(sys.argv)
-    font = QFont("Segoe UI", 12)
-    app.setFont(font)
+    # font = QFont(app.font().family(), 12)
+    # app.setFont(font)
+    app.setFont(QApplication.font("QMenu"))
 
     w = ByteConverterDialog()
+    # w.setFont(QApplication.font("QPushButton"))
     w.decEdit.setText("75")
     w.show()
     return app.exec_()
+
 
 if __name__ == '__main__':
     main()

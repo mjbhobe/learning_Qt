@@ -11,8 +11,8 @@ static QTextStream cout(stdout, QIODevice::WriteOnly);
 
 int main(void)
 {
-   cout << "Hello World, welcome to the Qt Framework!" << endl;
-   cout << "You are using Qt Framework version " << QT_VERSION_STR << endl;
+   cout << "Hello World, welcome to the Qt Framework!" << Qt::endl;
+   cout << "You are using Qt Framework version " << QT_VERSION_STR << Qt::endl;
 
    return 0;
 }

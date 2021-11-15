@@ -9,16 +9,16 @@ INCLUDEPATH += .
 win32 {
   CONFIG += console
 }
-CONFIG += c++17
+CONFIG += c++20
 
 QT += core gui xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -pedantic -Wall
 #QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
-INCLUDEPATH += /home/mjbhobe/anaconda3/envs/dlnlp/include
+#INCLUDEPATH += /home/mjbhobe/anaconda3/envs/dlnlp/include
 INCLUDEPATH += ../common
-LIBS +=  -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lstdc++ -lm -lgmpxx -lgmp
+LIBS +=  -lstdc++ -lm #-lgmpxx -lgmp
 
 HEADERS += ../common/common.hxx
 SOURCES += ../common/common.cc

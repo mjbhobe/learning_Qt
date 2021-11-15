@@ -1,28 +1,23 @@
 # sigslot.py: illustrates signals & slots
 import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+import pathlib
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
-class CenteredOnDesktopWidget(QWidget):
-    """
-    custom widget that centers itself on screen when shown
-    derive your widget (usually top window) from this widget
-    """
-    def __init__(self, *args, **kwargs):
-        super(CenteredOnDesktopWidget, self).__init__(*args, **kwargs)
+USING_PYQT6 = True if PYQT_VERSION_STR.startswith('6') else False
 
-    def show(self):
-        """
-        shows the widget centered on desktop
-        """
-        super(CenteredOnDesktopWidget,self).show()
-        screenSize = QApplication.desktop().screenGeometry()
-        left = (screenSize.width() - self.width()) // 2
-        top  = (screenSize.height() - self.height()) // 2
-        self.move(left, top)
+p = pathlib.Path(__file__)
+print(f"Current file's path is {str(p)}")
+p.parents[2]
+print(f"p.parents[2] = {str(p.parents[2])}")
+sys.path.append(str(p.parents[2]))
+import globalvars
+globalvars.USING_PYQT6 = USING_PYQT6
+import utils
 
-class SigSlotWidget(CenteredOnDesktopWidget):
+
+class SigSlotWidget(utils.CenteredOnDesktopWidget):
     def __init__(self, *args, **kwargs):
         super(SigSlotWidget, self).__init__(*args, **kwargs)
 
@@ -31,6 +26,7 @@ class SigSlotWidget(CenteredOnDesktopWidget):
         self.label = QLabel("Click the button to quit application")
         self.btn = QPushButton("Quit!")
         self.btn.setDefault(True)
+        self.btn.setToolTip("Close Application")
         layout = QHBoxLayout()
         layout.addWidget(self.label)
         layout.addWidget(self.btn)
@@ -43,23 +39,30 @@ class SigSlotWidget(CenteredOnDesktopWidget):
 
     def confirmQuit(self):
         # version1 - just quit
-        #QApplication.instance().quit()
+        # QApplication.instance().quit()
 
         # version 2 - ask & quit
+        buttons = QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes \
+            if USING_PYQT6 else QMessageBox.No | QMessageBox.Yes
+        defButton = QMessageBox.StandardButton.No if USING_PYQT6 else \
+            QMessageBox.No
         resp = QMessageBox.question(self, "Please Confirm",
-                "This will quit the application\nOk to close?",
-                QMessageBox.No | QMessageBox.Yes, QMessageBox.No)
-        if resp == QMessageBox.Yes:
+                                    "This will quit the application\nOk to close?",
+                                    buttons, defButton)
+        if resp == (QMessageBox.StandardButton.Yes if USING_PYQT6 else QMessageBox.Yes):
             QApplication.instance().quit()
+
 
 def main():
     app = QApplication(sys.argv)
-    font = QFont("Segoe UI", 12)
-    app.setFont(font)
+    # font = QFont(app.font().family(), 12)
+    # app.setFont(font)
+    app.setFont(QApplication.font("QMenu"))
 
     w = SigSlotWidget()
     w.show()
-    return app.exec_()
+    return app.exec()
+
 
 if __name__ == '__main__':
     main()

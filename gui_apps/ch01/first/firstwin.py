@@ -1,55 +1,47 @@
 # firstwin.py: Hello PyQt with a QMainWindow
 import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+import pathlib
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
-class CenteredOnDesktopWidget(QWidget):
-    """
-    custom widget that centers itself on screen when shown
-    derive your widget (usually top window) from this widget
-    """
-    def __init__(self, *args, **kwargs):
-        super(CenterOnDesktopWidget, self).__init__(*args, **kwargs)
+USING_PYQT6 = True if PYQT_VERSION_STR.startswith('6') else False
 
-    def show(self):
-        """
-        shows the widget centered on desktop
-        """
-        super(CenteredOnDesktopWidget,self).show()
-        screenSize = QApplication.desktop().screenGeometry()
-        left = (screenSize.width() - self.width()) // 2
-        top  = (screenSize.height() - self.height()) // 2
-        self.move(left, top)
+p = pathlib.Path(__file__)
+print(f"Current file's path is {str(p)}")
+p.parents[2]
+print(f"p.parents[2] = {str(p.parents[2])}")
+sys.path.append(str(p.parents[2]))
+import globalvars
+globalvars.USING_PYQT6 = USING_PYQT6
+import utils
 
-    def centerShow(widget):
-        """
-        class function to center any widget on desktop
-        """
-        widget.show()
-        screenSize = QApplication.desktop().screenGeometry()
-        left = (screenSize.width() - widget.width()) // 2
-        top  = (screenSize.height() - widget.height()) // 2
-        widget.move(left, top)
 
 class FirstWin(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         msg = f"This is a PyQt5 QMainWindow!\n"
-        msg = msg +  f"You are using Qt version {QT_VERSION_STR}"
+        msg = msg + f"You are using Qt version {QT_VERSION_STR}"
         self.label = QLabel(msg)
-        self.label.setAlignment(Qt.AlignCenter)
+        alignment = Qt.AlignmentFlag.AlignCenter if USING_PYQT6 else Qt.AlignCenter
+        self.label.setAlignment(alignment)
         self.setWindowTitle("Hello PyQt")
-        self.setCentralWidget(self.label)
+        self.centralWidget = QWidget()
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.label)
+        self.centralWidget.setLayout(self.layout)
+        self.setCentralWidget(self.centralWidget)
+
 
 def main():
     app = QApplication(sys.argv)
-    font = QFont("Segoe UI", 12)
+    font = QFont(app.font('QMenu'))
     app.setFont(font)
 
     w = FirstWin()
-    CenteredOnDesktopWidget.centerShow(w)
-    return app.exec_()
+    utils.CenteredOnDesktopWidget.showCenteredOnDesktop(w)
+    return app.exec()
+
 
 if __name__ == '__main__':
     main()

@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import *
 from drawWindow import DrawWindow
 from doodle import Doodle
 
-WinTitle = "PyQt5 Doodle - Step07: Separating the Doodle"
+WinTitle = "PyQt5 Doodle - Step08: Separating the Doodle"
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):

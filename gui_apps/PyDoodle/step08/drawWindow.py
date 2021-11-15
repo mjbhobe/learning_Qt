@@ -19,7 +19,9 @@ from doodle import Doodle
 class DrawWindow(QWidget):
     def __init__(self, *args, **kwargs):
         super(QWidget, self).__init__(*args, **kwargs)
-        self.setStyleSheet("background-color: white")
+        backColor = self.palette().color(QPalette.Window)
+        self.setBackgroundRole(QPalette.Window)
+        #self.setStyleSheet("background-color: white")
         self.__doodle = Doodle()
         self.__dragging = False
         self.__currSquiggle = None

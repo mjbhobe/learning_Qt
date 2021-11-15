@@ -8,6 +8,8 @@ release
 
 # ignore obj files
 .o
+.exe
+.dll
 
 # ignore stash files
 .qmake.stash

@@ -9,6 +9,7 @@
 #include "MainWindow.h"
 #include <QApplication>
 #include <QDebug>
+#include <QStyleFactory>
 #include <QtGui>
 
 static MainWindow *__pMainWindow = nullptr;
@@ -23,6 +24,7 @@ MainWindow *getMainWindow()
 int main(int argc, char **argv)
 {
    QApplication app(argc, argv);
+   QApplication::setStyle(QStyleFactory::create("Fusion"));
 
    // create the GUI
    MainWindow *mainWindow = new MainWindow();

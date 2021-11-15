@@ -6,7 +6,8 @@ int main(int argc, char **argv)
 {
    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    QApplication app(argc, argv);
-   QFont font("SF UI Text", 10);
+   // QFont font("SF UI Text", 10);
+   QFont font("Segoe UI", 12);
    QApplication::setFont(font);
 
    // initialize & display dialog

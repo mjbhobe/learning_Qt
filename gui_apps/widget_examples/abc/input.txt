@@ -1,0 +1,3 @@
+IDE Overview
+
+Qt Creator is an integrated development environment (IDE) that provided you

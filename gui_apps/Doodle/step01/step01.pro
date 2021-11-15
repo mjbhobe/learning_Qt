@@ -9,3 +9,6 @@ include(../common.pro)
 
 # Input
 SOURCES += step01.cc
+
+DISTFILES += \
+  step01.py

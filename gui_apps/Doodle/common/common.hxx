@@ -3,7 +3,7 @@
 #define __common_hxx__
 
 #include <QTextStream>
-#include <gmpxx.h> // GNU arbit precision numbers
+//#include <gmpxx.h> // GNU arbit precision numbers
 
 QTextStream &operator<<(QTextStream &ost, const mpz_class &c);
 

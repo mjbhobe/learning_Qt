@@ -17,7 +17,8 @@ QT -= gui widgets
 QMAKE_CXXFLAGS += -pedantic -Wall
 #QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
 INCLUDEPATH += /home/mjbhobe/anaconda3/envs/dlnlp/include
-LIBS +=  -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lstdc++ -lm -lgmpxx -lgmp
+LIBS +=  -L/home/mjbhobe/anaconda3/envs/dlnlp/lib -lstdc++ -lm 
+#LIBS += -lgmpxx -lgmp
 
 # disable qDebug() output in release builds
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT

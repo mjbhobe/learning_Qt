@@ -62,10 +62,11 @@ class TempConverter(QDialog):
 
 def main():
     app = QApplication(sys.argv)
-    font = QFont("Segoe UI", 12)
+    font = QFont(app.font().family(), 12)
     app.setFont(font)
 
     w = TempConverter()
+    w.setFont(font)
     w.show()
     return app.exec_()
 

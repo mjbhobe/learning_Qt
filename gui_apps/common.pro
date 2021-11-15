@@ -19,3 +19,6 @@ QMAKE_CXXFLAGS += -pedantic -Wall
 # disable qDebug() output in release builds
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
+win32 {
+   QMAKE_CXXFLAGS += -IC:\\Dev\\Qt\\Tools\\mingw810_64\\x86_64-w64-mingw32\\include
+}

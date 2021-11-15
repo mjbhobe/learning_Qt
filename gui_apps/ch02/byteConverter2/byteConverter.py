@@ -1,4 +1,4 @@
-# byteConverter.py: class to convert 
+# byteConverter.py: class to convert
 import sys
 from PyQt5.QtCore import *
 
@@ -14,7 +14,7 @@ class ByteConverter(QObject):
 
     @pyqtSlot(str)
     def setDec(decStr):
-        # NOTE: decStr is string rep of deciman num
+        # NOTE: decStr is string rep of a decimal num
         decNum = int(decStr, base=10)
         emit sigHexChanged(hex(decNum))
         emit sigBinChanged(bin(decNum))

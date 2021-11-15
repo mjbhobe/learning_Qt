@@ -23,6 +23,7 @@ TempConverterDialog::TempConverterDialog(QWidget *parent)
    // top layout, with spinner, slider & label
    QHBoxLayout *top = new QHBoxLayout();
    top->addWidget(l1);
+   top->addStretch();
    top->addWidget(_spinner);
 
    // middle layout with Faren converters
