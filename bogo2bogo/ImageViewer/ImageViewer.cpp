@@ -51,8 +51,7 @@ void ImageViewer::createActions()
   exitAction = new QAction("E&xit", this);
   exitAction->setShortcut(QKeySequence("Ctrl+Q"));
   exitAction->setStatusTip("Quit the application");
-  QObject::connect(exitAction, SIGNAL(triggered()), QApplication::instance(),
-                   SLOT(quit()));
+  QObject::connect(exitAction, SIGNAL(triggered()), QApplication::instance(), SLOT(quit()));
 
   zoomInAction = new QAction("Zoom &in (25%)", this);
   zoomInAction->setShortcut(QKeySequence("Ctrl++"));
@@ -237,10 +236,9 @@ void ImageViewer::fitToWindow()
 
 void ImageViewer::about()
 {
-  QString str = QString(
-                  "<p><b>Image Viewer</b> application to view images on desktop.</p>"
-                  "<p>Developed with Qt %1 by Manish Bhobe</p>"
-                  "<p>Free to use, but use at your own risk!!")
+  QString str = QString("<p><b>Image Viewer</b> application to view images on desktop.</p>"
+                        "<p>Developed with Qt %1 by Manish Bhobe</p>"
+                        "<p>Free to use, but use at your own risk!!")
                   .arg(QT_VERSION_STR);
   QMessageBox::about(this, tr("About Image Viewer"), str);
 }

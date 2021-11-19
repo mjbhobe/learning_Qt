@@ -15,11 +15,11 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_DEPRECATED_WARNINGS -DQT_CORE_LIB
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra $(DEFINES)
-CXXFLAGS      = -fno-keep-inline-dllexport -pedantic -Wall -g -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I. -I. -IC:/Dev/msys64/mingw64/include -IC:/Dev/Qt/6.2.0/mingw81_64/include -IC:/Dev/Qt/6.2.0/mingw81_64/include/QtCore -Idebug -IC:/Dev/Qt/6.2.0/mingw81_64/mkspecs/win32-g++ 
+CXXFLAGS      = -fno-keep-inline-dllexport -pedantic -Wall -I../common_files -g -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
+INCPATH       = -I. -I. -IC:/Dev/msys64/mingw64/include -IC:/Dev/GNULibs/gmp-6.2.1/bin/include -IC:/Dev/Qt/6.2.0/mingw81_64/include -IC:/Dev/Qt/6.2.0/mingw81_64/include/QtCore -Idebug -IC:/Dev/Qt/6.2.0/mingw81_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,console -mthreads
-LIBS        =        C:\Dev\Qt\6.2.0\mingw81_64\lib\libQt6Core.a  -LC:\Dev\msys64\mingw64\lib -lgmp -lstdc++ -lm 
+LIBS        =        C:\Dev\Qt\6.2.0\mingw81_64\lib\libQt6Core.a  -LC:\Dev\msys64\mingw64\lib -lstdc++ -lm -LC:\Dev\GNULibs\gmp-6.2.1\bin\lib -lgmp -lgmpxx 
 QMAKE         = C:\Dev\Qt\6.2.0\mingw81_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -99,7 +99,7 @@ compiler_moc_predefs_make_all: debug/moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) debug\moc_predefs.h
 debug/moc_predefs.h: C:/Dev/Qt/6.2.0/mingw81_64/mkspecs/features/data/dummy.cpp
-	g++ -fno-keep-inline-dllexport -pedantic -Wall -g -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o debug\moc_predefs.h C:\Dev\Qt\6.2.0\mingw81_64\mkspecs\features\data\dummy.cpp
+	g++ -fno-keep-inline-dllexport -pedantic -Wall -I../common_files -g -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o debug\moc_predefs.h C:\Dev\Qt\6.2.0\mingw81_64\mkspecs\features\data\dummy.cpp
 
 compiler_moc_header_make_all:
 compiler_moc_header_clean:

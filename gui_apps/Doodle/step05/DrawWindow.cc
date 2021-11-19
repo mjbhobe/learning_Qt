@@ -1,4 +1,5 @@
 // DrawWindow.cc: implements DrawWindow class
+#include "common.hxx"
 #include "DrawWindow.h"
 #include "Line.h"
 #include <QApplication>
@@ -58,7 +59,9 @@ void DrawWindow::drawLineTo(const QPoint &pt)
 
 void DrawWindow::clearImage()
 {
-   _image.fill(qRgb(255, 255, 255));
+   QColor color = getPaletteColor(QPalette::Window);
+   _image.fill(color);
+   //_image.fill(qRgb(255, 255, 255));
    update();
 }
 
@@ -141,7 +144,9 @@ void DrawWindow::resizeImage(const QSize &newSize)
    if (_image.size() == newSize)
       return;
    QImage newImage(newSize, QImage::Format_RGB32);
-   newImage.fill(qRgb(255, 255, 255));
+   QColor color = getPaletteColor(QPalette::Window);
+   newImage.fill(color);
+   // newImage.fill(qRgb(255, 255, 255));
 
    // draw existing image over new image
    QPainter painter(&newImage);

@@ -8,11 +8,18 @@
 
 #include <QApplication>
 #include <QtGui>
+#include "common.hxx"
 #include "DrawWindow.h"
 
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
+  app.setStyle("Fusion");
+
+#ifdef Q_OS_WINDOWS
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+     setWinDarkPalette(&app);
+#endif
 
   // create the GUI
   DrawWindow mainWindow;

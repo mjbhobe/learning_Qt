@@ -12,13 +12,21 @@
 // =================================================================================
 """
 import sys
+import os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from mainWindow import *
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+import mypyqt5_utils as utils
 
 # @see: https://stackoverflow.com/questions/59262975/how-to-determine-an-active-screen-monitor-of-my-application-window-using-pyt
 # fire up a temporary QApplication
+
+
 def get_resolution(app):
 
     #app = QApplication(sys.argv)
@@ -34,8 +42,18 @@ def get_resolution(app):
     g = d.screenGeometry()
     return (g.width(), g.height())
 
+
 def main():
     app = QApplication(sys.argv)
+    app.setFont(QApplication.font("QMenu"))
+    app.setStyle("Fusion")
+
+    sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+    import mypyqt5_utils as utils
+
+    if darkdetect.isDark():
+        utils.setDarkPalette(app)
+
     x, y = get_resolution(app)
 
     if x > 1920 and y > 1080:
@@ -49,11 +67,11 @@ def main():
         QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, False)
         QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, False)
 
-
     mainWindow = MainWindow()
     mainWindow.show()
 
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

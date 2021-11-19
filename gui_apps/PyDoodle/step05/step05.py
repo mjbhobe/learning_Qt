@@ -16,18 +16,30 @@
 // =====================================================================================
 """
 import sys
+import os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from mainWindow import *
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+import mypyqt5_utils as utils
+
 
 def main():
     app = QApplication(sys.argv)
+    app.setStyle("Fusion")
+
+    if darkdetect.isDark():
+        utils.setDarkPalette(app)
 
     mainWindow = MainWindow()
     mainWindow.show()
 
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

@@ -13,12 +13,13 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step02: Handling Events")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        # self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100, 100, 640, 480))
 
     # operating system Events
     def closeEvent(self, e: QCloseEvent) -> None:

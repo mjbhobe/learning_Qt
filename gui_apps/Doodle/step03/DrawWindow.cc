@@ -1,5 +1,9 @@
 // DrawWindow.cc: implements DrawWindow class
 #include "DrawWindow.h"
+#include "common.hxx"
+#include <QtGlobal>
+#include <QGuiApplication>
+#include <QPalette>
 #include <QMessageBox>
 #include <QtGui>
 
@@ -20,13 +24,17 @@ void DrawWindow::drawPoint(const QPoint &pt)
    QPainter painter(&_image);
    QFont font("Monospace", 10);
    painter.setFont(font);
+   painter.setPen(getPaletteColor(QPalette::WindowText));
    painter.drawText(pt.x(), pt.y(), str);
    update();
 }
 
 void DrawWindow::clearImage()
 {
-   _image.fill(qRgb(255, 255, 255));
+   //_image.fill(qRgb(255, 255, 255));
+   QColor color = getPaletteColor(QPalette::Window);
+   qDebug("clearImage() -> Color from palette %s", qPrintable(color.name()));
+   _image.fill(color);
    update();
 }
 
@@ -71,7 +79,9 @@ void DrawWindow::resizeImage(const QSize &newSize)
       return;
    // create a  new image matching the new size
    QImage newImage(newSize, QImage::Format_RGB32);
-   newImage.fill(qRgb(255, 255, 255));
+   QColor color = getPaletteColor(QPalette::Window);
+   qDebug("resizeImage() -> Color from palette %s", qPrintable(color.name()));
+   newImage.fill(color);
 
    // draw existing image over new image & mark it as new image
    QPainter painter(&newImage);

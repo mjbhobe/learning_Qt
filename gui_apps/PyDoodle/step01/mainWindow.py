@@ -12,9 +12,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt Doodle - Step01: Basic Window")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        # self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100, 100, 640, 480))

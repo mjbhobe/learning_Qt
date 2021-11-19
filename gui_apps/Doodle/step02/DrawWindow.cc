@@ -6,7 +6,7 @@
 DrawWindow::DrawWindow()
 {
    setWindowTitle("Qt Scribble Application - Step02: Handling events");
-   setStyleSheet("background-color: white;");
+   // setStyleSheet("background-color: white;");
    resize(640, 480);
 }
 
@@ -14,7 +14,7 @@ void DrawWindow::closeEvent(QCloseEvent *event)
 {
    // window is about to close, prompt user & decide if ok to quit
    // based on user's response.
-   qDebug() << "DrawWindow::closeEvent() called!" << endl;
+   qDebug() << "DrawWindow::closeEvent() called!" << Qt::endl;
 
    switch (QMessageBox::question(this, tr("Qt Scribble Tutorial"),
                                  tr("This will close the application.\nOk to quit now?"),

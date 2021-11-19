@@ -9,18 +9,29 @@
 // ============================================================================
 """
 import sys
+import os
+import pathlib
 from PyQt5.QtGui import *
 from mainWindow import *
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+import mypyqt5_utils as utils
+
 
 def main():
     app = QApplication(sys.argv)
-    font = QFont("Segoe UI", 12)
-    app.setFont(font)
+    app.setFont(QApplication.font("QMenu"))
+    app.setStyle("Fusion")
+
+    if darkdetect.isDark():
+        utils.setDarkPalette(app)
 
     mainWindow = MainWindow()
     mainWindow.show()
 
     return app.exec_()
+
 
 if __name__ == "__main__":
     main()

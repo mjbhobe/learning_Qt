@@ -13,12 +13,13 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step05: Maining a Squiggle & set width + color")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        # self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100, 100, 640, 480))
         self.modified = False
         self.points = []
         self.dragging = False
@@ -74,8 +75,8 @@ class MainWindow(QMainWindow):
                 # if Ctrl key is also pressed with mouse press, display
                 # dialog to change pen thickness
                 newWidth, ok = QInputDialog.getInt(self, "Pen Width",
-                                            "Enter new pen width (2-12):",
-                                            self.penWidth, 2, 12)
+                                                   "Enter new pen width (2-12):",
+                                                   self.penWidth, 2, 12)
                 if ok:  # user clicked Ok on QInputDialog
                     self.penWidth = newWidth
             else:

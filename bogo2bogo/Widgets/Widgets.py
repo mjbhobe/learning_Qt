@@ -43,8 +43,11 @@ class WidgetsForm(QMainWindow):
             self.ui.osComboBox.addItem(os_name)
         self.ui.osComboBox.currentIndexChanged.connect(self.osNameChanged)
         self.ui.lineEdit.setEnabled(False)
+        self.ui.quoteEdit.setEnabled(False)
         self.ui.horizontalSlider.setValue(25)
         self.ui.verticalSlider.setValue(75)
+        self.ui.osComboBox.setCurrentIndex(1)
+        self.ui.quotesCombo.setCurrentIndex(5)
 
     def quoteChanged(self, index):
         person = self.ui.quotesCombo.currentText()

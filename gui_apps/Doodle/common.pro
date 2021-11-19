@@ -14,15 +14,18 @@ CONFIG += c++20
 QT += core gui xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QMAKE_CXXFLAGS += -pedantic -Wall
+GMP_INC=`pkg-config --cflags gmp`
+GMP_LIBS=`pkg-config --libs gmp`
+
+QMAKE_CXXFLAGS += -pedantic -Wall -I/c/Dev/msys64/mingw64/include
 #QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
 #INCLUDEPATH += /home/mjbhobe/anaconda3/envs/dlnlp/include
-INCLUDEPATH += ../common
-LIBS +=  -lstdc++ -lm #-lgmpxx -lgmp
-
+INCLUDEPATH += ../common 
+QMAKE_LIBS += -L/c/Dev/msys64/mingw64/lib -lgmpxx -lgmp -lstdc++ -lm
+# LIBS +=  -lstdc++ -lm $(GMP_LIBS)
 HEADERS += ../common/common.hxx
 SOURCES += ../common/common.cc
 
 # disable qDebug() output in release builds
-# CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
+CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 

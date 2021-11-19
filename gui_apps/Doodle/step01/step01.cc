@@ -10,15 +10,22 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QtGui>
+#include "common.hxx"
 
 int main(int argc, char **argv)
 {
    QApplication app(argc, argv);
+   app.setStyle("Fusion");
+
+#ifdef Q_OS_WINDOWS
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+     setWinDarkPalette(&app);
+#endif
 
    // create the GUI
    QMainWindow mainWindow;
    mainWindow.setWindowTitle("Qt Scribble Tutorial - Step01");
-   mainWindow.setStyleSheet("background-color: white;");
+   // mainWindow.setStyleSheet("background-color: white;");
    mainWindow.resize(640, 480);
    mainWindow.show();
 

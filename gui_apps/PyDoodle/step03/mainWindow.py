@@ -13,12 +13,13 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step03: Drawing points")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        # self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100, 100, 640, 480))
         self.modified = False
         self.points = []
 
@@ -39,7 +40,7 @@ class MainWindow(QMainWindow):
         painter = QPainter()
         painter.begin(self)
         try:
-            font = QFont("Monospace", 12)
+            font = QFont("Consolas", 10)
             painter.setFont(font)
 
             if len(self.points) > 0:

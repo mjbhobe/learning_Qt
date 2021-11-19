@@ -7,6 +7,7 @@
 #include "DrawWindow.h"
 #include "Doodle.h"
 #include "Line.h"
+#include "common.hxx"
 
 const QString AppTitle("Qt Scribble");
 const QString WindowTitle("Qt Scribble - Step06: Drawing multiple lines");
@@ -63,7 +64,9 @@ void DrawWindow::clearImage()
 {
   Q_ASSERT(_doodle != nullptr);
   _doodle->clear();
-  _image.fill(qRgb(255,255,255));
+  QColor color = getPaletteColor(QPalette::Window);
+  _image.fill(color);
+  //_image.fill(qRgb(255,255,255));
   update();
 }
 
@@ -165,7 +168,9 @@ void DrawWindow::resizeImage(const QSize& newSize)
   if (_image.size() == newSize)
     return;
   QImage newImage(newSize, QImage::Format_RGB32);
-  newImage.fill(qRgb(255,255,255));
+  QColor color = getPaletteColor(QPalette::Window);
+  newImage.fill(color);
+  //newImage.fill(qRgb(255,255,255));
   // draw existing image over new image
   QPainter painter(&newImage);
   painter.setRenderHint(QPainter::Antialiasing);

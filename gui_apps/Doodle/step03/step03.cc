@@ -6,6 +6,7 @@
 // Created by Manish Bhobe.
 // ===========================================================================
 #include "DrawWindow.h"
+#include "common.hxx"
 #include <QApplication>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -43,6 +44,13 @@ void DrawMainWindow::closeEvent(QCloseEvent *event)
 int main(int argc, char **argv)
 {
    QApplication app(argc, argv);
+   app.setFont(QApplication::font("QMenu"));
+   app.setStyle("Fusion");
+
+#ifdef Q_OS_WINDOWS
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+     setWinDarkPalette(&app);
+#endif
 
    // create the GUI
    DrawWindow *drawWidget = new DrawWindow;
@@ -54,3 +62,4 @@ int main(int argc, char **argv)
 
    return app.exec();
 }
+
