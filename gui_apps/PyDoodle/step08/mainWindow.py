@@ -9,14 +9,21 @@
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
 """
-import sys, os
+import sys
+import pathlib
+import os
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from drawWindow import DrawWindow
 from doodle import Doodle
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+import mypyqt5_utils as utils
 
 WinTitle = "PyQt5 Doodle - Step08: Separating the Doodle"
+
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -31,26 +38,34 @@ class MainWindow(QMainWindow):
         self.setupToolbar()
         self.statusBar().showMessage("PyQt5 Doodle: random doodling application by Manish Bhobe")
 
+    def getIcon(self, iconName: str) -> QIcon:
+        this_file_path = pathlib.Path(__file__)
+        icons_dir = os.path.join(this_file_path.parents[1], 'common', 'icons', '128x128')
+        icon_path = os.path.join(icons_dir, iconName)
+        if os.path.exists(icon_path):
+            return QIcon(icon_path)
+        raise FileNotFoundError(f"{icon_path} - file does not exist!")
+
     def setupActions(self):
-        self.fileNewAction = QAction(QIcon("./icons/32x32/new.png"), "&New Doodle", self)
+        self.fileNewAction = QAction(self.getIcon("new.png"), "&New Doodle", self)
         self.fileNewAction.setShortcut(QKeySequence.New)
         self.fileNewAction.setToolTip("New Doodle")
         self.fileNewAction.setStatusTip("Create a new doodle")
         self.fileNewAction.triggered.connect(self.fileNew)
 
-        self.fileOpenAction = QAction(QIcon("./icons/32x32/open.png"), "&Open Doodle...", self)
+        self.fileOpenAction = QAction(self.getIcon("open.png"), "&Open Doodle...", self)
         self.fileOpenAction.setShortcut(QKeySequence.Open)
         self.fileOpenAction.setToolTip("Open Doodle")
         self.fileOpenAction.setStatusTip("Open existing doodle file")
         self.fileOpenAction.triggered.connect(self.fileOpen)
 
-        self.fileSaveAction = QAction(QIcon("./icons/32x32/save.png"), "&Save Doodle", self)
+        self.fileSaveAction = QAction(self.getIcon("save.png"), "&Save Doodle", self)
         self.fileSaveAction.setShortcut(QKeySequence.Save)
         self.fileSaveAction.setToolTip("Save Doodle")
         self.fileSaveAction.setStatusTip("Save existing doodle file")
         self.fileSaveAction.triggered.connect(self.fileSave)
 
-        self.fileSaveAsAction = QAction(QIcon("./icons/32x32/save_as.png"), "Save Doodle &as...", self)
+        self.fileSaveAsAction = QAction(self.getIcon("save_as.png"), "Save Doodle &as...", self)
         self.fileSaveAsAction.setShortcut(QKeySequence.SaveAs)
         self.fileSaveAsAction.setToolTip("Save Doodle As")
         self.fileSaveAsAction.setStatusTip("Save Doodle to another file")
@@ -61,13 +76,13 @@ class MainWindow(QMainWindow):
         self.exitAction.setStatusTip("Save any pending changes & exit application")
         self.exitAction.triggered.connect(self.fileExit)
 
-        self.penWidthAction = QAction(QIcon("./icons/32x32/line-width.png"), "&Choose Pen Thickness...", self)
+        self.penWidthAction = QAction(self.getIcon("line-width.png"), "&Choose Pen Thickness...", self)
         self.penWidthAction.setShortcut("Ctrl+T")
         self.penWidthAction.setToolTip("Pen Thickness")
         self.penWidthAction.setStatusTip("Choose Pen Thickness")
         self.penWidthAction.triggered.connect(self.changePenWidth)
 
-        self.penColorAction = QAction(QIcon("./icons/32x32/pen-color.png"), "&Choose Pen Color...", self)
+        self.penColorAction = QAction(self.getIcon("pen-color.png"), "&Choose Pen Color...", self)
         self.penColorAction.setShortcut("Ctrl+L")
         self.penColorAction.setToolTip("Pen Color")
         self.penColorAction.setStatusTip("Choose Pen Color")
@@ -77,7 +92,6 @@ class MainWindow(QMainWindow):
         self.aboutAction.setToolTip("About Doodle...")
         self.aboutAction.setStatusTip("Display Information about application")
         self.aboutAction.triggered.connect(self.helpAbout)
-
 
     def setupMenubar(self):
         fileMenu = QMenu("&File", self)
@@ -113,35 +127,35 @@ class MainWindow(QMainWindow):
 
     def fileNew(self):
         QMessageBox.information(self, "File New",
-            "You selected the New Doodle option", QMessageBox.Ok)
+                                "You selected the New Doodle option", QMessageBox.Ok)
 
     def fileOpen(self):
         currDir = os.getcwd()
         fname = QFileDialog.getOpenFileName(self, 'Open Doodle', currDir)
         if fname[0]:
             QMessageBox.information(self, "File Open",
-                f"You selected {fname[0]}", QMessageBox.Ok)
+                                    f"You selected {fname[0]}", QMessageBox.Ok)
 
     def fileSave(self):
         QMessageBox.information(self, "File Save",
-            "You selected the File Save option", QMessageBox.Ok)
+                                "You selected the File Save option", QMessageBox.Ok)
 
     def fileSaveAs(self):
         QMessageBox.information(self, "File Save As",
-            "You selected the File Save As option", QMessageBox.Ok)
+                                "You selected the File Save As option", QMessageBox.Ok)
 
     def fileExit(self):
         qDebug("File + Exit selected....")
-        #QApplication.instance().close()
+        # QApplication.instance().close()
         self.close()
 
     def changePenWidth(self):
         newWidth, ok = QInputDialog.getInt(self, "Pen Width",
-                            "Enter new pen width (2-12):",
-                            self.drawWindow.doodle.defPenWidth, 2, 12)
+                                           "Enter new pen width (2-12):",
+                                           self.drawWindow.doodle.defPenWidth, 2, 12)
         if ok:  # user clicked Ok on QInputDialog
             self.drawWindow.doodle.defPenWidth = newWidth
-            
+
     def changePenColor(self):
         newColor = QColorDialog.getColor(self.drawWindow.doodle.defPenColor, self)
         if newColor.isValid():
@@ -149,12 +163,12 @@ class MainWindow(QMainWindow):
 
     def helpAbout(self):
         about = QMessageBox.information(self, "About PyDoodle...",
-            "PyQt Doodle - random doodles.\n" + "\n" +
-            "Developed using PyQt5 GUI Library for Python\n" +
-            "Created by Manish Bhobe",
-            QMessageBox.Ok)
-        #about.setIcon(QIcon("./icons/32x32/painting.png"))
-        #about.show()
+                                        "PyQt Doodle - random doodles.\n" + "\n" +
+                                        "Developed using PyQt5 GUI Library for Python\n" +
+                                        "Created by Manish Bhobe",
+                                        QMessageBox.Ok)
+        # about.setIcon(QIcon("./icons/32x32/painting.png"))
+        # about.show()
 
     # operating system Events
     def closeEvent(self, e):

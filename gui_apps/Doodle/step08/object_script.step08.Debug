@@ -1,0 +1,11 @@
+debug/common.o
+debug/Line.o
+debug/Doodle.o
+debug/DrawWindow.o
+debug/MainWindow.o
+debug/step08.o
+debug/qrc_resources.o
+debug/moc_Line.o
+debug/moc_Doodle.o
+debug/moc_DrawWindow.o
+debug/moc_MainWindow.o
