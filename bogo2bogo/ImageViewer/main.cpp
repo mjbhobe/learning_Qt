@@ -7,18 +7,19 @@
 
 int main(int argc, char *argv[])
 {
-  QApplication a(argc, argv);
-  a.setFont(QApplication::font("QMenu"));
-  a.setStyle("Fusion");
+   QApplication app(argc, argv);
+   app.setFont(QApplication::font("QMenu"));
+   app.setStyle("Fusion");
+   PaletteSwitcher palSwitcher(&app);
 
-#ifdef Q_OS_WINDOWS
-  if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
-    setWinDarkPalette(&a);
-#endif
+   //#ifdef Q_OS_WINDOWS
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      palSwitcher.setDarkPalette();
+   //#endif
 
-  ImageViewer w;
-  w.setFont(QApplication::font("QMenu"));
-  w.show();
+   ImageViewer w;
+   w.setFont(QApplication::font("QMenu"));
+   w.show();
 
-  return a.exec();
+   return app.exec();
 }

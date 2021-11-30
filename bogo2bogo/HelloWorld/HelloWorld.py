@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # HelloWorld.py - hello world
-import sys, os, pathlib
+import sys
+import os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -28,10 +30,13 @@ def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = utils.PaletteSwitcher(app)
+
     if darkdetect.isDark():
         # apply dark stylesheet
         # app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
-        utils.setDarkPalette(app)
+        # utils.setDarkPalette(app)
+        palSwitcher.setDarkPalette()
 
     w = HelloWorld()
     w.show()

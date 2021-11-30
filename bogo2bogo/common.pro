@@ -10,7 +10,7 @@ INCLUDEPATH += .
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-INCLUDEPATH += C:\\Dev\\msys64\\mingw64\\include
+INCLUDEPATH += C:\\Dev\\GNULibs\\gmp-6.2.1\\bin\\include
 INCLUDEPATH += ../common_files/
 
 # You can also make your code fail to compile if you use deprecated APIs.
@@ -22,7 +22,7 @@ win32 {
   # CONFIG += console
   LIBS += -lUser32 -lGdi32 -lKernel32
 }
-CONFIG += c++20
+CONFIG += c++20 console
 QT += core gui xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

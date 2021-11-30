@@ -51,9 +51,13 @@ def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = utils.PaletteSwitcher(app)
 
     if darkdetect.isDark():
-        utils.setDarkPalette(app)
+        # apply dark stylesheet
+        # app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
+        # utils.setDarkPalette(app)
+        palSwitcher.setDarkPalette()
 
     # create the main main window
     mainWin = MainWindow()

@@ -24,9 +24,11 @@ private:
   void createMenus();
   void createToolBar();
   void createStatusBar();
+  void timerEvent(QTimerEvent *event);
 
   // central widget
   DrawWindow *_drawWindow;
+  int _timerId;
 
   // actions
   QAction *fileNewAction;
@@ -36,6 +38,7 @@ private:
   QAction *exitAction;
   QAction *penWidthAction;
   QAction *penColorAction;
+  QAction *aboutQtAction;
   QAction *aboutAction;
   // menus
   QMenu *fileMenu;

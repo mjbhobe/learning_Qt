@@ -60,6 +60,7 @@ class DrawWindow  : public QMainWindow {
     QAction *exitAction;
     QAction *penWidthAction;
     QAction *penColorAction;
+    QAction *aboutQtAction;
     QAction *aboutAction;
     // menus
     QMenu *fileMenu;

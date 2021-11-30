@@ -6,6 +6,7 @@
 
 class QAction;
 class QMenu;
+class QTimerEvent;
 class DrawWindow;
 
 class MainWindow : public QMainWindow {
@@ -16,11 +17,16 @@ class MainWindow : public QMainWindow {
   public slots:
     void exitApp();
     void about();
+
   private:
     void createActions();
     void createMenus();
+    void createToolbar();
+    void timerEvent(QTimerEvent *event);
+
     // central widget
     DrawWindow *_drawWindow;
+    int _timerId;
 
     // actions
     QAction *fileNewAction;
@@ -30,6 +36,7 @@ class MainWindow : public QMainWindow {
     QAction *exitAction;
     QAction *penWidthAction;
     QAction *penColorAction;
+    QAction *aboutQtAction;
     QAction *aboutAction;
     // menus
     QMenu *fileMenu;

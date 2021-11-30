@@ -27,11 +27,12 @@ def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = utils.PaletteSwitcher(app)
 
     if darkdetect.isDark():
-        utils.setDarkPalette(app)
+        palSwitcher.setDarkPalette()
 
-    mainWindow = MainWindow()
+    mainWindow = MainWindow(palSwitcher)
     mainWindow.show()
 
     sys.exit(app.exec_())

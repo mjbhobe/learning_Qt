@@ -20,6 +20,7 @@ class DrawWindow  : public QMainWindow {
   public:
     DrawWindow();
     ~DrawWindow();
+    void resizeImage(const QSize& size, bool force=false);
   protected:
     // operating system events
     void closeEvent(QCloseEvent *event);
@@ -41,7 +42,6 @@ class DrawWindow  : public QMainWindow {
 	private:
 		void drawLineTo(const QPoint& pt);	
     void clearImage();
-    void resizeImage(const QSize& size);
     bool canClose();
 
     // members

@@ -238,34 +238,17 @@ class ImageViewer(QMainWindow):
                           f"<p>Free to use, but use at your own risk!!")
 
 
-def setDarkPalette(app: QApplication) -> None:
-    # Now use a palette to switch to dark colors:
-    # @see for example: https://stackoverflow.com/questions/48256772/dark-theme-for-qt-widgets
-    palette = QPalette()
-    palette.setColor(QPalette.Window, QColor(53, 53, 53))
-    palette.setColor(QPalette.WindowText, Qt.white)
-    palette.setColor(QPalette.Base, QColor(25, 25, 25))
-    palette.setColor(QPalette.AlternateBase, QColor(53, 53, 53))
-    palette.setColor(QPalette.ToolTipBase, Qt.black)
-    palette.setColor(QPalette.ToolTipText, Qt.white)
-    palette.setColor(QPalette.Text, Qt.white)
-    palette.setColor(QPalette.Button, QColor(53, 53, 53))
-    palette.setColor(QPalette.ButtonText, Qt.white)
-    palette.setColor(QPalette.BrightText, Qt.red)
-    palette.setColor(QPalette.Link, QColor(42, 130, 218))
-    palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
-    palette.setColor(QPalette.HighlightedText, Qt.black)
-    app.setPalette(palette)
-
-
 def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = utils.PaletteSwitcher(app)
+
     if darkdetect.isDark():
         # apply dark stylesheet
         # app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
-        utils.setDarkPalette(app)
+        # utils.setDarkPalette(app)
+        palSwitcher.setDarkPalette()
 
     w = ImageViewer()
     w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer")

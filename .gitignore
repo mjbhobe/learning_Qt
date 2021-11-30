@@ -5,11 +5,22 @@ release
 
 # ignore .vscode folder (Visual Studio code settings)
 .vscode
+.vs
+.idea
+.qt_for_python
 
 # ignore obj files
 .o
+.obj
 .exe
 .dll
+.pch
+.ilk
+.log
+.pdb
+.idb
+.tlog
+.recipe
 
 # ignore stash files
 .qmake.stash

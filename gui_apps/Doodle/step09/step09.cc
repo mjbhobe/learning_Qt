@@ -7,6 +7,7 @@
 // ===========================================================================
 
 #include "MainWindow.h"
+#include "common.hxx"
 #include <QApplication>
 #include <QDebug>
 #include <QStyleFactory>
@@ -24,7 +25,13 @@ MainWindow *getMainWindow()
 int main(int argc, char **argv)
 {
    QApplication app(argc, argv);
-   QApplication::setStyle(QStyleFactory::create("Fusion"));
+   // QApplication::setStyle(QStyleFactory::create("Fusion"));
+   app.setStyle("Fusion");
+
+#ifdef Q_OS_WINDOWS
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      setWinDarkPalette(&app);
+#endif
 
    // create the GUI
    MainWindow *mainWindow = new MainWindow();

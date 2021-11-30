@@ -9,17 +9,24 @@
 // ============================================================================
 """
 import sys
+import os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from squiggle import *
+import darkdetect
+
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+import mypyqt5_utils as utils
+
 
 class DrawWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step06: Drawing multiple Squiggles with own pen width & color")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        # self.setStyleSheet("background-color: white")
+        self.setGeometry(QRect(100, 100, 640, 480))
         self.modified = False
         self.squiggles = []
         self.dragging = False
@@ -48,9 +55,23 @@ class DrawWindow(QMainWindow):
 
     def paintEvent(self, e: QPaintEvent) -> None:
         """ handler for paint events """
+        print('In DrawWindow::paintEvent() - ', end='', flush=True)
+        if darkdetect.isDark():
+            print('dark theme detected - ', end='', flush=True)
+            utils.setDarkPalette(QApplication.instance())
+        else:
+            print('light theme detected - ', end='', flush=True)
+            # QApplication.instance().setStyleSheet("")
+            utils.setDarkPalette(QApplication.instance(), False)
         painter = QPainter()
         try:
+            width, height = self.width(), self.height()
+            color = QColor(53, 53, 53) if darkdetect.isDark() else utils.getPaletteColor(QPalette.Window)
+            print(f'QPalette.Window color = {color.name()}')
             painter.begin(self)
+            painter.setBrush(color)
+            painter.setPen(color)
+            painter.drawRect(0, 0, width, height)
             painter.setRenderHint(QPainter.Antialiasing, True)
             self.drawSquiggles(painter)
         finally:
@@ -63,10 +84,10 @@ class DrawWindow(QMainWindow):
                 # if Ctrl key is also pressed with mouse press, display
                 # dialog to change pen thickness
                 newWidth, ok = QInputDialog.getInt(self, "Pen Width",
-                                            "Enter new pen width (2-12):",
-                                            self.penWidth, 2, 12)
+                                                   "Enter new pen width (2-12):",
+                                                   self.penWidth, 2, 12)
                 if ok:  # user clicked Ok on QInputDialog
-                    self.penWidth = newWidth                
+                    self.penWidth = newWidth
             else:
                 # start a new line
                 #self.currSquiggle = Squiggle(self.penWidth, self.penColor)
@@ -114,4 +135,3 @@ class DrawWindow(QMainWindow):
             self.update()
         else:
             e.accept()
-

@@ -4,9 +4,8 @@
 
 TEMPLATE = app
 TARGET = step07
-INCLUDEPATH += .
-CONFIG += c++14
-QT += core gui widgets
+
+include (../common.pro)
 
 # Input
 HEADERS += Doodle.h DrawWindow.h Line.h

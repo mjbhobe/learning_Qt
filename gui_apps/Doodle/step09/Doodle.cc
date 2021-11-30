@@ -121,7 +121,7 @@ bool Doodle::load(const QString &path)
       _filePath = path;
       setNew(false);
       setModified(false);
-      qDebug() << "Doodle loaded successfully!";
+      qDebug() << "Doodle loaded successfully from " << path << "!";
       return true;
    }
    else {
