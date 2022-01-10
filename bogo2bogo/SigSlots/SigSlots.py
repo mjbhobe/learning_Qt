@@ -11,7 +11,7 @@ from PyQt5 import uic
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-import mypyqt5_utils as utils
+from mypyqt5_utils import ThemeSetter
 
 
 class SigSlots(QMainWindow):
@@ -33,7 +33,8 @@ def main():
     app.setStyle("Fusion")
 
     if darkdetect.isDark():
-        utils.setDarkPalette(app)
+        #utils.setDarkPalette(app)
+        ThemeSetter.setDarkTheme(app)
 
     w = SigSlots()
     w.show()

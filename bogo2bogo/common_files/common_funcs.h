@@ -5,27 +5,25 @@
 #include <QColor>
 #include <QPalette>
 #include <QTextStream>
+
 #ifndef _MSC_VER
 #include <gmpxx.h> // GNU arbit precision numbers
-
 QTextStream &operator<<(QTextStream &ost, const mpz_class &c);
 #endif
-QColor getPaletteColor(QPalette::ColorRole colorRole,
-                       QPalette::ColorGroup colorGroup = QPalette::Active);
 
-#ifdef Q_OS_WINDOWS
-// some common functions
 bool windowsDarkThemeAvailable();
 bool windowsIsInDarkTheme();
-void setWinDarkPalette(QApplication *app);
+
+#ifdef Q_OS_WINDOWS
 
 class PaletteSwitcher : public QObject
 {
    Q_OBJECT
  protected:
+   QApplication *_appInstance;
    QPalette *_darkPalette, *_lightPalette;
    bool darkPaletteInUse;
-   QApplication *_appInstance;
+
    void initializePalettes();
 
  public:
@@ -56,13 +54,6 @@ class PaletteSwitcher : public QObject
 #else
 
 /**** on non-Windows platform, do nothing!! ****/
-
-// some common functions
-bool windowsDarkThemeAvailable() { return false; }
-bool windowsIsInDarkTheme() { return false; }
-void setWinDarkPalette(QApplication *app)
-{ /* do nothing! */
-}
 
 // dummy class for non Windows platforms - does nothing!!
 class PaletteSwitcher : public QObject

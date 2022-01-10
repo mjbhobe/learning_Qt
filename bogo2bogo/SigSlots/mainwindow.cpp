@@ -3,25 +3,41 @@
 #include "ui_mainwindow.h"
 #include <QObject>
 
-MainWindow::MainWindow(PaletteSwitcher *ps, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), _ps(ps)
+MainWindow::MainWindow(QWidget *parent)
+   : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-   Q_ASSERT(ps != nullptr);
    ui->setupUi(this);
    ui->slider->setValue(25);
+   usingDarkPalette = true;
+   ThemeSwitcher::setDarkTheme(this);
+
    QString ver = QString("Built with Qt %1").arg(QT_VERSION_STR);
    ui->qtVer->setText(ver);
-   connect(ui->pushButton2, &QPushButton::clicked, this, switchPalette);
-   this->_timerId = this->startTimer(1000);
+   connect(ui->pushButton2, &QPushButton::clicked, this, &MainWindow::switchPalette);
+   ui->pushButton2->setText(usingDarkPalette ? "Light Palette" : "Dark Palette");
+   ui->pushButton2->setToolTip(
+      QString("Switch to %1 palette").arg(usingDarkPalette ? "light" : "dark"));
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::switchPalette()
 {
-   Q_ASSERT(_ps != nullptr);
-   _ps->swapPalettes();
+   if (usingDarkPalette) {
+     ThemeSwitcher::setLightTheme(this);
+     usingDarkPalette = false;
+   }
+   else {
+     ThemeSwitcher::setDarkTheme(this);
+     usingDarkPalette = true;
+   }
+
+   ui->pushButton2->setText(usingDarkPalette ? "Light Palette" : "Dark Palette");
+   ui->pushButton2->setToolTip(
+      QString("Switch to %1 palette").arg(usingDarkPalette ? "light" : "dark"));
 }
 
+/*
 void MainWindow::timerEvent(QTimerEvent *e)
 {
    if (e->timerId() == this->_timerId) {
@@ -37,3 +53,4 @@ void MainWindow::timerEvent(QTimerEvent *e)
       // update();
    }
 }
+*/

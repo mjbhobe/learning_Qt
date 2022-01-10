@@ -10,12 +10,14 @@ int main(int argc, char *argv[])
   app.setFont(QApplication::font("QMenu"));
   app.setStyle("Fusion");
 
-#ifdef Q_OS_WINDOWS
+/*#ifdef Q_OS_WINDOWS
   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
     setWinDarkPalette(&app);
 #endif
+*/
 
   TextFinder w;
+  ThemeSwitcher::setDarkTheme(&w);
   w.setFont(font);
   w.show();
 

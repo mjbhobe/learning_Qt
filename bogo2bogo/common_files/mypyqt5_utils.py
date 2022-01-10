@@ -13,45 +13,68 @@ import darkdetect
 
 __version__ = "1.0"
 
+class ThemeSetter(QObject):
 
-def getPaletteColor(colorRole: QPalette.ColorRole, colorGroup: QPalette.ColorGroup = QPalette.Active) -> QColor:
-    pal = qApp.palette()
-    color = pal.color(colorGroup, colorRole)
-    return color
+    def _getDarkPalette() -> QPalette:
+        """ static function - returns a dark palette similar to Windows """
+        darkPalette = QPalette()
+        darkPalette.setColor(QPalette.Window, QColor(36, 36, 36)) # QColor(53, 53, 53))
+        darkPalette.setColor(QPalette.WindowText, Qt.white)
+        darkPalette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(127, 127, 127))
+        darkPalette.setColor(QPalette.Base, QColor(46, 46, 46)) # QColor(42, 42, 42))
+        darkPalette.setColor(QPalette.AlternateBase, QColor(66, 66, 66))
+        darkPalette.setColor(QPalette.ToolTipBase, Qt.white)
+        darkPalette.setColor(QPalette.ToolTipText, QColor(53, 53, 53))
+        darkPalette.setColor(QPalette.Text, Qt.white)
+        darkPalette.setColor(QPalette.Disabled, QPalette.Text, QColor(127, 127, 127))
+        darkPalette.setColor(QPalette.Dark, QColor(35, 35, 35))
+        darkPalette.setColor(QPalette.Shadow, QColor(20, 20, 20))
+        darkPalette.setColor(QPalette.Button, QColor(53, 53, 53))
+        darkPalette.setColor(QPalette.ButtonText, Qt.white)
+        darkPalette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(127, 127, 127))
+        darkPalette.setColor(QPalette.BrightText, Qt.red)
+        darkPalette.setColor(QPalette.Link, QColor(42, 130, 218))
+        darkPalette.setColor(QPalette.Highlight, QColor(42, 130, 218))
+        darkPalette.setColor(QPalette.Disabled, QPalette.Highlight, QColor(80, 80, 80))
+        darkPalette.setColor(QPalette.HighlightedText, Qt.white)
+        darkPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, QColor(127, 127, 127))
+        return darkPalette
 
 
-def setDarkPalette(app: QApplication, setDark=True) -> None:
-    # Dark palette based on Windows 10 dark theme
-    # @see for example: https://stackoverflow.com/questions/48256772/dark-theme-for-qt-widgets
+    def _getLightPalette() -> QPalette:
+        """ static function - returns a light palette similar to Windows """
+        lightPalette = QPalette()
+        lightPalette.setColor(QPalette.Window, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.WindowText, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.Base, Qt.white)
+        lightPalette.setColor(QPalette.AlternateBase, QColor(233, 231, 227))
+        lightPalette.setColor(QPalette.ToolTipBase, QColor(255, 255, 220))
+        lightPalette.setColor(QPalette.ToolTipText, Qt.black)
+        lightPalette.setColor(QPalette.Text, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.Text, QColor(120, 120, 120))
+        lightPalette.setColor(QPalette.Dark, QColor(160, 160, 160))
+        lightPalette.setColor(QPalette.Shadow, QColor(105, 105, 105))
+        lightPalette.setColor(QPalette.Button, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.ButtonText, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(78, 78, 78))
+        lightPalette.setColor(QPalette.BrightText, Qt.white)
+        lightPalette.setColor(QPalette.Link, QColor(0, 0, 255))
+        lightPalette.setColor(QPalette.Highlight, QColor(0, 120, 215))
+        lightPalette.setColor(QPalette.Disabled, QPalette.Highlight, QColor(0, 120, 215))
+        lightPalette.setColor(QPalette.HighlightedText, Qt.white)
+        lightPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, Qt.white)
+        return lightPalette
 
-    # set dark palette on Windows only
-    if platform.platform() == 'Windows':
-        if setDark:
-            palette = QPalette()
-            palette.setColor(QPalette.Window, QColor(53, 53, 53))
-            palette.setColor(QPalette.WindowText, Qt.white)
-            palette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(127, 127, 127))
-            palette.setColor(QPalette.Base, QColor(42, 42, 42))
-            palette.setColor(QPalette.AlternateBase, QColor(66, 66, 66))
-            palette.setColor(QPalette.ToolTipBase, Qt.white)
-            palette.setColor(QPalette.ToolTipText, QColor(53, 53, 53))
-            palette.setColor(QPalette.Text, Qt.white)
-            palette.setColor(QPalette.Disabled, QPalette.Text, QColor(127, 127, 127))
-            palette.setColor(QPalette.Dark, QColor(35, 35, 35))
-            palette.setColor(QPalette.Shadow, QColor(20, 20, 20))
-            palette.setColor(QPalette.Button, QColor(53, 53, 53))
-            palette.setColor(QPalette.ButtonText, Qt.white)
-            palette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(127, 127, 127))
-            palette.setColor(QPalette.BrightText, Qt.red)
-            palette.setColor(QPalette.Link, QColor(42, 130, 218))
-            palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
-            palette.setColor(QPalette.Disabled, QPalette.Highlight, QColor(80, 80, 80))
-            palette.setColor(QPalette.HighlightedText, Qt.white)
-            palette.setColor(QPalette.Disabled, QPalette.HighlightedText, QColor(127, 127, 127))
-            app.setPalette(palette)
-        else:
-            # does this work?
-            app.setStyle("")
+
+    def setDarkTheme(app : QApplication) -> None:
+        """ sets dark palette """
+        app.setPalette(ThemeSetter._getDarkPalette())
+
+
+    def setDarkTheme(app : QApplication) -> None:
+        """ sets light palette """
+        app.setPalette(ThemeSetter._getDarkPalette())
 
 
 class PaletteSwitcher(QObject):
@@ -130,6 +153,66 @@ class PaletteSwitcher(QObject):
         else:
             self.appInstance.setPalette(self.darkPalette)
         self.darkPaletteInUse = not self.darkPaletteInUse
+
+
+def getPaletteColor(colorRole: QPalette.ColorRole, colorGroup: QPalette.ColorGroup = QPalette.Active) -> QColor:
+    pal = qApp.palette()
+    color = pal.color(colorGroup, colorRole)
+    return color
+
+def _getWinDarkPalette() -> QPalette:
+    darkPalette = QPalette()
+    darkPalette.setColor(QPalette.Window, QColor(53, 53, 53))
+    darkPalette.setColor(QPalette.WindowText, Qt.white)
+    darkPalette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(127, 127, 127))
+    darkPalette.setColor(QPalette.Base, QColor(42, 42, 42))
+    darkPalette.setColor(QPalette.AlternateBase, QColor(66, 66, 66))
+    darkPalette.setColor(QPalette.ToolTipBase, Qt.white)
+    darkPalette.setColor(QPalette.ToolTipText, QColor(53, 53, 53))
+    darkPalette.setColor(QPalette.Text, Qt.white)
+    darkPalette.setColor(QPalette.Disabled, QPalette.Text, QColor(127, 127, 127))
+    darkPalette.setColor(QPalette.Dark, QColor(35, 35, 35))
+    darkPalette.setColor(QPalette.Shadow, QColor(20, 20, 20))
+    darkPalette.setColor(QPalette.Button, QColor(53, 53, 53))
+    darkPalette.setColor(QPalette.ButtonText, Qt.white)
+    darkPalette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(127, 127, 127))
+    darkPalette.setColor(QPalette.BrightText, Qt.red)
+    darkPalette.setColor(QPalette.Link, QColor(42, 130, 218))
+    darkPalette.setColor(QPalette.Highlight, QColor(42, 130, 218))
+    darkPalette.setColor(QPalette.Disabled, QPalette.Highlight, QColor(80, 80, 80))
+    darkPalette.setColor(QPalette.HighlightedText, Qt.white)
+    darkPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, QColor(127, 127, 127))
+    return darkPalette
+
+def _getWinLightPalette() -> QPalette:
+        lightPalette = QPalette()
+        lightPalette.setColor(QPalette.Window, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.WindowText, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.Base, Qt.white)
+        lightPalette.setColor(QPalette.AlternateBase, QColor(233, 231, 227))
+        lightPalette.setColor(QPalette.ToolTipBase, QColor(255, 255, 220))
+        lightPalette.setColor(QPalette.ToolTipText, Qt.black)
+        lightPalette.setColor(QPalette.Text, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.Text, QColor(120, 120, 120))
+        lightPalette.setColor(QPalette.Dark, QColor(160, 160, 160))
+        lightPalette.setColor(QPalette.Shadow, QColor(105, 105, 105))
+        lightPalette.setColor(QPalette.Button, QColor(240, 240, 240))
+        lightPalette.setColor(QPalette.ButtonText, Qt.black)
+        lightPalette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(78, 78, 78))
+        lightPalette.setColor(QPalette.BrightText, Qt.white)
+        lightPalette.setColor(QPalette.Link, QColor(0, 0, 255))
+        lightPalette.setColor(QPalette.Highlight, QColor(0, 120, 215))
+        lightPalette.setColor(QPalette.Disabled, QPalette.Highlight, QColor(0, 120, 215))
+        lightPalette.setColor(QPalette.HighlightedText, Qt.white)
+        lightPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, Qt.white)
+        return lightPalette
+
+def setDarkPalette(app : QApplication) -> None:
+	app.setPalette(_getWinDarkPalette())
+
+def setLightPalette(app : QApplication) -> None:
+	app.setPalette(_getWinLightPalette())
 
 
 class PalMainWindow(QMainWindow):

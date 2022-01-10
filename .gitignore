@@ -9,7 +9,7 @@ release
 .idea
 .qt_for_python
 
-# ignore obj files
+# ignore intermediate build files & "executables"
 .o
 .obj
 .exe
@@ -21,6 +21,10 @@ release
 .idb
 .tlog
 .recipe
+.pro.user
+.cache
+.qtc_clang
+ui_*
 
 # ignore stash files
 .qmake.stash

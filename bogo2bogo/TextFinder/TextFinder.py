@@ -52,9 +52,11 @@ def main():
     font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
     app.setFont(font)  # QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = utils.PaletteSwitcher(app)
 
     if darkdetect.isDark():
-        utils.setDarkPalette(app)
+        #utils.setDarkPalette(app)
+        palSwitcher.setDarkPalette()
 
     w = TextFinder()
     w.setFont(font)

@@ -17,9 +17,10 @@ public:
 
 private slots:
   void onFindButtonClicked();
+  void onOpenButtonClicked();
 
 private:
   Ui::TextFinder *ui;
-  void loadTextFile();
+  void loadTextFile(const QString &filePath = "");
 };
 #endif // TEXTFINDER_H

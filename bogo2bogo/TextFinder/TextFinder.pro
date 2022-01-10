@@ -1,3 +1,4 @@
+CONFIG += msys2
 TEMPLATE = app
 TARGET = TextFinder
 

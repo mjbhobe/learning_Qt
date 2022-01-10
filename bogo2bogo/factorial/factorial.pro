@@ -1,3 +1,5 @@
+CONFIG += msys2
+TEMPLATE = app
 TARGET = factorial
 
 include (../common.pro)

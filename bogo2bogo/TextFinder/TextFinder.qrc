@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>input.txt</file>
+        <file alias="eye.png">images/eye.png</file>
     </qresource>
 </RCC>

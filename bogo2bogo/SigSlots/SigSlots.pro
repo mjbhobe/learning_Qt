@@ -1,4 +1,5 @@
 
+CONFIG += msys2
 TEMPLATE = app
 TARGET = SigSlots
 

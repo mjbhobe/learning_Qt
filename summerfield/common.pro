@@ -10,7 +10,10 @@ INCLUDEPATH += .
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-INCLUDEPATH += C:\\Dev\\msys64\\mingw64\\include
+COMMON_FILES_HOME = c:/Dev/Code/git-projects/learning_Qt/summerfield/common_files
+
+INCLUDEPATH += C:/Dev/GNULibs/gmp-6.2.1/bin/include
+INCLUDEPATH += $${COMMON_FILES_HOME}
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -18,21 +21,30 @@ INCLUDEPATH += C:\\Dev\\msys64\\mingw64\\include
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 win32 {
-  CONFIG += console
   LIBS += -lUser32 -lGdi32 -lKernel32
 }
-CONFIG += c++20
-
+CONFIG += c++20 console
 QT += core gui xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -pedantic -Wall
-# QMAKE_LFLAGS += -LC:/Dev/msys64/mingw64/lib -lgmp
-QMAKE_LIBS += -LC:/Dev/msys64/mingw64/lib -lgmp
+#QMAKE_LFLAGS += -lgmpxx -lgmp -lstdc++ -lm
+# INCLUDEPATH += C:/Dev/msys64/mingw64/include
+INCLUDEPATH += C:/Dev/GNULibs/gmp-6.2.1/bin/include
+# QMAKE_LIBS += -LC:/Dev/msys64/mingw64/lib -lstdc++ -lm
+QMAKE_LIBS += -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -lgmp -lgmpxx -lstdc++ -lm
+#LIBS += -lgmpxx -lgmp
+
 # disable qDebug() output in release builds
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
 win32 {
-   QMAKE_CXXFLAGS += -IC:\\Dev\\Qt\\Tools\\mingw810_64\\x86_64-w64-mingw32\\include
+   #QMAKE_CXXFLAGS += -IC:\\Dev\\Qt\\Tools\\mingw810_64\\x86_64-w64-mingw32\\include
 #   QMAKE_CXXFLAGS += -IC:\\Dev\\msys64\\mingw64\\include
 }
+
+SOURCES += $${COMMON_FILES_HOME}/common_funcs.cpp
+HEADERS += $${COMMON_FILES_HOME}/common_funcs.h
+
+# for QDarkStyle
+RESOURCES += $${COMMON_FILES_HOME}/qdarkstyle/dark/style.qrc

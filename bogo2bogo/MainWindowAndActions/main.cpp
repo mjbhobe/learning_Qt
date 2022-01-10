@@ -9,12 +9,13 @@ int main(int argc, char *argv[])
   a.setFont(QApplication::font("QMenu"));
   a.setStyle("Fusion");
 
-#ifdef Q_OS_WINDOWS
+/*#ifdef Q_OS_WINDOWS
   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
     setWinDarkPalette(&a);
-#endif
+#endif*/
 
   MainWindow w;
+  ThemeSwitcher::setDarkTheme(&w);
   w.show();
 
   return a.exec();

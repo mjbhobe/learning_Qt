@@ -17,14 +17,12 @@ class MainWindow : public QMainWindow
    Q_OBJECT
 
  public:
-   MainWindow(PaletteSwitcher *ps, QWidget *parent = nullptr);
+   MainWindow(QWidget *parent = nullptr);
    ~MainWindow();
 
  private:
    Ui::MainWindow *ui;
-   PaletteSwitcher *_ps;
-   int _timerId;
-   void timerEvent(QTimerEvent *event);
+   bool usingDarkPalette;
 
  private slots:
    void switchPalette();
