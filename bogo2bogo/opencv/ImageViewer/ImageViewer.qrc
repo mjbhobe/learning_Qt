@@ -1,16 +1,24 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
   <qresource>
-      <file alias="open.png">images/open.png</file>
-      <file alias="save.png">images/save.png</file>
-      <file alias="first.png">images/go-first.png</file>
-      <file alias="previous.png">images/go-previous.png</file>
-      <file alias="next.png">images/go-next.png</file>
-      <file alias="last.png">images/go-last.png</file>
-      <file alias="zoom_in.png">images/zoom_in.png</file>
-      <file alias="zoom_out.png">images/zoom_out.png</file>
-      <file alias="fit_to_size.png">images/fit_to_size.png</file>
-      <file alias="print.png">images/print.png</file>
+      <file alias="open_light.png">images/light/open48.png</file>
+      <file alias="open_dark.png">images/dark/open48.png</file>
+      <file alias="save_light.png">images/light/save48.png</file>
+      <file alias="save_dark.png">images/dark/save48.png</file>
+      <file alias="print_light.png">images/light/print48.png</file>
+      <file alias="print_dark.png">images/dark/print48.png</file>
+      <file alias="prev_light.png">images/light/prev48.png</file>
+      <file alias="prev_dark.png">images/dark/prev48.png</file>
+      <file alias="next_light.png">images/light/next48.png</file>
+      <file alias="next_dark.png">images/dark/next48.png</file>
+      <file alias="zoomin_light.png">images/light/zoomin48.png</file>
+      <file alias="zoomin_dark.png">images/dark/zoomin48.png</file>
+      <file alias="zoomout_light.png">images/light/zoomout48.png</file>
+      <file alias="zoomout_dark.png">images/dark/zoomout48.png</file>
+      <file alias="fit_to_size_light.png">images/light/fit2window48.png</file>
+      <file alias="fit_to_size_dark.png">images/dark/fit2window48.png</file>
+      <file alias="blur_light.png">images/light/blur48.png</file>
+      <file alias="blur_dark.png">images/dark/blur48.png</file>
       <file alias="ImageViewer-icon.png">images/ImageViewer-icon.png</file>
   </qresource>
 </RCC>

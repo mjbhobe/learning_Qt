@@ -1,4 +1,4 @@
-CONFIG += msys2
+# CONFIG += msys2
 TEMPLATE = app
 TARGET = ImageEditor
 
@@ -10,9 +10,13 @@ include (../../common.pro)
 
 SOURCES += \
     main.cpp \
+    ImageSpinner.cpp \
+    MatOps.cpp \
     ImageEditor.cpp
 
 HEADERS += \
+    ImageSpinner.h \
+    MatOps.h \
     ImageEditor.h
 
 FORMS += \

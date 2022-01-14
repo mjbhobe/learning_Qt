@@ -1,61 +1,17 @@
+#include "ImageEditor.h"
+#include "ImageSpinner.h"
+#include "MatOps.h" // cv::Mat specific image operations
+#include "common_funcs.h"
+#include "ui_ImageEditor.h"
+#include <opencv2/opencv.hpp>
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
-#include "ImageEditor.h"
-#include "ui_ImageEditor.h"
 
-ImageSpinner::ImageSpinner(const QString &imagePath) : m_currIndex(-1)
+ImageEditor::ImageEditor(QWidget *parent)
+   : QMainWindow(parent) /*, m_pixmap(nullptr) */, imageSpinner(nullptr)
 {
-   QFileInfo current(imagePath);
-   m_dir = current.absoluteDir();
-   QStringList imageFilters;
-   imageFilters << "*.tiff"
-                << "*.tif"
-                << "*.jpg"
-                << "*.jpeg"
-                << "*.gif"
-                << "*.bmp"
-                << "*.png";
-   m_fileNames = m_dir.entryList(imageFilters, QDir::Files, QDir::Name);
-   m_currIndex = m_fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
-}
-
-QString ImageSpinner::prevImage()
-{
-   m_currIndex = m_currIndex - 1;
-   if (m_currIndex < 0)
-      m_currIndex = 0; // keep at 0th index
-   QString prevImagePath = m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
-   qDebug() << "Will display (prev): " << prevImagePath;
-   //return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
-   return prevImagePath;
-}
-
-QString ImageSpinner::nextImage()
-{
-   m_currIndex = m_currIndex + 1;
-   if (m_currIndex > m_fileNames.count() - 1)
-      m_currIndex = m_fileNames.count() - 1; // keep at last index
-
-   QString nextImagePath = m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
-   qDebug() << "Will display (next): " << nextImagePath;
-   //return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
-   return nextImagePath;
-}
-
-bool ImageSpinner::atFirst() const
-{
-   return m_currIndex == 0;
-}
-
-bool ImageSpinner::atLast() const
-{
-   return m_currIndex == m_fileNames.count() - 1;
-}
-
-ImageEditor::ImageEditor(QWidget *parent) : QMainWindow(parent), image(nullptr), imageSpinner(nullptr)
-{
-   setWindowTitle("ImageEditor");
+   setWindowTitle(QString("Qt %1 Image Editor").arg(QT_VERSION_STR));
    scaleFactor = 1.0;
    imageLoaded = false;
    imageLabel = new QLabel("");
@@ -72,29 +28,47 @@ ImageEditor::ImageEditor(QWidget *parent) : QMainWindow(parent), image(nullptr),
 
    createActions();
    createMenus();
-   createToolbars();
+   createToolbar();
    statusBar()->showMessage("");
-   statusBar()->setStyleSheet(
-      "QStatusBar{padding-left:8px;background:rgb(59,59,59);color:rgb(127,127,127);}");
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      statusBar()->setStyleSheet(
+         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}");
+   else
+      statusBar()->setStyleSheet(
+         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}");
 
-   // set initial size to 3/5 of screen
+   // set initial size to 4/5 of screen
    resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
-   setWindowIcon(QIcon(":/ImageEditor-icon.png")); // load an image
+   setWindowIcon(QIcon(":/ImageEditor-icon.png")); // set the main window icon
 }
 
 ImageEditor::~ImageEditor() {}
 
+// helper function
+QString getIconPath(QString baseName, bool darkTheme = false)
+{
+   QString iconPath = QString(":/%1_%2.png").arg(baseName).arg(darkTheme ? "dark" : "light");
+   qDebug() << "Loading icon " << iconPath;
+   return iconPath;
+}
+
 void ImageEditor::createActions()
 {
+   bool usingDarkTheme = true;
+#ifdef Q_OS_WINDOWS
+   usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
+#endif
    openAction = new QAction("&Open...", this);
    openAction->setShortcut(QKeySequence::Open);
-   openAction->setIcon(QIcon(":/open.png"));
+   // openAction->setIcon(QIcon(":/open.png"));
+   openAction->setIcon(QIcon(getIconPath("open", usingDarkTheme)));
    openAction->setStatusTip("Open a new image file to view");
    QObject::connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
 
    printAction = new QAction("&Print...", this);
    printAction->setShortcut(QKeySequence::Print);
-   printAction->setIcon(QIcon(":/print.png"));
+   // printAction->setIcon(QIcon(":/print.png"));
+   printAction->setIcon(QIcon(getIconPath("print", usingDarkTheme)));
    printAction->setStatusTip("Print the current image");
    QObject::connect(printAction, SIGNAL(triggered()), this, SLOT(print()));
    printAction->setEnabled(false);
@@ -105,33 +79,51 @@ void ImageEditor::createActions()
    QObject::connect(exitAction, SIGNAL(triggered()), QApplication::instance(), SLOT(quit()));
 
    blurAction = new QAction("&Blur Image", this);
+   blurAction->setIcon(QIcon(getIconPath("blur", usingDarkTheme)));
    blurAction->setStatusTip("Blue active image");
    QObject::connect(blurAction, SIGNAL(triggered()), this, SLOT(blurImage()));
    blurAction->setEnabled(false);
 
+   sharpenAction = new QAction("&Sharpen Image", this);
+   sharpenAction->setIcon(QIcon(getIconPath("sharpen", usingDarkTheme)));
+   sharpenAction->setStatusTip("Sharpen active image");
+   QObject::connect(sharpenAction, SIGNAL(triggered()), this, SLOT(sharpenImage()));
+   sharpenAction->setEnabled(false);
+
+   erodeAction = new QAction("&Erode Image", this);
+   erodeAction->setIcon(QIcon(getIconPath("erode", usingDarkTheme)));
+   erodeAction->setStatusTip("Erode active image");
+   QObject::connect(erodeAction, SIGNAL(triggered()), this, SLOT(erodeImage()));
+   erodeAction->setEnabled(false);
+
    zoomInAction = new QAction("Zoom &in (25%)", this);
    zoomInAction->setShortcut(QKeySequence("Ctrl++"));
-   zoomInAction->setIcon(QIcon(":/zoom_in.png"));
+   // zoomInAction->setIcon(QIcon(":/zoom_in.png"));
+   zoomInAction->setIcon(QIcon(getIconPath("zoomin", usingDarkTheme)));
    zoomInAction->setStatusTip("Zoom into the image by 25%");
    QObject::connect(zoomInAction, SIGNAL(triggered()), this, SLOT(zoomIn()));
    zoomInAction->setEnabled(false);
 
    zoomOutAction = new QAction("Zoom &out (25%)", this);
    zoomOutAction->setShortcut(QKeySequence("Ctrl+-"));
-   zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
+   // zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
+   zoomOutAction->setIcon(QIcon(getIconPath("zoomout", usingDarkTheme)));
    zoomOutAction->setStatusTip("Zoom out of the image by 25%");
    QObject::connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
    zoomOutAction->setEnabled(false);
 
+   /* not needed, as fitToWindowAction is a 'checkable' action
    zoomNormalAction = new QAction("&Normal size", this);
    zoomNormalAction->setShortcut(QKeySequence("Ctrl+0"));
    zoomNormalAction->setStatusTip("Zoom to normal size (reset zoom)");
    QObject::connect(zoomNormalAction, SIGNAL(triggered()), this, SLOT(normalSize()));
    zoomNormalAction->setEnabled(false);
+   */
 
    fitToWindowAction = new QAction("Fit to &window", this);
    fitToWindowAction->setShortcut(QKeySequence("Ctrl+1"));
-   fitToWindowAction->setIcon(QIcon(":/fit_to_size.png"));
+   // fitToWindowAction->setIcon(QIcon(":/fit_to_size.png"));
+   fitToWindowAction->setIcon(QIcon(getIconPath("fit_to_size", usingDarkTheme)));
    fitToWindowAction->setStatusTip("Fit the image to window");
    QObject::connect(fitToWindowAction, SIGNAL(triggered()), this, SLOT(fitToWindow()));
    fitToWindowAction->setEnabled(false);
@@ -139,14 +131,16 @@ void ImageEditor::createActions()
 
    prevImageAction = new QAction("&Previous image", this);
    prevImageAction->setShortcut(QKeySequence::MoveToPreviousChar); // left arrow (usually)
-   prevImageAction->setIcon(QIcon(":/previous.png"));
+   // prevImageAction->setIcon(QIcon(":/previous.png"));
+   prevImageAction->setIcon(QIcon(getIconPath("prev", usingDarkTheme)));
    prevImageAction->setStatusTip("View previous image in folder");
    QObject::connect(prevImageAction, SIGNAL(triggered()), this, SLOT(prevImage()));
    prevImageAction->setEnabled(false);
 
    nextImageAction = new QAction("&Next image", this);
    nextImageAction->setShortcut(QKeySequence::MoveToNextChar); // right arrow (usually)
-   nextImageAction->setIcon(QIcon(":/next.png"));
+   // nextImageAction->setIcon(QIcon(":/next.png"));
+   nextImageAction->setIcon(QIcon(getIconPath("next", usingDarkTheme)));
    nextImageAction->setStatusTip("View next image in folder");
    QObject::connect(nextImageAction, SIGNAL(triggered()), this, SLOT(nextImage()));
    nextImageAction->setEnabled(false);
@@ -170,11 +164,13 @@ void ImageEditor::createMenus()
 
    QMenu *editMenu = menuBar()->addMenu("&Edit");
    editMenu->addAction(blurAction);
+   editMenu->addAction(sharpenAction);
+   editMenu->addAction(erodeAction);
 
    QMenu *viewMenu = menuBar()->addMenu("&View");
    viewMenu->addAction(zoomInAction);
    viewMenu->addAction(zoomOutAction);
-   viewMenu->addAction(zoomNormalAction);
+   //viewMenu->addAction(zoomNormalAction);
    viewMenu->addSeparator();
    viewMenu->addAction(fitToWindowAction);
    viewMenu->addSeparator();
@@ -186,36 +182,66 @@ void ImageEditor::createMenus()
    helpMenu->addAction(aboutQtAction);
 }
 
-void ImageEditor::createToolbars()
+void ImageEditor::createToolbar()
 {
    QToolBar *toolBar = addToolBar("&Main");
+
    QPalette palette = toolBar->palette();
-   palette.setColor(QPalette::Window, QColor(59, 59, 59));
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77)); //QColor(59, 59, 59));
+   else
+      palette.setColor(QPalette::Window, QColor(240, 240, 240));
    toolBar->setPalette(palette);
+
    toolBar->addAction(openAction);
    toolBar->addAction(printAction);
+   toolBar->addSeparator();
 
+   toolBar->addAction(blurAction);
+   toolBar->addAction(sharpenAction);
+   toolBar->addSeparator();
 
-   QToolBar *toolBar3 = addToolBar("&View");
-   palette = toolBar3->palette();
-   palette.setColor(QPalette::Window, QColor(59, 59, 59));
-   toolBar3->addAction(zoomInAction);
-   toolBar3->addAction(zoomOutAction);
-   toolBar3->addAction(fitToWindowAction);
-   toolBar3->addAction(prevImageAction);
-   toolBar3->addAction(nextImageAction);
+   toolBar->addAction(zoomInAction);
+   toolBar->addAction(zoomOutAction);
+   toolBar->addAction(fitToWindowAction);
+   toolBar->addAction(prevImageAction);
+   toolBar->addAction(nextImageAction);
 }
 
 void ImageEditor::updateActions()
 {
    blurAction->setEnabled(imageLoaded);
+   sharpenAction->setEnabled(imageLoaded);
+   erodeAction->setEnabled(imageLoaded);
 
    fitToWindowAction->setEnabled(imageLoaded);
    zoomInAction->setEnabled(!fitToWindowAction->isChecked());
    zoomOutAction->setEnabled(!fitToWindowAction->isChecked());
-   zoomNormalAction->setEnabled(!fitToWindowAction->isChecked());
+   //zoomNormalAction->setEnabled(!fitToWindowAction->isChecked());
    prevImageAction->setEnabled(imageLoaded);
    nextImageAction->setEnabled(imageLoaded);
+}
+
+void ImageEditor::writeSettings()
+{
+   QSettings settings("QtPie Apps Inc.", "ImageEditor - OpenCV");
+
+   settings.beginGroup("mainWindow");
+   settings.setValue("geometry", saveGeometry());
+   settings.setValue("state", saveState());
+   settings.endGroup();
+   qDebug() << "ImageEditor settings saved";
+}
+
+void ImageEditor::readSettings()
+{
+   QSettings settings("QtPie Apps Inc.", "ImageEditor - OpenCV");
+
+   settings.beginGroup("mainWindow");
+   restoreGeometry(settings.value("geometry").toByteArray());
+   restoreState(settings.value("state").toByteArray());
+   settings.endGroup();
+   qDebug() << "ImageEditor settings loaded";
 }
 
 void ImageEditor::scaleImage(double factor)
@@ -287,8 +313,7 @@ void ImageEditor::open()
 {
    QFileDialog dialog(this, "Open Image");
    initializeFileDialog(dialog, QFileDialog::AcceptOpen);
-   if (dialog.exec() == QFileDialog::Accepted && 
-       loadImage(dialog.selectedFiles().constFirst()))
+   if (dialog.exec() == QFileDialog::Accepted && loadImage(dialog.selectedFiles().constFirst()))
       updateActions();
 }
 
@@ -299,7 +324,65 @@ void ImageEditor::print()
 
 void ImageEditor::blurImage()
 {
-   qDebug() << "This will blur the image...";
+   // qDebug() << "This will blur the image...";
+   if (imageLoaded) {
+      /*
+      const QPixmap *pixmap = imageLabel->pixmap();
+      QImage image = pixmap->toImage();
+      // convert to format compatible with OpenCV
+      image = image.convertToFormat(QImage::Format_RGB888);
+      cv::Mat mat = cv::Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
+      // blur operation
+      cv::Mat tmp;
+      cv::blur(mat, tmp, cv::Size(8, 8));
+      mat = tmp;
+      // & back to QImage
+      QImage blurredImage(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+      imageLabel->setPixmap(QPixmap::fromImage(blurredImage));
+      */
+      MatOp blurOp(*(imageLabel->pixmap()));
+      imageLabel->setPixmap(blurOp.blur());
+      imageLabel->adjustSize();
+   }
+   else
+      qDebug() << "blurImage() should not be called if image is not loaded!";
+}
+
+void ImageEditor::sharpenImage()
+{
+   if (imageLoaded) {
+      /*
+      const QPixmap *pixmap = imageLabel->pixmap();
+      QImage image = pixmap->toImage();
+      // convert to format compatible with OpenCV
+      image = image.convertToFormat(QImage::Format_RGB888);
+      cv::Mat mat = cv::Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
+      // sharpen operation
+      int intensity = 2;
+      cv::Mat tmp;
+      cv::GaussianBlur(mat, tmp, cv::Size(9, 9), 0);
+      tmp = mat + (mat - tmp) * intensity;
+      // & back to QImage
+      QImage sharpenedImage(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+      imageLabel->setPixmap(QPixmap::fromImage(sharpenedImage));
+      */
+      MatOp sharpenOp(*(imageLabel->pixmap()));
+      imageLabel->setPixmap(sharpenOp.sharpen());
+      imageLabel->adjustSize();
+   }
+   else
+      qDebug() << "sharpenImage() should not be called if image is not loaded!";
+}
+
+void ImageEditor::erodeImage()
+{
+   if (imageLoaded) {
+      MatOp erodeOp(*(imageLabel->pixmap()));
+      imageLabel->setPixmap(erodeOp.erode());
+      imageLabel->adjustSize();
+   }
+   else
+      qDebug() << "erodeImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::zoomIn()

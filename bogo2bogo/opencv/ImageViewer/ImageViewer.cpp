@@ -1,4 +1,5 @@
 #include "ImageViewer.h"
+#include "common_funcs.h"
 #include "ui_ImageViewer.h"
 #include <QtCore>
 #include <QtGui>
@@ -27,7 +28,7 @@ QString ImageSpinner::prevImage()
       m_currIndex = 0; // keep at 0th index
    QString prevImagePath = m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
    qDebug() << "Will display (prev): " << prevImagePath;
-   //return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
+   // return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
    return prevImagePath;
 }
 
@@ -39,19 +40,13 @@ QString ImageSpinner::nextImage()
 
    QString nextImagePath = m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
    qDebug() << "Will display (next): " << nextImagePath;
-   //return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
+   // return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
    return nextImagePath;
 }
 
-bool ImageSpinner::atFirst() const
-{
-   return m_currIndex == 0;
-}
+bool ImageSpinner::atFirst() const { return m_currIndex == 0; }
 
-bool ImageSpinner::atLast() const
-{
-   return m_currIndex == m_fileNames.count() - 1;
-}
+bool ImageSpinner::atLast() const { return m_currIndex == m_fileNames.count() - 1; }
 
 ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), image(nullptr), imageSpinner(nullptr)
 {
@@ -72,10 +67,14 @@ ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), image(nullptr),
 
    createActions();
    createMenus();
-   createToolbars();
+   createToolbar();
    statusBar()->showMessage("");
-   statusBar()->setStyleSheet(
-      "QStatusBar{padding-left:8px;background:rgb(59,59,59);color:rgb(127,127,127);}");
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      statusBar()->setStyleSheet(
+         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}");
+   else
+      statusBar()->setStyleSheet(
+         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}");
 
    // set initial size to 3/5 of screen
    resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
@@ -84,17 +83,31 @@ ImageViewer::ImageViewer(QWidget *parent) : QMainWindow(parent), image(nullptr),
 
 ImageViewer::~ImageViewer() {}
 
+// helper function
+QString getIconPath(QString baseName, bool darkTheme = false)
+{
+   QString iconPath = QString(":/%1_%2.png").arg(baseName).arg(darkTheme ? "dark" : "light");
+   qDebug() << "Loading icon " << iconPath;
+   return iconPath;
+}
+
 void ImageViewer::createActions()
 {
+   bool usingDarkTheme = true;
+#ifdef Q_OS_WINDOWS
+   usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
+#endif
    openAction = new QAction("&Open...", this);
    openAction->setShortcut(QKeySequence::Open);
-   openAction->setIcon(QIcon(":/open.png"));
+   // openAction->setIcon(QIcon(":/open.png"));
+   openAction->setIcon(QIcon(getIconPath("open", usingDarkTheme)));
    openAction->setStatusTip("Open a new image file to view");
    QObject::connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
 
    printAction = new QAction("&Print...", this);
    printAction->setShortcut(QKeySequence::Print);
-   printAction->setIcon(QIcon(":/print.png"));
+   // printAction->setIcon(QIcon(":/print.png"));
+   printAction->setIcon(QIcon(getIconPath("print", usingDarkTheme)));
    printAction->setStatusTip("Print the current image");
    QObject::connect(printAction, SIGNAL(triggered()), this, SLOT(print()));
    printAction->setEnabled(false);
@@ -106,14 +119,16 @@ void ImageViewer::createActions()
 
    zoomInAction = new QAction("Zoom &in (25%)", this);
    zoomInAction->setShortcut(QKeySequence("Ctrl++"));
-   zoomInAction->setIcon(QIcon(":/zoom_in.png"));
+   // zoomInAction->setIcon(QIcon(":/zoom_in.png"));
+   zoomInAction->setIcon(QIcon(getIconPath("zoomin", usingDarkTheme)));
    zoomInAction->setStatusTip("Zoom into the image by 25%");
    QObject::connect(zoomInAction, SIGNAL(triggered()), this, SLOT(zoomIn()));
    zoomInAction->setEnabled(false);
 
    zoomOutAction = new QAction("Zoom &out (25%)", this);
    zoomOutAction->setShortcut(QKeySequence("Ctrl+-"));
-   zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
+   // zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
+   zoomOutAction->setIcon(QIcon(getIconPath("zoomout", usingDarkTheme)));
    zoomOutAction->setStatusTip("Zoom out of the image by 25%");
    QObject::connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
    zoomOutAction->setEnabled(false);
@@ -126,7 +141,8 @@ void ImageViewer::createActions()
 
    fitToWindowAction = new QAction("Fit to &window", this);
    fitToWindowAction->setShortcut(QKeySequence("Ctrl+1"));
-   fitToWindowAction->setIcon(QIcon(":/fit_to_size.png"));
+   // fitToWindowAction->setIcon(QIcon(":/fit_to_size.png"));
+   fitToWindowAction->setIcon(QIcon(getIconPath("fit_to_size", usingDarkTheme)));
    fitToWindowAction->setStatusTip("Fit the image to window");
    QObject::connect(fitToWindowAction, SIGNAL(triggered()), this, SLOT(fitToWindow()));
    fitToWindowAction->setEnabled(false);
@@ -134,14 +150,16 @@ void ImageViewer::createActions()
 
    prevImageAction = new QAction("&Previous image", this);
    prevImageAction->setShortcut(QKeySequence::MoveToPreviousChar); // left arrow (usually)
-   prevImageAction->setIcon(QIcon(":/previous.png"));
+   // prevImageAction->setIcon(QIcon(":/previous.png"));
+   prevImageAction->setIcon(QIcon(getIconPath("prev", usingDarkTheme)));
    prevImageAction->setStatusTip("View previous image in folder");
    QObject::connect(prevImageAction, SIGNAL(triggered()), this, SLOT(prevImage()));
    prevImageAction->setEnabled(false);
 
    nextImageAction = new QAction("&Next image", this);
    nextImageAction->setShortcut(QKeySequence::MoveToNextChar); // right arrow (usually)
-   nextImageAction->setIcon(QIcon(":/next.png"));
+   // nextImageAction->setIcon(QIcon(":/next.png"));
+   nextImageAction->setIcon(QIcon(getIconPath("next", usingDarkTheme)));
    nextImageAction->setStatusTip("View next image in folder");
    QObject::connect(nextImageAction, SIGNAL(triggered()), this, SLOT(nextImage()));
    nextImageAction->setEnabled(false);
@@ -178,23 +196,24 @@ void ImageViewer::createMenus()
    helpMenu->addAction(aboutQtAction);
 }
 
-void ImageViewer::createToolbars()
+void ImageViewer::createToolbar()
 {
    QToolBar *toolBar = addToolBar("&Main");
    QPalette palette = toolBar->palette();
-   palette.setColor(QPalette::Window, QColor(59, 59, 59));
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77)); //QColor(59, 59, 59));
+   else
+      palette.setColor(QPalette::Window, QColor(240, 240, 240));
+
    toolBar->setPalette(palette);
    toolBar->addAction(openAction);
    toolBar->addAction(printAction);
 
-   QToolBar *toolBar2 = addToolBar("&View");
-   palette = toolBar2->palette();
-   palette.setColor(QPalette::Window, QColor(59, 59, 59));
-   toolBar2->addAction(zoomInAction);
-   toolBar2->addAction(zoomOutAction);
-   toolBar2->addAction(fitToWindowAction);
-   toolBar2->addAction(prevImageAction);
-   toolBar2->addAction(nextImageAction);
+   toolBar->addAction(zoomInAction);
+   toolBar->addAction(zoomOutAction);
+   toolBar->addAction(fitToWindowAction);
+   toolBar->addAction(prevImageAction);
+   toolBar->addAction(nextImageAction);
 }
 
 void ImageViewer::updateActions()
@@ -260,8 +279,8 @@ void ImageViewer::initializeFileDialog(QFileDialog &dialog, QFileDialog::AcceptM
 
    QStringList mimeTypeFilters;
    const QByteArrayList supportedMimeTypes = (acceptMode == QFileDialog::AcceptOpen)
-      ? QImageReader::supportedMimeTypes()
-      : QImageWriter::supportedMimeTypes();
+                                                ? QImageReader::supportedMimeTypes()
+                                                : QImageWriter::supportedMimeTypes();
    for (const QByteArray &mimeTypeName : supportedMimeTypes)
       mimeTypeFilters.append(mimeTypeName);
    mimeTypeFilters.sort();

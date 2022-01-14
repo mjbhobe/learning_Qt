@@ -44,7 +44,7 @@ class ImageViewer : public QMainWindow
  private:
    void createActions();
    void createMenus();
-   void createToolbars();
+   void createToolbar();
    void updateActions();
    void scaleImage(double factor);
    void adjustScrollBar(QScrollBar *scrollBar, double factor);

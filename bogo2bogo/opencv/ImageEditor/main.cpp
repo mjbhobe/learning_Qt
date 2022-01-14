@@ -19,7 +19,10 @@ int main(int argc, char *argv[])
    //#endif
 
    ImageEditor w;
-   winDark::ThemeSwitcher::setDarkTheme(&w);
+   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
+      winDark::ThemeSwitcher::setDarkTheme(&w);
+   else
+      winDark::ThemeSwitcher::setLightTheme(&w);
    w.setFont(QApplication::font("QMenu"));
    w.show();
 

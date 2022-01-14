@@ -35,8 +35,8 @@ CONFIG(msys2) {
 } else {
    message("**NOT** using MSYS2 configuration...")
    INCLUDEPATH += C:/Dev/GNULibs/gmp-6.2.1/bin/include
-   INCLUDEPATH += C:/Dev/OpenCV/include
-   QMAKE_LIB_DIRS = -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -LC:/Dev/OpenCV/build/x86/mingw/lib
+   INCLUDEPATH += C:/Dev/OpenCV/build/x86/mingw/install/include
+   QMAKE_LIB_DIRS = -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -LC:/Dev/OpenCV/build/x86/mingw/install/x64/mingw/lib
    OPENCV_LIBS = -lopencv_core451 -lopencv_imgproc451 -lopencv_highgui451 -lopencv_ml451 -lopencv_video451 \
      -lopencv_features2d451 -lopencv_calib3d451 -lopencv_objdetect451 -lopencv_videoio451 -lopencv_imgcodecs451 -lopencv_flann451
 }

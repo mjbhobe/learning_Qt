@@ -1,0 +1,10 @@
+release/common_funcs.o
+release/winDark.o
+release/main.o
+release/ImageSpinner.o
+release/MatOps.o
+release/ImageEditor.o
+release/qrc_ImageEditor.o
+release/moc_common_funcs.o
+release/moc_winDark.o
+release/moc_ImageEditor.o

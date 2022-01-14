@@ -60,7 +60,7 @@ namespace winDark {
    {
 #ifdef Q_OS_WINDOWS
       _setDarkTitlebar(reinterpret_cast<HWND>(wid), dark);
-   #endif
+#endif
       // else do nothing - does not apply to other OSes
    }
 
@@ -106,11 +106,11 @@ namespace winDark {
    {
       if (ThemeSwitcher::_lightPalette == nullptr) {
          _lightPalette = new QPalette();
-         _lightPalette->setColor(QPalette::Window, QColor(240, 240, 240));
+         _lightPalette->setColor(QPalette::Window, Qt::white); //QColor(240, 240, 240));
          _lightPalette->setColor(QPalette::WindowText, Qt::black);
          _lightPalette->setColor(QPalette::Disabled, QPalette::WindowText, QColor(240, 240, 240));
-         _lightPalette->setColor(QPalette::Base, Qt::white);
-         _lightPalette->setColor(QPalette::AlternateBase, QColor(233, 231, 227));
+         _lightPalette->setColor(QPalette::Base, QColor(235, 235, 235)); // Qt::white);
+         _lightPalette->setColor(QPalette::AlternateBase, QColor(245, 245, 25));
          _lightPalette->setColor(QPalette::ToolTipBase, QColor(255, 255, 220));
          _lightPalette->setColor(QPalette::ToolTipText, Qt::black);
          _lightPalette->setColor(QPalette::Text, Qt::black);

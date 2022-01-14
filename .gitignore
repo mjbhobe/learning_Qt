@@ -2,6 +2,9 @@
 data
 debug
 release
+Makefile
+Makefile.Debug
+Makefile.Release 
 
 # ignore .vscode folder (Visual Studio code settings)
 .vscode
