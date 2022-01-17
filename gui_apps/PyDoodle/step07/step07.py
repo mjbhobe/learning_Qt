@@ -11,7 +11,7 @@
 //      This flaw will be corrected in steps where these GUI elements are introduced)
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // =====================================================================================
@@ -26,15 +26,11 @@ from mainWindow import MainWindow
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
-import mypyqt5_utils as utils
+from mypyqt5_utils import PyQtApp
 
 
 def main():
-    app = QApplication(sys.argv)
-    app.setStyle("Fusion")
-
-    if darkdetect.isDark():
-        utils.setDarkPalette(app)
+    app = PyQtApp(sys.argv)
 
     mainWindow = MainWindow()
     mainWindow.show()

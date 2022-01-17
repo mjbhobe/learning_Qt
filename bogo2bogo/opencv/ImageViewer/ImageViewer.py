@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # ImageViewer.py: Image viewer application with PyQt
-import sys
 import os
 import pathlib
+import sys
+from argparse import ArgumentParser
+
+# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
+# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
+import darkdetect
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5 import uic
-# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
-import qdarkstyle
-# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
-import darkdetect
+
 from ImageSpinner import ImageSpinner
 
 # thisPath = pathlib.Path(__file__)
 # print(thisPath.parents[0], thisPath.parents[1], os.path.join(thisPath.parents[1], 'common_files'))
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[2], 'common_files'))
-from mypyqt5_utils import ThemeSetter
+from mypyqt5_utils import PyQtApp
 
 
 class ImageViewer(QMainWindow):
@@ -64,7 +65,7 @@ class ImageViewer(QMainWindow):
         images_path = os.path.join(os.path.split(str(p))[0], "images")
         return images_path
 
-    def iconFromName(self, imageName, useDark=True):
+    def iconFromName(self, imageName, useDark = True):
         iconPath = os.path.join(ImageViewer.getImagesPath(), 'dark' if useDark else 'light')
         iconName = f"{imageName}24.png"
         iconPath = os.path.join(iconPath, iconName)
@@ -285,7 +286,7 @@ class ImageViewer(QMainWindow):
         self.updateActions()
 
     def prevImage(self):
-        assert(self.imageSpinner is not None)
+        assert (self.imageSpinner is not None)
         imagePath = self.imageSpinner.prevImagePath()
         if (self.loadImage(imagePath)):
             self.updateActions()
@@ -293,7 +294,7 @@ class ImageViewer(QMainWindow):
             QMessageBox.information(self, "ImageViewer", "Displaying first image in folder!")
 
     def nextImage(self):
-        assert(self.imageSpinner is not None)
+        assert (self.imageSpinner is not None)
         imagePath = self.imageSpinner.nextImagePath()
         if (self.loadImage(imagePath)):
             self.updateActions()
@@ -308,18 +309,29 @@ class ImageViewer(QMainWindow):
 
 
 def main():
-    app = QApplication(sys.argv)
-    # app.setFont(QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    # palSwitcher = utils.PaletteSwitcher(app)
-
-    if darkdetect.isDark():
-        ThemeSetter.setDarkTheme(app)
-    else:
-        ThemeSetter.setLightTheme(app)
+    # app = QApplication(sys.argv)
+    # # app.setFont(QApplication.font("QMenu"))
+    # app.setStyle("Fusion")
+    # # palSwitcher = utils.PaletteSwitcher(app)
+    #
+    # if darkdetect.isDark():
+    #     ThemeSetter.setDarkTheme(app)
+    # else:
+    #     ThemeSetter.setLightTheme(app)
+    ap = ArgumentParser()
+    ap.add_argument("-i", "--image", required = False,
+                    help = "Full path to image")
+    args = vars(ap.parse_args())
+    app = PyQtApp(sys.argv)
 
     w = ImageViewer()
     w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer")
+    if args['image'] is not None:
+        # check if image path provided
+        if os.path.exists(args['image']):
+            w.loadImage(args['image'])
+        else:
+            print(f"WARNING: {args['image']} - path does not exist!")
     w.show()
 
     sys.exit(app.exec())

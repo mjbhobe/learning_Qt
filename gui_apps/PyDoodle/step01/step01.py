@@ -16,19 +16,13 @@ from mainWindow import *
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
-import mypyqt5_utils as utils
+from mypyqt5_utils import PaletteSwitcher, PyQtApp
 
 
 def main():
-    app = QApplication(sys.argv)
-    app.setFont(QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    palSwitcher = utils.PaletteSwitcher(app)
+    app = PyQtApp(sys.argv)
 
-    if darkdetect.isDark():
-        palSwitcher.setDarkPalette()
-
-    mainWindow = MainWindow(palSwitcher)
+    mainWindow = MainWindow()
     mainWindow.show()
 
     return app.exec_()

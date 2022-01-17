@@ -3,7 +3,7 @@
 // drawWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -26,7 +26,8 @@ class DrawWindow(QMainWindow):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step06: Drawing multiple Squiggles with own pen width & color")
         # self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100, 100, 640, 480))
+        #self.setGeometry(QRect(100, 100, 640, 480))
+        self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.modified = False
         self.squiggles = []
         self.dragging = False
@@ -55,18 +56,11 @@ class DrawWindow(QMainWindow):
 
     def paintEvent(self, e: QPaintEvent) -> None:
         """ handler for paint events """
-        print('In DrawWindow::paintEvent() - ', end='', flush=True)
-        if darkdetect.isDark():
-            print('dark theme detected - ', end='', flush=True)
-            utils.setDarkPalette(QApplication.instance())
-        else:
-            print('light theme detected - ', end='', flush=True)
-            # QApplication.instance().setStyleSheet("")
-            utils.setDarkPalette(QApplication.instance(), False)
         painter = QPainter()
         try:
             width, height = self.width(), self.height()
-            color = QColor(53, 53, 53) if darkdetect.isDark() else utils.getPaletteColor(QPalette.Window)
+            color = QColor(53, 53, 53) if darkdetect.isDark() \
+                else QColor(240, 240, 240)
             print(f'QPalette.Window color = {color.name()}')
             painter.begin(self)
             painter.setBrush(color)

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # utils.py - utility functions
 
-import sys
 import platform
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -13,7 +12,6 @@ import qdarkstyle
 import darkdetect
 
 __version__ = "1.0"
-
 
 class ThemeSetter(QObject):
 
@@ -153,7 +151,6 @@ class PaletteSwitcher(QObject):
             self.appInstance.setPalette(self.darkPalette)
         self.darkPaletteInUse = not self.darkPaletteInUse
 
-
 class PyQtApp(QApplication):
     def __init__(self, *args, **kwargs):
         super(PyQtApp, self).__init__(*args, **kwargs)
@@ -163,12 +160,9 @@ class PyQtApp(QApplication):
         self.setFont(font)
         QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
         QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-        #self.palSwitcher : PaletteSwitcher = PaletteSwitcher(self)
+        self.palSwitcher : PaletteSwitcher = PaletteSwitcher(self)
         if darkdetect.isDark():
-            #self.palSwitcher.setDarkPalette()
-            ThemeSetter.setDarkTheme(self)
-        else:
-            ThemeSetter.setLightTheme(self)
+            self.palSwitcher.setDarkPalette()
 
 
 def getPaletteColor(colorRole: QPalette.ColorRole, colorGroup: QPalette.ColorGroup = QPalette.Active) -> QColor:

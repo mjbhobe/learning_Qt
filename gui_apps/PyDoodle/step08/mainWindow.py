@@ -4,7 +4,7 @@
 // mainWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -29,13 +29,22 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle(WinTitle)
-        self.setWindowIcon(QIcon("./icons/32x32/painting.png"))
-        self.setGeometry(QRect(100, 100, 640, 480))
+        #self.setWindowIcon(QIcon("./icons/32x32/painting.png"))
+        self.setWindowIcon(self.getIcon("painting.png"))
+        #self.setGeometry(QRect(100, 100, 640, 480))
+        self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.drawWindow = DrawWindow()
         self.setCentralWidget(self.drawWindow)
         self.setupActions()
         self.setupMenubar()
         self.setupToolbar()
+        # and status bar
+        if darkdetect.isDark():
+            self.statusBar().setStyleSheet(
+                "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
+        else:
+            self.statusBar().setStyleSheet(
+                "QStatusBar{padding-left:8px;background:rgb(220,220,220);color:rgb(54,54,54);}")
         self.statusBar().showMessage("PyQt5 Doodle: random doodling application by Manish Bhobe")
 
     def getIcon(self, iconName: str) -> QIcon:
@@ -115,6 +124,12 @@ class MainWindow(QMainWindow):
 
     def setupToolbar(self):
         toolBar = QToolBar("Main", self)
+        palette = toolBar.palette()
+        if darkdetect.isDark():
+            palette.setColor(QPalette.Window, QColor(66, 66, 66))
+        else:
+            palette.setColor(QPalette.Window, QColor(220, 220, 220))
+        toolBar.setPalette(palette)
         toolBar.addAction(self.fileNewAction)
         toolBar.addAction(self.fileOpenAction)
         toolBar.addAction(self.fileSaveAction)

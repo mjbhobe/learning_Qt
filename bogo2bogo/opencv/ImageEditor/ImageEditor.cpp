@@ -199,6 +199,7 @@ void ImageEditor::createToolbar()
 
    toolBar->addAction(blurAction);
    toolBar->addAction(sharpenAction);
+   toolBar->addAction(erodeAction);
    toolBar->addSeparator();
 
    toolBar->addAction(zoomInAction);

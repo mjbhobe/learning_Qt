@@ -21,22 +21,13 @@ import mypyqt5_utils as utils
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, palSwitcher: utils.PaletteSwitcher):
+    def __init__(self):
         super(QMainWindow, self).__init__()
         self.setWindowTitle("PyQt5 Doodle - Step03: Drawing points")
-        # self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100, 100, 640, 480))
+        #self.setGeometry(QRect(100, 100, 640, 480))
+        self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.modified = False
         self.points = []
-        self.palSwitcher = palSwitcher
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.switchPalette)
-        self.timer.start(1000)
-
-    def switchPalette(self):
-        if (darkdetect.isDark() and (not self.palSwitcher.isDarkPaletteInUse())) \
-                or ((not darkdetect.isDark()) and self.palSwitcher.isDarkPaletteInUse()):
-            self.palSwitcher.swapPalettes()
 
     # operating system Events
     def closeEvent(self, e):
@@ -55,7 +46,7 @@ class MainWindow(QMainWindow):
         painter = QPainter()
         painter.begin(self)
         try:
-            font = QFont("Consolas", 10)
+            font = QFont("monospace", 11)
             painter.setFont(font)
 
             if len(self.points) > 0:

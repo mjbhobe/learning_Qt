@@ -11,7 +11,10 @@ from PyQt5 import uic
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-from mypyqt5_utils import ThemeSetter
+# from mypyqt5_utils import ThemeSetter
+from mypyqt5_utils import PaletteSwitcher
+
+palSwitcher : PaletteSwitcher = None
 
 
 class SigSlots(QMainWindow):
@@ -31,10 +34,12 @@ def main():
     app = QApplication(sys.argv)
     app.setFont(QApplication.font("QMenu"))
     app.setStyle("Fusion")
+    palSwitcher = PaletteSwitcher(app)
 
     if darkdetect.isDark():
         #utils.setDarkPalette(app)
-        ThemeSetter.setDarkTheme(app)
+        #ThemeSetter.setDarkTheme(app)
+        palSwitcher.setDarkPalette()
 
     w = SigSlots()
     w.show()

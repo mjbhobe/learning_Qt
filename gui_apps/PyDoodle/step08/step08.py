@@ -11,19 +11,24 @@
 //      This flaw will be corrected in steps where these GUI elements are introduced)
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // =====================================================================================
 """
-import sys
+import sys, os
+import pathlib
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from mainWindow import MainWindow
 
+sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common'))
+from mypyqt5_utils import PyQtApp
+
+
 def main():
-    app = QApplication(sys.argv)
+    app = PyQtApp(sys.argv)
 
     mainWindow = MainWindow()
     mainWindow.show()

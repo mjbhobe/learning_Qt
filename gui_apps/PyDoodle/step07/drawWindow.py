@@ -4,7 +4,7 @@
 // drawWindow.py: custom QMainWindow derived class for main window
 //
 // Tutorial - PyQt5 Doodle Application
-// Based on a similar tutorial for Borland ObjectWindows Library (OWL) 
+// Based on a similar tutorial for Borland ObjectWindows Library (OWL)
 // @author: Manish Bhobe
 // My experiments with the Qt Framework. Use at your own risk!!
 // ============================================================================
@@ -46,19 +46,11 @@ class DrawWindow(QWidget):
 
     def paintEvent(self, e: QPaintEvent) -> None:
         """ handler for paint events """
-        # print('In DrawWindow::paintEvent() - ', end='', flush=True)
-        if darkdetect.isDark():
-            # print('dark theme detected - ', end='', flush=True)
-            utils.setDarkPalette(QApplication.instance())
-        else:
-            # print('light theme detected - ', end='', flush=True)
-            # QApplication.instance().setStyleSheet("")
-            utils.setDarkPalette(QApplication.instance(), False)
         painter = QPainter()
         try:
             width, height = self.width(), self.height()
-            color = QColor(53, 53, 53) if darkdetect.isDark() else utils.getPaletteColor(QPalette.Window)
-            # print(f'QPalette.Window color = {color.name()}')
+            color = QColor(53, 53, 53) if darkdetect.isDark() \
+                else QColor(240, 240, 240)
             painter.begin(self)
             painter.setBrush(color)
             painter.setPen(color)
