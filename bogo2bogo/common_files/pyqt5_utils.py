@@ -1,22 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# utils.py - utility functions
+"""
+* pyqt5_utils.py - utility functions for PyQt5 GUI programmings
+* @author: Manish Bhobe
+* My experiments with Python, PyQt, Data Science & Deep Learning
+* The code is made available for illustration purposes only.
+* Use at your own risk!!
+"""
 
 import sys
-import platform
+
+# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
+import darkdetect
+# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
+import qdarkstyle
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
-import qdarkstyle
-# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
-import darkdetect
+from qdarkstyle.dark.palette import DarkPalette
+from qdarkstyle.light.palette import LightPalette
 
 __version__ = "1.0"
+__author__ = "Manish Bhobe"
 
 
 class ThemeSetter(QObject):
-
+    @staticmethod
     def _getDarkPalette() -> QPalette:
         """ static function - returns a dark palette similar to Windows """
         darkPalette = QPalette()
@@ -42,6 +51,7 @@ class ThemeSetter(QObject):
         darkPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, QColor(127, 127, 127))
         return darkPalette
 
+    @staticmethod
     def _getLightPalette() -> QPalette:
         """ static function - returns a light palette similar to Windows """
         lightPalette = QPalette()
@@ -67,10 +77,12 @@ class ThemeSetter(QObject):
         lightPalette.setColor(QPalette.Disabled, QPalette.HighlightedText, Qt.white)
         return lightPalette
 
+    @staticmethod
     def setDarkTheme(app: QApplication) -> None:
         """ sets dark palette """
         app.setPalette(ThemeSetter._getDarkPalette())
 
+    @staticmethod
     def setLightTheme(app: QApplication) -> None:
         """ sets light palette """
         app.setPalette(ThemeSetter._getLightPalette())
@@ -157,21 +169,44 @@ class PaletteSwitcher(QObject):
 class PyQtApp(QApplication):
     def __init__(self, *args, **kwargs):
         super(PyQtApp, self).__init__(*args, **kwargs)
-        self.setStyle("Fusion")
-        font : QFont = QFont("Segoe UI", 12) if sys.platform == "win32" \
-            else QFont("monospace", 11)
-        self.setFont(font)
+        # self.setStyle("Fusion")
+        self.font: QFont = QFont("Segoe UI", 11) if sys.platform == "win32" \
+            else QApplication.font("QMenu")
+        self.setFont(self.font)
         QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
         QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-        #self.palSwitcher : PaletteSwitcher = PaletteSwitcher(self)
+
+        # load the stylesheets
+        self.darkStyle = qdarkstyle.load_stylesheet(palette = DarkPalette)
+        self.darkStyle += "\nQPushButton{min-height:1.2em; min-width:5em}"
+        self.lightStyle = qdarkstyle.load_stylesheet(palette = LightPalette)
+        self.lightStyle += "\nQPushButton{min-height:1.2em; min-width:5em}"
+        # set style depending on which theme is in Use
         if darkdetect.isDark():
-            #self.palSwitcher.setDarkPalette()
-            ThemeSetter.setDarkTheme(self)
+            self.setStyleSheet(self.darkStyle)
+            self.darkMode = True
         else:
-            ThemeSetter.setLightTheme(self)
+            self.setStyleSheet(self.lightStyle)
+            self.darkMode = False
+
+    def getFont(self) -> QFont:
+        return self.font
+
+    def setDarkStyle(self):
+        self.setStyleSheet(self.darkStyle)
+        self.darkMode = True
+
+    def setLightStyle(self):
+        self.setStyleSheet(self.lightStyle)
+        self.darkMode = False
+
+    def swapStyle(self):
+        ss = self.lightStyle if self.darkMode else self.darkStyle
+        self.setStyleSheet(ss)
 
 
-def getPaletteColor(colorRole: QPalette.ColorRole, colorGroup: QPalette.ColorGroup = QPalette.Active) -> QColor:
+def getPaletteColor(colorRole: QPalette.ColorRole,
+                    colorGroup: QPalette.ColorGroup = QPalette.Active) -> QColor:
     pal = qApp.palette()
     color = pal.color(colorGroup, colorRole)
     return color

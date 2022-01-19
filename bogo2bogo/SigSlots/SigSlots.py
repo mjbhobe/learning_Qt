@@ -12,14 +12,15 @@ import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
 # from mypyqt5_utils import ThemeSetter
-from mypyqt5_utils import PaletteSwitcher
+from mypyqt5_utils import PyQtApp
 
-palSwitcher : PaletteSwitcher = None
+# palSwitcher : PaletteSwitcher = None
 
 
 class SigSlots(QMainWindow):
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, app: PyQtApp, parent: QWidget = None):
         super().__init__(parent)
+        self.app = app
         p = pathlib.Path(__file__)
         uiFilePath = os.path.join(os.path.split(str(p))[0], "mainwindow.ui")
         self.ui = uic.loadUi(uiFilePath, self)
@@ -27,21 +28,27 @@ class SigSlots(QMainWindow):
 
     def setupUi(self):
         self.ui.slider.setValue(25)
+        self.ui.quitBtn.clicked.connect(qApp.quit)
+        self.ui.switchPalBtn.clicked.connect(self.switchPalette)
         self.ui.qtVer.setText(f"Build with PyQt {PYQT_VERSION_STR}")
+
+    def switchPalette(self):
+        self.app.swapStyle()
 
 
 def main():
-    app = QApplication(sys.argv)
-    app.setFont(QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    palSwitcher = PaletteSwitcher(app)
+    app = PyQtApp(sys.argv)
+    # app.setFont(QApplication.font("QMenu"))
+    # app.setStyle("Fusion")
+    # palSwitcher = PaletteSwitcher(app)
+    #
+    # if darkdetect.isDark():
+    #     #utils.setDarkPalette(app)
+    #     #ThemeSetter.setDarkTheme(app)
+    #     palSwitcher.setDarkPalette()
 
-    if darkdetect.isDark():
-        #utils.setDarkPalette(app)
-        #ThemeSetter.setDarkTheme(app)
-        palSwitcher.setDarkPalette()
-
-    w = SigSlots()
+    w = SigSlots(app)
+    w.setFont(app.getFont())
     w.show()
 
     return app.exec()

@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Widgets.py - signals & slots
+"""
+* Widgets.py - creates various widgets in a window
+* @author: Manish Bhobe
+* My experiments with Python, PyQt, Data Science & Deep Learning
+* The code is made available for illustration purposes only.
+* Use at your own risk!!
+"""
 import sys
 import os
 import pathlib
@@ -11,7 +17,7 @@ from PyQt5 import uic
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-import mypyqt5_utils as utils
+from mypyqt5_utils import PyQtApp
 
 quotes = {
     'Nelson Mandela': 'The greatest glory in living lies not in never falling, but in rising every time we fall.',
@@ -59,15 +65,16 @@ class WidgetsForm(QMainWindow):
 
 
 def main():
-    app = QApplication(sys.argv)
-    font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
-    app.setFont(font)
-    app.setStyle("Fusion")
-
-    if darkdetect.isDark():
-        utils.setDarkPalette(app)
+    app = PyQtApp(sys.argv)
+    # font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
+    # app.setFont(font)
+    # app.setStyle("Fusion")
+    #
+    # if darkdetect.isDark():
+    #     utils.setDarkPalette(app)
 
     w = WidgetsForm()
+    font : QFont = app.getFont()
     w.setFont(QFont(font.family(), font.pointSize() - 1))
     w.show()
 

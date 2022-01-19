@@ -6,15 +6,16 @@ import pathlib
 import platform
 import sys
 
-import darkdetect
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from scipy.special import factorial
 
+# add mypyqt5_utils to System path
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-#import mypyqt5_utils as utils
-from mypyqt5_utils import ThemeSetter
+# import mypyqt5_utils as utils
+from pyqt5_utils import PyQtApp
+
 
 class FactorialWidget(QWidget):
     def __init__(self, parent: QWidget = None):
@@ -56,7 +57,7 @@ class FactorialWidget(QWidget):
             # Mac or Linux
             mono = QFont('Monospace')
             font.setPixelSize(12)
-            #font = QFont(mono.family(), mono.pointSize()-1)
+            # font = QFont(mono.family(), mono.pointSize()-1)
 
         self.factorial.setFont(font)
         regExp = QRegExp("[1-9][0-9]{0,9}")
@@ -82,14 +83,10 @@ class FactorialWidget(QWidget):
 
 
 def main():
-    app = QApplication(sys.argv)
-    app.setFont(QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    if darkdetect.isDark():
-        ThemeSetter.setDarkTheme(app)
+    app = PyQtApp(sys.argv)
 
     w = FactorialWidget()
-    w.setFont(QApplication.font("QMenu"))
+    w.setFont(app.getFont())  # QApplication.font("QMenu"))
     w.show()
 
     sys.exit(app.exec())

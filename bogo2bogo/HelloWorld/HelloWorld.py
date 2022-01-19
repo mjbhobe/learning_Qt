@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # HelloWorld.py - hello world
-import sys
 import os
 import pathlib
+import sys
+
 from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
 # using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
 # import qdarkstyle
 # to detect dark themes (@see: https://pypi.org/project/darkdetect/)
-import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-from mypyqt5_utils import ThemeSetter
+from pyqt5_utils import PyQtApp
 
 
 class HelloWorld(QWidget):
@@ -27,15 +27,7 @@ class HelloWorld(QWidget):
 
 
 def main():
-    app = QApplication(sys.argv)
-    app.setFont(QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    # palSwitcher = utils.PaletteSwitcher(app)
-
-    if darkdetect.isDark():
-        # set dark theme
-        #palSwitcher.setDarkPalette()
-        ThemeSetter.setDarkTheme(app)
+    app = PyQtApp(sys.argv)
 
     w = HelloWorld()
     w.show()

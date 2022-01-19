@@ -11,10 +11,9 @@ from PyQt5 import uic
 import darkdetect
 
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[1], 'common_files'))
-import mypyqt5_utils as utils
+from mypyqt5_utils import PyQtApp
 
 import TextFinderForm
-
 
 class TextFinder(QWidget):
     def __init__(self):
@@ -48,18 +47,18 @@ class TextFinder(QWidget):
 
 
 def main():
-    app = QApplication(sys.argv)
-    font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
-    app.setFont(font)  # QApplication.font("QMenu"))
-    app.setStyle("Fusion")
-    palSwitcher = utils.PaletteSwitcher(app)
-
-    if darkdetect.isDark():
-        #utils.setDarkPalette(app)
-        palSwitcher.setDarkPalette()
+    app = PyQtApp(sys.argv)
+    # font = QFont("SF UI Text", QApplication.font("QMenu").pointSize())
+    # app.setFont(font)  # QApplication.font("QMenu"))
+    # app.setStyle("Fusion")
+    # palSwitcher = utils.PaletteSwitcher(app)
+    #
+    # if darkdetect.isDark():
+    #     #utils.setDarkPalette(app)
+    #     palSwitcher.setDarkPalette()
 
     w = TextFinder()
-    w.setFont(font)
+    w.setFont(app.getFont())
     w.show()
 
     return app.exec_()

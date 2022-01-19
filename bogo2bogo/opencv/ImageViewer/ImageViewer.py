@@ -47,12 +47,12 @@ class ImageViewer(QMainWindow):
         self.createMenu()
         self.createToolbar()
         # and status bar
-        if darkdetect.isDark():
-            self.statusBar().setStyleSheet(
-                "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
-        else:
-            self.statusBar().setStyleSheet(
-                "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}")
+        # if darkdetect.isDark():
+        #     self.statusBar().setStyleSheet(
+        #         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
+        # else:
+        #     self.statusBar().setStyleSheet(
+        #         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}")
         self.statusBar().showMessage(
             f"Image Viewer: developed with PyQt {PYQT_VERSION_STR} by Manish Bhobe")
 
@@ -175,12 +175,12 @@ class ImageViewer(QMainWindow):
 
     def createToolbar(self):
         toolBar = self.addToolBar("Main")
-        palette = toolBar.palette()
-        if darkdetect.isDark():
-            palette.setColor(QPalette.Window, QColor(66, 66, 66))
-        else:
-            palette.setColor(QPalette.Window, QColor(240, 240, 240))
-        toolBar.setPalette(palette)
+        # palette = toolBar.palette()
+        # if darkdetect.isDark():
+        #     palette.setColor(QPalette.Window, QColor(66, 66, 66))
+        # else:
+        #     palette.setColor(QPalette.Window, QColor(240, 240, 240))
+        # toolBar.setPalette(palette)
         toolBar.addAction(self.openAction)
         toolBar.addAction(self.printAction)
         toolBar.addSeparator()

@@ -18,7 +18,7 @@ from ImageSpinner import ImageSpinner
 # thisPath = pathlib.Path(__file__)
 # print(thisPath.parents[0], thisPath.parents[1], os.path.join(thisPath.parents[1], 'common_files'))
 sys.path.append(os.path.join(pathlib.Path(__file__).parents[2], 'common_files'))
-from mypyqt5_utils import PyQtApp
+from pyqt5_utils import PyQtApp
 
 
 class ImageEditor(QMainWindow):
@@ -48,12 +48,12 @@ class ImageEditor(QMainWindow):
         self.createMenu()
         self.createToolbar()
         # and status bar
-        if darkdetect.isDark():
-            self.statusBar().setStyleSheet(
-                "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
-        else:
-            self.statusBar().setStyleSheet(
-                "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}")
+        # if darkdetect.isDark():
+        #     self.statusBar().setStyleSheet(
+        #         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
+        # else:
+        #     self.statusBar().setStyleSheet(
+        #         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}")
         self.statusBar().showMessage(
             f"Image Editor: developed with PyQt {PYQT_VERSION_STR} by Manish Bhobe")
 
@@ -201,12 +201,12 @@ class ImageEditor(QMainWindow):
 
     def createToolbar(self) -> None:
         toolBar = self.addToolBar("Main")
-        palette = toolBar.palette()
-        if darkdetect.isDark():
-            palette.setColor(QPalette.Window, QColor(66, 66, 66))
-        else:
-            palette.setColor(QPalette.Window, QColor(240, 240, 240))
-        toolBar.setPalette(palette)
+        # palette = toolBar.palette()
+        # if darkdetect.isDark():
+        #     palette.setColor(QPalette.Window, QColor(66, 66, 66))
+        # else:
+        #     palette.setColor(QPalette.Window, QColor(240, 240, 240))
+        # toolBar.setPalette(palette)
         toolBar.addAction(self.openAction)
         toolBar.addAction(self.printAction)
         toolBar.addSeparator()
