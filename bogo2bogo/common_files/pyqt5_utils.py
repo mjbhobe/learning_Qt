@@ -177,10 +177,10 @@ class PyQtApp(QApplication):
         QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
         # load the stylesheets
-        self.darkStyle = qdarkstyle.load_stylesheet(palette = DarkPalette)
-        self.darkStyle += "\nQPushButton{min-height:1.2em; min-width:5em}"
-        self.lightStyle = qdarkstyle.load_stylesheet(palette = LightPalette)
-        self.lightStyle += "\nQPushButton{min-height:1.2em; min-width:5em}"
+        self.darkStyle = qdarkstyle.load_stylesheet(palette=DarkPalette)
+        self.darkStyle += "\nQPushButton{min-height:1.2em; min-width:4em}"
+        self.lightStyle = qdarkstyle.load_stylesheet(palette=LightPalette)
+        self.lightStyle += "\nQPushButton{min-height:1.2em; min-width:4em}"
         # set style depending on which theme is in Use
         if darkdetect.isDark():
             self.setStyleSheet(self.darkStyle)

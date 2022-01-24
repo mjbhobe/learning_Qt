@@ -23,12 +23,11 @@ class Ui_TextFinder(object):
     def setupUi(self, TextFinder):
         if not TextFinder.objectName():
             TextFinder.setObjectName(u"TextFinder")
-        TextFinder.resize(459, 443)
+        TextFinder.resize(611, 516)
         self.verticalLayout_2 = QVBoxLayout(TextFinder)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.label = QLabel(TextFinder)
@@ -45,6 +44,11 @@ class Ui_TextFinder(object):
         self.findButton.setObjectName(u"findButton")
 
         self.horizontalLayout.addWidget(self.findButton)
+
+        self.openButton = QPushButton(TextFinder)
+        self.openButton.setObjectName(u"openButton")
+
+        self.horizontalLayout.addWidget(self.openButton)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -72,5 +76,6 @@ class Ui_TextFinder(object):
         TextFinder.setWindowTitle(QCoreApplication.translate("TextFinder", u"Form", None))
         self.label.setText(QCoreApplication.translate("TextFinder", u"&Keyword", None))
         self.findButton.setText(QCoreApplication.translate("TextFinder", u"&Find", None))
+        self.openButton.setText(QCoreApplication.translate("TextFinder", u"&Open...", None))
     # retranslateUi
 

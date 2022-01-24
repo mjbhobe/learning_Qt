@@ -36,7 +36,7 @@ class Form(QWidget):
     def setupUi(self):
         self.principal.setPrefix("$")
         self.principal.setRange(1000, 100000)
-        self.principal.setSingleStep(1000)
+        self.principal.setSingleStep(500)
         self.principal.setValue(2000)
         self.label2 = QLabel("Rate:")
         self.rate = QDoubleSpinBox()
@@ -80,6 +80,8 @@ class Form(QWidget):
 
 
 def main():
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = PyQtApp(sys.argv)
     # app.setLightStyle()
 
