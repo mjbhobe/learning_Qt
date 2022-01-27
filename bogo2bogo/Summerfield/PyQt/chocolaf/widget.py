@@ -64,6 +64,7 @@ class Form(QWidget):
         self.le1 = QLineEdit()
         self.label4 = QLabel("Last name:")
         self.le2 = QLineEdit()
+        self.le2.setEnabled(False)
         self.pbg = QPushButton("Message")
         self.pbg.setEnabled(False)
         h1 = QHBoxLayout()
@@ -113,9 +114,11 @@ class Form(QWidget):
         self.slider4.setValue(self.slider3.value())
 
     def nameChanged(self):
-        enable: bool = (len(self.le1.text().strip()) != 0) and\
+        enableLe2 = len(self.le1.text().strip()) != 0
+        enableBtn: bool = (len(self.le1.text().strip()) != 0) and\
             (len(self.le2.text().strip()) != 0)
-        self.pbg.setEnabled(enable)
+        self.le2.setEnabled(enableLe2)
+        self.pbg.setEnabled(enableBtn)
 
     def showMessage(self):
         name: str = " ".join([self.le1.text().strip(), self.le2.text().strip()])
@@ -123,18 +126,27 @@ class Form(QWidget):
                                 f"Hello {name} - hope you are enjoying this theme")
 
 
+def loadStyleSheet() -> str:
+    here = os.path.dirname(os.path.abspath(__file__))
+    print(f"loasStyleSteet() -> You are {here}")
+    darkss_dir = os.path.join(here, "styles", "dark")
+    sys.path.append(darkss_dir)
+    import stylesheet_rc
+
+    darkss_path = os.path.join(darkss_dir, "stylesheet.css")
+    assert os.path.exists(darkss_path)
+    print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
+    stylesheet = ""
+    with open(darkss_path, "r") as f:
+      stylesheet = f.read()
+    return stylesheet
+
 def main():
     app = PyQtApp(sys.argv)
-    here = os.path.dirname(os.path.abspath(__file__))
-    print(f"You are {here}")
-    darkss_path = os.path.join(here, "styles", "dark", "stylesheet.css")
-    assert os.path.exists(darkss_path)
-    print(f"Loading dark stylesheet from {darkss_path}")
 
     w = Form("Using my stylesheet")
-    # w.setStyleSheet(stylesheet)
-    with open(darkss_path, "r") as f:
-        w.setStyleSheet(f.read())
+    stylesheet = loadStyleSheet()
+    w.setStyleSheet(stylesheet)
     w.move(200, 200)
     w.show()
 
