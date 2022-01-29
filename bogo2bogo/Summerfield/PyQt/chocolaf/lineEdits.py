@@ -186,7 +186,7 @@ class Window(QWidget):
         self.accessLineEdit.setPlaceholderText("Placeholder Text")
 
         # signal & slot
-        accessComboBox.activated.connect(self.inputMaskChanged)
+        accessComboBox.activated.connect(self.accessChanged)
 
         # layout
         accessLayout = QGridLayout()
@@ -197,8 +197,9 @@ class Window(QWidget):
 
         return accessGroup
 
-    def inputMaskChanged(self, index: int):
-        pass
+    def accessChanged(self, index: int):
+        readOnly: bool = (index == 1)
+        self.accessLineEdit.setReadOnly(readOnly)
 
 
 def loadStyleSheet() -> str:
