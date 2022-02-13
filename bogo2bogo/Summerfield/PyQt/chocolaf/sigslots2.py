@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-* sigslots2.py - many to 1 signal handler
+* sigslots2.py - many to 1 signal handler using QPushButtons
+*   and Chocolaf & QDarkStyle-dark, QDarkStyle-light and Fusion stylesheets
 * @author: Manish Bhobe
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
@@ -26,9 +27,13 @@ class Form(QWidget):
             button = QPushButton(text)
             button.clicked.connect(self.btnClicked)
             layout.addWidget(button)
+        closeBtn = QPushButton("Close")
+        closeBtn.setDefault(True)
+        closeBtn.clicked.connect(qApp.exit)
         self.label = QLabel("Which button clicked?")
         layout.addWidget(self.label)
         self.setLayout(layout)
+        layout.addWidget(closeBtn)
         self.setWindowTitle("Qt Signals & Slots Demo")
 
     def btnClicked(self):
@@ -36,30 +41,35 @@ class Form(QWidget):
         self.label.setText(f"You clicked {button.text()}")
 
 
-def loadStyleSheet() -> str:
-    here = os.path.dirname(os.path.abspath(__file__))
-    print(f"loasStyleSteet() -> You are {here}")
-    darkss_dir = os.path.join(here, "styles", "dark")
-    sys.path.append(darkss_dir)
-    import stylesheet_rc
-
-    darkss_path = os.path.join(darkss_dir, "stylesheet.css")
-    assert os.path.exists(darkss_path)
-    print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
-    stylesheet = ""
-    with open(darkss_path, "r") as f:
-        stylesheet = f.read()
-    return stylesheet
-
-
 def main():
     app = PyQtApp(sys.argv)
-    # app.setLightStyle()
+    app.setStyle("Fusion")
 
     w = Form()
-    w.setStyleSheet(loadStyleSheet())
-    # w.setFont(app.getFont())
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
+    w.setWindowTitle(f"{w.windowTitle()} - using Chocolaf")
+    w.move(100, 100)
     w.show()
+
+    rect = w.geometry()
+    w1 = Form()
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    w1.setWindowTitle(f"{w1.windowTitle()} - using QDarkStyle-dark")
+    w1.move(rect.left() + 20, rect.top() + rect.height() + 50)
+    w1.show()
+
+    rect = w1.geometry()
+    w2 = Form()
+    w2.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
+    w2.setWindowTitle(f"{w2.windowTitle()} - using QDarkStyle-light")
+    w2.move(rect.left() + 20, rect.top() + rect.height() + 50)
+    w2.show()
+
+    rect = w2.geometry()
+    w3 = Form()
+    w3.move(rect.left() + 20, rect.top() + rect.height() + 50)
+    w2.setWindowTitle(f"{w3.windowTitle()} - using Fusion")
+    w3.show()
 
     return app.exec()
 

@@ -1,5 +1,5 @@
 """
-* calendar.py: PyQt5 version of the Qt calendar widgets demo
+* lineEdits.py - various types of single line edit widgets
 * @author: Manish Bhobe
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
@@ -44,6 +44,7 @@ class Window(QWidget):
         echoComboBox.addItem("Password")
         echoComboBox.addItem("PasswordEchoOnEdit")
         echoComboBox.addItem("No Echo")
+        # echoComboBox.setEditable(True)
 
         self.echoLineEdit = QLineEdit()
         self.echoLineEdit.setPlaceholderText("Placeholder Text")
@@ -224,12 +225,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     win = Window()
-    win.setStyleSheet(loadStyleSheet())
+    win.setStyleSheet(app.getStyleSheet("Chocolaf"))
     win.move(100, 100)
     win.show()
 
     rect = win.geometry()
     win1 = Window()
+    win1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
     win1.show()
 

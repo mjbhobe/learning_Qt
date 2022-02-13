@@ -160,6 +160,15 @@ QCheckBox:focus {
   border: none;
 }
 
+QCheckBox QWidget {
+  background-color: rgb(54, 54, 54); /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  color: rgb(220, 220, 220); 
+  spacing: 4px;
+  padding: 0px;
+  outline: none;
+  border: none;
+}
+
 QCheckBox QWidget:disabled {
   background-color: #19232D;
   color: #9DA9B5;

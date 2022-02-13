@@ -138,22 +138,29 @@ def loadStyleSheet() -> str:
     print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
     stylesheet = ""
     with open(darkss_path, "r") as f:
-      stylesheet = f.read()
+        stylesheet = f.read()
     return stylesheet
+
 
 def main():
     app = PyQtApp(sys.argv)
 
     w = Form("Using my stylesheet")
-    stylesheet = loadStyleSheet()
-    w.setStyleSheet(stylesheet)
-    w.move(200, 200)
+    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.move(20, 20)
     w.show()
 
     rect = w.geometry()
-    w1 = Form("Using QDarkStyle")
+    w1 = Form("Using QDarkStyle (Dark)")
+    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
     w1.move(rect.left() + rect.width() // 2, rect.top() + rect.height() + 50)
     w1.show()
+
+    rect = w1.geometry()
+    w2 = Form("Using QDarkStyle (Light)")
+    w2.setStyleSheet(app.getStylesheet("qdarkstyle_light"))
+    w2.move(rect.left() + rect.width() // 2, rect.top() + rect.height() + 50)
+    w2.show()
 
     return app.exec()
 

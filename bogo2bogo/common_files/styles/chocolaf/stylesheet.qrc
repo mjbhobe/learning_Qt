@@ -13,11 +13,18 @@
       <file alias="checkbox_checked_disabled.png">images/checkbox_checked_disabled.png</file>
       <file alias="checkbox_checked_focus.png">images/checkbox_checked_focus.png</file>
       <file alias="checkbox_checked.png">images/checkbox_checked.png</file>
+      <file alias="checkbox_indeterminate_focus.png">images/checkbox_indeterminate_focus.png</file>
       <file alias="checkbox_indeterminate_disabled.png">images/checkbox_indeterminate_disabled.png</file>
       <file alias="checkbox_indeterminate.png">images/checkbox_indeterminate.png</file>
       <file alias="checkbox_unchecked_disabled.png">images/checkbox_unchecked_disabled.png</file>
       <file alias="checkbox_unchecked_focus.png">images/checkbox_unchecked_focus.png</file>
       <file alias="checkbox_unchecked.png">images/checkbox_unchecked.png</file>
+      <file alias="radio_checked.png">images/radio_checked.png</file>
+      <file alias="radio_unchecked.png">images/radio_unchecked.png</file>
+      <file alias="radio_checked_focus.png">images/radio_checked_focus.png</file>
+      <file alias="radio_unchecked_focus.png">images/radio_unchecked_focus.png</file>
+      <file alias="radio_checked_disabled.png">images/radio_checked_disabled.png</file>
+      <file alias="radio_unchecked_disabled.png">images/radio_unchecked_disabled.png</file>
       <file alias="window_grip.png">images/window_grip.png</file>
   </qresource>
 </RCC>

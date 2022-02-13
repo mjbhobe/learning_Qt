@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-* sigslots.py - illustrates signals & slots with PyQt
+* sigslots.py - illustrates signals & slots with PyQt with a QDial & 
+*    QSpinBox class using Chocolaf & QarkStyle-dark stylesheets
 * @author: Manish Bhobe
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
@@ -24,10 +25,19 @@ class Form(QWidget):
         self.dial = QDial()
         self.dial.setNotchesVisible(True)
         self.spinBox = QSpinBox()
+        self.spinBox2 = QSpinBox()
+        self.spinBox2.setEnabled(False)
+
+        spinLayout = QVBoxLayout()
+        spinLayout.addStretch()
+        spinLayout.addWidget(self.spinBox)
+        spinLayout.addWidget(self.spinBox2)
+        spinLayout.addStretch()
 
         layout = QHBoxLayout()
         layout.addWidget(self.dial)
-        layout.addWidget(self.spinBox)
+        # layout.addWidget(self.spinBox)
+        layout.addLayout(spinLayout)
 
         self.pb = QPushButton("Quit")
         self.pb.setDefault(True)
@@ -37,7 +47,7 @@ class Form(QWidget):
         layout2.addStretch()
         layout2.addWidget(self.pb)
 
-        #vlayout = QVBoxLayout()
+        # vlayout = QVBoxLayout()
         # vlayout.addLayout(layout)
         # vlayout.addLayout(layout2)
 
@@ -50,34 +60,19 @@ class Form(QWidget):
         self.setWindowTitle("Qt Signals & Slots Demo")
 
 
-def loadStyleSheet() -> str:
-    here = os.path.dirname(os.path.abspath(__file__))
-    print(f"loasStyleSteet() -> You are {here}")
-    darkss_dir = os.path.join(here, "styles", "dark")
-    sys.path.append(darkss_dir)
-    import stylesheet_rc
-
-    darkss_path = os.path.join(darkss_dir, "stylesheet.css")
-    assert os.path.exists(darkss_path)
-    print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
-    stylesheet = ""
-    with open(darkss_path, "r") as f:
-        stylesheet = f.read()
-    return stylesheet
-
-
 def main():
     app = PyQtApp(sys.argv)
 
     w = Form()
-    stylesheet = loadStyleSheet()
-    w.setStyleSheet(stylesheet)
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(100, 100)
+    w.setWindowTitle(f"{w.windowTitle()} - using Chocolaf")
     w.show()
 
     rect = w.geometry()
     w1 = Form()
-    w1.setFont(app.getFont())
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    w1.setWindowTitle(f"{w1.windowTitle()} - using QDarkStyle-dark")
     w1.show()
     w1.move(rect.left() + rect.width() + 50, rect.top() + rect.height() // 4 + 50)
 

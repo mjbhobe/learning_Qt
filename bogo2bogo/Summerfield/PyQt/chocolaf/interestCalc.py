@@ -101,12 +101,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = Form()
-    w.setStyleSheet(loadStyleSheet())
-    w.move(100, 100)
+    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.move(500, 100)
     w.show()
 
     rect = w.geometry()
     w1 = Form()
+    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
     w1.move(rect.left() + rect.width() + 20, rect.top() + rect.height() // 4 + 20)
     w1.show()
 

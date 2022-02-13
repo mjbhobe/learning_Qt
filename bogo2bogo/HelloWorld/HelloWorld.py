@@ -30,6 +30,7 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = HelloWorld()
+    w.move(100, 100)
     w.show()
 
     return app.exec()

@@ -90,13 +90,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = TextFinder()
-    w.setFont(app.getFont())
+    w.setStyleSheet(app.getStylesheet("chocolaf"))
     w.show()
     w.move(100, 100)
 
     rect = w.geometry()
     w1 = TextFinder()
-    w1.setStyleSheet(loadStyleSheet())
+    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
     w1.move(rect.left() + rect.width() + 50, rect.top() + rect.height() // 4 + 50)
     w1.show()
 

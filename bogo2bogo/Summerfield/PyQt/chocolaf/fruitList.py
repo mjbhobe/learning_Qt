@@ -83,6 +83,7 @@ def main():
 
     form = Form()
     form.setStyleSheet(loadStyleSheet())
+    form.move(100, 100)
     form.show()
     return app.exec()
 
