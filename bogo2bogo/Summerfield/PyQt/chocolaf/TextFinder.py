@@ -46,7 +46,8 @@ class TextFinder(QWidget):
     def openButtonClicked(self):
         docsPath = QStandardPaths.standardLocations(QStandardPaths.DocumentsLocation)
         filePath = QFileDialog.getOpenFileName(self, "Open File",
-                                               docsPath[-1], "Text Files (*.txt *.c *.cpp *.h *.hxx *.py *.java *.bat *.sh)")
+                                               docsPath[-1],
+                                               "Text Files (*.txt *.c *.cpp *.h *.hxx *.py *.java *.bat *.sh)")
         if filePath:
             self.loadTextFile(filePath[0])
 
@@ -90,13 +91,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = TextFinder()
-    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.show()
     w.move(100, 100)
 
     rect = w.geometry()
     w1 = TextFinder()
-    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() + 50, rect.top() + rect.height() // 4 + 50)
     w1.show()
 

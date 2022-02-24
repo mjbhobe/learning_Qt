@@ -1,0 +1,28 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource>
+      <!-- theme images -->
+      <file alias="file_new.png">images/file_new-1.png</file>
+      <file alias="file_open.png">images/file_open-1.png</file>
+      <file alias="file_save.png">images/file_save-1.png</file>
+      <file alias="file_save-d.png">images/file_save-1d.png</file>
+      <file alias="file_saveall.png">images/file_saveall-1.png</file>
+      <file alias="file_saveall-d.png">images/file_saveall-1d.png</file>
+      <file alias="file_print.png">images/file_print-1.png</file>
+      <file alias="edit_undo.png">images/edit_undo-1.png</file>
+      <file alias="edit_redo.png">images/edit_redo-1.png</file>
+      <file alias="edit_cut.png">images/edit_cut-1.png</file>
+      <file alias="edit_cut-d.png">images/edit_cut-1d.png</file>
+      <file alias="edit_copy.png">images/edit_copy-1.png</file>
+      <file alias="edit_copy-d.png">images/edit_copy-1d.png</file>
+      <file alias="edit_paste.png">images/edit_paste-1.png</file>
+      <file alias="edit_paste-d.png">images/edit_paste-1d.png</file>
+      <file alias="edit_delete.png">images/edit_delete-1.png</file>
+      <file alias="find.png">images/find-1.png</file>
+      <file alias="replace.png">images/replace-1.png</file>
+      <file alias="zoomin.png">images/zoomin-1.png</file>
+      <file alias="zoomout.png">images/zoomout-1.png</file>
+      <file alias="word_wrap.png">images/word_wrap-1.png</file>
+      <file alias="text_editor_icon.png">images/text_editor_icon.png</file>
+  </qresource>
+</RCC>

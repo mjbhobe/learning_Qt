@@ -59,16 +59,16 @@ def main():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = PyQtApp(sys.argv)
-    app.setStyleSheet(None)
 
     win = DigitalClock()
     # use chocolaf stylesheet
-    win.setStyleSheet(loadStyleSheet())
+    win.setStyleSheet(app.getStyleSheet("Chocolaf"))
     win.move(100, 100)
     win.show()
 
     rect = win.geometry()
     win1 = DigitalClock()   # will use QDarkStyle
+    win1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
     win1.show()
 

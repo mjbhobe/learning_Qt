@@ -19,18 +19,18 @@
   * [Y] - QWidget
   * [ ] - QMainWindow
   * [Y] - QToolTip
-  * [ ] - QStatusBar
+  * [Y] - QStatusBar
   * [Y] - QCheckBox
   * [Y] - QGroupBox
   * [Y] - QRadioButton
-  * [ ] - QMenuBar
-  * [ ] - QMenu
+  * [Y] - QMenuBar
+  * [Y] - QMenu
   * [Y] - QAbstractItemView
   * [Y] - QAbstractScrollArea
   * [Y] - QScrollArea
   * [Y] - QScrollBar
   * [Y] - QTextEdit
-  * [ ] - QSizeGrip
+  * [Y] - QSizeGrip
   * [ ] - QStackWidget
   * [ ] - QToolBar
   * [Y] - QAbstractSpinBox
@@ -86,7 +86,7 @@ QToolBar * {
 /* QWidget                       */
 /*********************************/
 QWidget {
-  background-color: rgb(52, 52, 52); /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  background-color: rgb(42, 42, 42); /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
   border: 0px solid rgb(127,127,127);
   padding: 0px;
   color: rgb(220, 220, 220);
@@ -95,7 +95,7 @@ QWidget {
 }
 
 QWidget:disabled {
-  background-color: rgb(52, 52, 52); /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  background-color: rgb(42, 42, 42); /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
   color: rgb(127, 127, 127);
   selection-background-color: rgb(43, 87, 154);
   selection-color: rgb(127, 127, 127);
@@ -128,6 +128,79 @@ QToolTip {
   /* Remove opacity, fix #174 - may need to use RGBA */
 }
 
+/*********************************/
+/* QStatusBar                     */
+/*********************************/
+
+QStatusBar {
+  border: 1px solid rgb(32, 32, 32); /* rgb(25, 32, 49); */
+  /* Fixes Spyder #9120, #9121 */
+  background: rgb(32, 32, 32); /* rgb(25, 32, 49); */
+  /* Fixes #205, white vertical borders separating items */
+}
+
+QStatusBar::item {
+  border: none;
+}
+
+QStatusBar QToolTip {
+  background-color: rgb(224, 227, 176);
+  border: none; 
+  color: rgb(0, 0, 0);
+  /* Remove padding, for fix combo box tooltip */
+  padding: 0px;
+  /* Reducing transparency to read better */
+  opacity: 230;
+}
+
+QStatusBar QLabel {
+  /* Fixes Spyder #9120, #9121 */
+  background: transparent;
+}
+
+/*********************************/
+/* QToolBar                      */
+/*********************************/
+
+QToolBar {
+  background-color: rgb(32, 32, 32); /* #455364; */
+  border-top: 1px solid rgb(102, 102, 102); /* #19232D; */
+  padding: 6px;
+  font-weight: bold;
+  spacing: 2px;
+}
+
+QToolBar:disabled {
+  /* Fixes #272 */
+  background-color: rgb(32, 32, 32);
+}
+
+QToolBar::handle:horizontal {
+  width: 16px;
+  image: url(":/toolbar_move_horizontal.png");
+}
+
+QToolBar::handle:vertical {
+  height: 16px;
+  image: url(":/toolbar_move_vertical.png");
+}
+
+QToolBar::separator:horizontal {
+  width: 16px;
+  image: url(":/toolbar_separator_horizontal.png");
+}
+
+QToolBar::separator:vertical {
+  height: 16px;
+  image: url(":/toolbar_separator_vertical.png");
+}
+
+QToolButton#qt_toolbar_ext_button {
+  background: rgb(42, 42, 42); /* #455364; */
+  border: 0px;
+  color: rgb(220, 220, 220); /* #E0E1E3; */
+  image: url(":/arrow_right.png");
+}
 
 /*********************************/
 /* QGroupBox                     */
@@ -139,6 +212,7 @@ QGroupBox {
   border: 1px solid rgb(127, 127, 127);
   border-radius: 4px;
   padding: 2px;
+  padding-top: 0.5em;
   margin-top: 6px;
   margin-bottom: 4px;
 }
@@ -418,6 +492,17 @@ QAbstractSpinBox::down-arrow, QAbstractSpinBox::down-arrow:disabled, QAbstractSp
 
 QAbstractSpinBox::down-arrow:hover {
     image: url(":/arrow_down.png");
+}
+
+/*********************************/
+/* QSizeGrip                     */
+/*********************************/
+
+QSizeGrip {
+  background: transparent;
+  width: 12px;
+  height: 12px;
+  image: url(":/window_grip.png");
 }
 
 /*********************************/
@@ -723,17 +808,17 @@ QComboBox QAbstractItemView:alternate {
 QScrollBar:horizontal {
     height: 16px;
     margin: 2px 16px 2px 16px;
-    border: 1px solid rgb(127, 127, 127);
+    border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
-    /* background-color: rgb(62, 62, 62); */
-    background-color: transparent;
+    background-color: rgb(64, 64, 64); 
+    /* background-color: transparent; */
 }
 
 /* rgb(75, 110, 175);  */
 
 QScrollBar::handle:horizontal {
-    background-color: rgb(62, 62, 62);
-    border: 1px solid rgb(127, 127, 127);
+    background-color: rgb(159, 159, 159); /* rgb(62, 62, 62); */
+    border: 1px solid rgb(159, 159, 159); /* rgb(127, 127, 127); */
     border-radius: 4px;
     min-width: 8px;
 }
@@ -752,15 +837,15 @@ QScrollBar::handle:horizontal:focus {
 QScrollBar:vertical {
     width: 16px;
     margin: 16px 2px 16px 2px;
-    border: 1px solid rgb(127, 127, 127);
+    border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
-    /* background-color: rgb(62, 62, 62); */
-    background-color: transparent;
+    background-color: rgb(64, 64, 64); 
+    /* background-color: transparent; */
 }
 
 QScrollBar::handle:vertical {
-    background-color: rgb(62, 62, 62);
-    border: 1px solid rgb(127, 127, 127);
+    background-color: rgb(159, 159, 159); /* rgb(62, 62, 62); */
+    border: 1px solid rgb(159, 159, 159); /* rgb(127, 127, 127); */
     min-height: 8px;
     border-radius: 4px;
 }
@@ -879,6 +964,10 @@ QLineEdit, QTextEdit {
     selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175);*/ /*rgb(0, 109, 201);*/
 }
 
+QTextEdit {
+  border: none;
+}
+
 QLineEdit:disabled, QTextEdit:disabled {
     /*background-color: #19232D; */
     color: rgb(127, 127, 127); /* from QWidget */
@@ -889,11 +978,11 @@ QLineEdit:read-only, QTextEdit:read-only {
     color: rgb(127, 127, 127);
 }
 
-QLineEdit:hover, QTextEdit:hover {
+QLineEdit:hover /*, QTextEdit:hover */ {
     border: 1px solid rgb(0, 114, 198); /* rgb(75, 110, 175);*/
 }
 
-QLineEdit:focus, QTextEdit:focus {
+QLineEdit:focus /*, QTextEdit:focus */ {
     border: 2px solid rgb(0, 114, 198); /* rgb(75, 110, 175);*/
 }
 
@@ -1185,29 +1274,62 @@ QRadioButton::indicator:checked:disabled {
 /* QMenuBar                      */ 
 /*********************************/
 
+QMenuBar {
+  background-color: rgb(32, 32, 32); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
+  padding: 2px;
+  border: none; /*1px solid rgb(102, 102, 102);*/
+  color: rgb(220, 220, 220);
+  selection-background-color: rgb(83, 88, 90); /* rgb(0, 114, 198); */
+}
+
+QMenuBar:focus {
+  border: 1px solid rgb(102, 102, 102);
+}
+
+QMenuBar::item {
+  background: transparent;
+  padding: 4px 10px 4px 10px;
+}
+
+QMenuBar::item:selected {
+  padding: 4px;
+  background: transparent;
+  border: 0px solid rgb(102, 102, 102);
+  background-color: rgb(0, 114, 198);
+}
+
+QMenuBar::item:pressed {
+  padding: 4px;
+  border: 0px solid rgb(102, 102, 102);
+  background-color: rgb(0, 114, 198);
+  color: rgb(220, 220, 220);
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
 /*********************************/
 /* QMenu                         */ 
 /*********************************/
 
 QMenu {
-  background-color: rgb(54, 54, 54);
+  background-color: rgb(54, 54, 54); /* rgb(25, 32, 48); */ 
   color: rgb(220, 220, 220);
   margin: 0px;
-  border: 1px solid rgb(127, 127, 127);
+  border: 1px solid rgb(83, 88, 90); /* rgb(64, 64, 64); */ /*rgb(127, 127, 127);*/
   selection-background-color: rgb(83, 88, 90);
 }
 
 QMenu::separator {
   height: 1px;
   /*background-color: rgb(64, 64, 64); */
-  background-color: rgb(127, 127, 127);
-  /* margin-left: 4px;
-  margin-right: 4px; */
+  background-color: rgb(102, 102, 102); /*rgb(127, 127, 127); */
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 QMenu::item {
-  background-color: rgb(54, 54, 54);
-  padding: 4px 24px 4px 28px;
+  background-color: rgb(54, 54, 54); /* rgb(25, 32, 48); */ 
+  padding: 4px 24px 4px 24px;
   border: 1px transparent rgb(220, 220, 220);
 }
 
@@ -1314,7 +1436,7 @@ QMenu::right-arrow {
 /*********************************/
 
 QToolButton {
-  background-color: rgb(68, 68, 68); /* rgb(76, 80, 82); *//*#455364;*/
+  background-color: transparent; /* rgb(68, 68, 68); */ /* rgb(76, 80, 82); *//*#455364;*/
   color: rgb(220, 220, 220); 
   /* border-color: rgb(127, 127, 127); */
   border-radius: 4px;

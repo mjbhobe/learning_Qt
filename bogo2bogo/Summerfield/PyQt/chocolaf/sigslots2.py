@@ -68,7 +68,7 @@ def main():
     rect = w2.geometry()
     w3 = Form()
     w3.move(rect.left() + 20, rect.top() + rect.height() + 50)
-    w2.setWindowTitle(f"{w3.windowTitle()} - using Fusion")
+    w3.setWindowTitle(f"{w3.windowTitle()} - using Fusion")
     w3.show()
 
     return app.exec()

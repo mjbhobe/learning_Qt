@@ -146,19 +146,19 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = Form("Using my stylesheet")
-    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(20, 20)
     w.show()
 
     rect = w.geometry()
     w1 = Form("Using QDarkStyle (Dark)")
-    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() // 2, rect.top() + rect.height() + 50)
     w1.show()
 
     rect = w1.geometry()
     w2 = Form("Using QDarkStyle (Light)")
-    w2.setStyleSheet(app.getStylesheet("qdarkstyle_light"))
+    w2.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
     w2.move(rect.left() + rect.width() // 2, rect.top() + rect.height() + 50)
     w2.show()
 

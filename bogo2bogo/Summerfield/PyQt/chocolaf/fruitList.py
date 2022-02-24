@@ -80,9 +80,9 @@ def loadStyleSheet() -> str:
 
 def main():
     app = PyQtApp(sys.argv)
+    app.setStyle("Chocolaf")
 
     form = Form()
-    form.setStyleSheet(loadStyleSheet())
     form.move(100, 100)
     form.show()
     return app.exec()

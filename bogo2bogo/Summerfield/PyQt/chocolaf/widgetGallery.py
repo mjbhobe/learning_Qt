@@ -125,7 +125,7 @@ class WidgetGallery(QWidget):
         groupLayout = QHBoxLayout()
         groupLayout.addLayout(buttonLayout)
         groupLayout.addLayout(checkableLayout)
-        groupLayout.addStretch(1)
+        # groupLayout.addStretch(1)
 
         buttonsGroupBox.setLayout(groupLayout)
         return buttonsGroupBox
@@ -261,13 +261,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = WidgetGallery()
-    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(20, 20)
     w.show()
 
     rect = w.geometry()
     w1 = WidgetGallery()
-    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() + 50,
             rect.top() + rect.height() // 4 + 50)
     w1.show()

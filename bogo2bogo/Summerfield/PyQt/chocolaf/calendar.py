@@ -346,12 +346,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     win = Window()
-    win.setStyleSheet(loadStyleSheet())
+    win.setStyleSheet(app.getStyleSheet("Chocolaf"))
     win.move(100, 100)
     win.show()
 
     rect = win.geometry()
     win1 = Window()
+    win1.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
     win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
     win1.show()
 
