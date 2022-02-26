@@ -352,7 +352,7 @@ def main():
 
     rect = win.geometry()
     win1 = Window()
-    win1.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
+    win1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
     win1.show()
 

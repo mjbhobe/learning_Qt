@@ -4,7 +4,7 @@ debug
 release
 Makefile
 Makefile.Debug
-Makefile.Release 
+Makefile.Release
 
 # ignore .vscode folder (Visual Studio code settings)
 .vscode

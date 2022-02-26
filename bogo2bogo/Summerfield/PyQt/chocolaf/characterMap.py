@@ -1,5 +1,5 @@
 """
-* charMap.py - character map, uses QComboBox & checkboxes
+* characterMap.py - character map, uses QComboBox & checkboxes
 * @author: Manish Bhobe
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
@@ -34,20 +34,24 @@ class CharacterWidget(QWidget):
 
         self.displayFont = QFont()
         self.squareSize = 24
-        self.columns = 16
+        self.squareSize = int(max(24, QFontMetrics(self.displayFont).lineSpacing() * 1.5))  # height() * 3)
+        print(f"(C) -> self.squareSize() = {self.squareSize}", flush=True)
+        self.columns = 64
         self.lastKey = -1
         self.setMouseTracking(True)
 
     def updateFont(self, fontFamily):
         self.displayFont.setFamily(fontFamily)
-        self.squareSize = max(24, QFontMetrics(self.displayFont).xHeight() * 3)
+        self.squareSize = int(max(24, QFontMetrics(self.displayFont).lineSpacing() * 1.5))  # height() * 3)
+        print(f"self.squareSize() = {self.squareSize}", flush=True)
+        # self.squareSize = max(self.squareSize, QFontMetrics(self.displayFont).xWidth * 3)
         self.adjustSize()
         self.update()
 
     def updateSize(self, fontSize):
         fontSize = int(fontSize)
         self.displayFont.setPointSize(fontSize)
-        self.squareSize = max(24, QFontMetrics(self.displayFont).xHeight() * 3)
+        self.squareSize = int(max(24, QFontMetrics(self.displayFont).lineSpacing() * 1.5))  # height() * 3)
         self.adjustSize()
         self.update()
 
@@ -57,7 +61,7 @@ class CharacterWidget(QWidget):
         self.displayFont = fontDatabase.font(self.displayFont.family(),
                                              fontStyle, self.displayFont.pointSize())
         self.displayFont.setStyleStrategy(oldStrategy)
-        self.squareSize = max(24, QFontMetrics(self.displayFont).xHeight() * 3)
+        self.squareSize = int(max(24, QFontMetrics(self.displayFont).lineSpacing() * 1.5))  # height() * 3)
         self.adjustSize()
         self.update()
 
@@ -94,7 +98,7 @@ class CharacterWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.fillRect(event.rect(), Qt.white)
+        painter.fillRect(event.rect(), QColor(42, 42, 42))  # Qt.white)
         painter.setFont(self.displayFont)
 
         redrawRect = event.rect()
@@ -103,7 +107,7 @@ class CharacterWidget(QWidget):
         beginColumn = redrawRect.left() // self.squareSize
         endColumn = redrawRect.right() // self.squareSize
 
-        painter.setPen(Qt.gray)
+        painter.setPen(QColor(102, 102, 102))  # Qt.gray)
         for row in range(beginRow, endRow + 1):
             for column in range(beginColumn, endColumn + 1):
                 painter.drawRect(column * self.squareSize,
@@ -111,7 +115,7 @@ class CharacterWidget(QWidget):
                                  self.squareSize)
 
         fontMetrics = QFontMetrics(self.displayFont)
-        painter.setPen(Qt.black)
+        painter.setPen(QColor(220, 220, 220))  # Qt.black)
         for row in range(beginRow, endRow + 1):
             for column in range(beginColumn, endColumn + 1):
                 key = row * self.columns + column
@@ -175,11 +179,13 @@ class Window(QWidget):
         self.findSizes(self.fontCombo.currentFont())
 
         self.lineEdit = QLineEdit()
+        self.lineEdit.setReadOnly(True)
         clipboardButton = QPushButton("&To clipboard")
 
         self.clipboard = QApplication.clipboard()
 
         self.fontCombo.currentFontChanged.connect(self.findStyles)
+        self.fontCombo.activated[str].connect(self.characterWidget.updateFont)
         self.fontCombo.currentFontChanged.connect(self.findSizes)
         self.styleCombo.activated[str].connect(self.characterWidget.updateStyle)
         self.sizeCombo.currentIndexChanged[str].connect(self.characterWidget.updateSize)
@@ -196,7 +202,7 @@ class Window(QWidget):
         filterLayout.addWidget(self.styleCombo, 1)
         filterLayout.addWidget(fontMergeLabel)
         filterLayout.addWidget(self.fontMergeCheckbox, 1)
-        filterLayout.addWidget(self.closeBtn,1)
+        filterLayout.addWidget(self.closeBtn, 1)
         filterLayout.addStretch(1)
 
         lineLayout = QHBoxLayout()
@@ -269,17 +275,18 @@ def main():
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
     app = PyQtApp(sys.argv)
+    app.setStyle("Chocolaf")
 
     win = Window()
-    win.setStyleSheet(app.getStylesheet("chocolaf"))
+    #win.setStyleSheet(app.getStyleSheet("Chocolaf"))
     win.move(100, 100)
     win.show()
 
-    rect = win.geometry()
-    win1 = Window()
-    win1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
-    win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 50)
-    win1.show()
+    # rect = win.geometry()
+    # win1 = Window()
+    # win1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    # win1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 50)
+    # win1.show()
 
     return app.exec()
 

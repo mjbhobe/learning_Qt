@@ -84,36 +84,20 @@ class AnalogClock(QWidget):
         painter.drawPixmap(0, 0, self.pixMap)
 
 
-def loadStyleSheet() -> str:
-    here = os.path.dirname(os.path.abspath(__file__))
-    print(f"loasStyleSteet() -> You are {here}")
-    darkss_dir = os.path.join(here, "styles", "dark")
-    sys.path.append(darkss_dir)
-    import stylesheet_rc
-
-    darkss_path = os.path.join(darkss_dir, "stylesheet.css")
-    assert os.path.exists(darkss_path)
-    print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
-    stylesheet = ""
-    with open(darkss_path, "r") as f:
-        stylesheet = f.read()
-    return stylesheet
-
-
 def main():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = PyQtApp(sys.argv)
+    app.setStyle("Chocolaf")
 
     clock = AnalogClock()
-    clock.setStyleSheet(loadStyleSheet())
     clock.move(100, 100)
     clock.show()
 
-    rect = clock.geometry()
-    clock1 = AnalogClock()
-    clock1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
-    clock1.show()
+    # rect = clock.geometry()
+    # clock1 = AnalogClock()
+    # clock1.move(rect.left() + rect.width() // 4 + 20, rect.top() + rect.height() + 10)
+    # clock1.show()
 
     return app.exec()
 

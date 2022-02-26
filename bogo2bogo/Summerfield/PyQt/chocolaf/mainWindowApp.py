@@ -25,8 +25,8 @@ class MainWindow(QMainWindow):
 
         self.curFile = ''
 
-        self.textEdit = QTextEdit()
-        self.textEdit.setFont(QFont("Consolas", 12))
+        self.textEdit = QPlainTextEdit()
+        self.textEdit.setFont(QFont("Consolas", 11))
         self.setCentralWidget(self.textEdit)
 
         self.createActions()
@@ -77,10 +77,10 @@ class MainWindow(QMainWindow):
 
     def about(self):
         QMessageBox.about(self, "About Application",
-                          "The <b>Text Editor</b> example demonstrates how to write "
+                          "The <b>Chocolaf-TextEditor</b> example demonstrates how to write "
                           "modern GUI applications using PyQt, with a menu bar, "
                           "toolbars, and a status bar.<br/><br/>"
-                          "Author: Manish Bhobe<br/>"
+                          "Author: Manish Bhobe<br/><br/>"
                           "<small>Code released for illustration purposes only!</small>")
 
     def documentWasModified(self):
@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
                                  statusTip="Save the document under a new name",
                                  triggered=self.saveAs)
 
-        self.exitAct = QAction("E&xit", self, shortcut="Ctrl+Q",
+        self.exitAct = QAction(QIcon(':/on-off.png'), "E&xit", self, shortcut="Ctrl+Q",
                                statusTip="Exit the application", triggered=self.close)
 
         cutIcon = QIcon(':/edit_cut.png')
@@ -148,7 +148,10 @@ class MainWindow(QMainWindow):
         self.textEdit.copyAvailable.connect(self.copyAct.setEnabled)
 
     def createMenus(self):
-        self.fileMenu = self.menuBar().addMenu("&File")
+        menuBar = self.menuBar()
+        menuBar.setStyleSheet("QMenuBar {background-color: rgb(25, 32, 48);}")
+
+        self.fileMenu = menuBar.addMenu("&File")
         self.fileMenu.addAction(self.newAct)
         self.fileMenu.addAction(self.openAct)
         self.fileMenu.addAction(self.saveAct)
@@ -156,15 +159,15 @@ class MainWindow(QMainWindow):
         self.fileMenu.addSeparator()
         self.fileMenu.addAction(self.exitAct)
 
-        self.editMenu = self.menuBar().addMenu("&Edit")
+        self.editMenu = menuBar.addMenu("&Edit")
         self.editMenu.addAction(self.cutAct)
         self.editMenu.addAction(self.copyAct)
         self.editMenu.addAction(self.pasteAct)
         self.editMenu.addAction(self.wordWrapAct)
 
-        self.menuBar().addSeparator()
+        menuBar.addSeparator()
 
-        self.helpMenu = self.menuBar().addMenu("&Help")
+        self.helpMenu = menuBar.addMenu("&Help")
         self.helpMenu.addAction(self.aboutAct)
         self.helpMenu.addAction(self.aboutQtAct)
 
@@ -181,19 +184,22 @@ class MainWindow(QMainWindow):
         self.editToolBar.addAction(self.wordWrapAct)
 
     def createStatusBar(self):
-        self.statusBar().showMessage("Ready")
+        statusBar = self.statusBar()
+        statusBar.setStyleSheet("QStatusBar {background-color: rgb(25, 32, 48);}")
+        statusBar.showMessage("Ready")
 
     def readSettings(self):
-        settings = QSettings("Trolltech", "Application Example")
+        settings = QSettings("ChocoApps", "Chocolaf-TextEditor")
         pos = settings.value("pos", QPoint(200, 200))
         size = settings.value("size", QSize(400, 400))
         self.resize(size)
         self.move(pos)
 
     def writeSettings(self):
-        settings = QSettings("Trolltech", "Application Example")
+        settings = QSettings("ChocoApps", "Chocolaf-TextEditor")
         settings.setValue("pos", self.pos())
         settings.setValue("size", self.size())
+        settings.setValue("fontFamily", self.textEdit.font.famil)
 
     def maybeSave(self):
         if self.textEdit.document().isModified():
@@ -251,7 +257,7 @@ class MainWindow(QMainWindow):
         else:
             shownName = 'untitled.txt'
 
-        self.setWindowTitle("%s[*] - Application" % shownName)
+        self.setWindowTitle("%s[*] - PyQtTextEditor" % shownName)
 
     def strippedName(self, fullFileName):
         return QFileInfo(fullFileName).fileName()

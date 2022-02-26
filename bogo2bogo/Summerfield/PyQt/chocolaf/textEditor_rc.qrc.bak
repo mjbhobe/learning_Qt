@@ -62,7 +62,5 @@
 	  <file alias="zoom_to_fill.png">images/zoom_to_fill.png</file>
 
       <file alias="text_editor_icon.png">images/text_editor_icon.png</file>
-	  <file alias="image_viewer_icon.png">images/image_viewer_icon.png</file>
-	  <file alias="qt_logo.png">images/qt_logo.png</file>
   </qresource>
 </RCC>
