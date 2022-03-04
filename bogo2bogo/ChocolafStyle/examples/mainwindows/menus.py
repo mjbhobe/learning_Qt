@@ -17,8 +17,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtPrintSupport import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
 
 

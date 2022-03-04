@@ -15,8 +15,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class MoviePlayer(QWidget):
@@ -56,7 +58,8 @@ class MoviePlayer(QWidget):
         self.resize(400, 400)
 
     def open(self):
-        fileName, _ = QFileDialog.getOpenFileName(self, "Open a Movie",
+        videosPath = QStandardPaths.standardLocations(QStandardPaths.MoviesLocation)
+        fileName, _ = QFileDialog.getOpenFileName(self, "Open a Movie", videosPath[-1],
                                                   self.currentMovieDirectory)
 
         if fileName:
@@ -175,7 +178,7 @@ def main():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = PyQtApp(sys.argv)
-    app.setStyle("Fusion")
+    app.setStyle("QDarkStyle-dark")
 
     win = MoviePlayer()
     # win.setStyleSheet(app.getStyleSheet("Chocolaf"))

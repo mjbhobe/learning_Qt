@@ -19,14 +19,17 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from sklearn.manifold import trustworthiness
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class WidgetGallery(QWidget):
     def __init__(self, parent: QWidget = None):
         super(WidgetGallery, self).__init__(parent)
         self.buttonsGroupBox = self.createButtonsGroupBox()
+        self.itemViewTabWidget = self.createItemViewTabWidget()
         self.simpleWidgetsGroupBox = self.createSimpleWidgetsGroupBox()
         self.toolBox = self.createTextToolBox()
 
@@ -40,6 +43,7 @@ class WidgetGallery(QWidget):
         groupsLayout = QGridLayout()
         groupsLayout.addWidget(self.buttonsGroupBox, 0, 0)
         groupsLayout.addWidget(self.simpleWidgetsGroupBox, 0, 1)
+        groupsLayout.addWidget(self.itemViewTabWidget, 1, 0)
         groupsLayout.addWidget(self.toolBox, 1, 1)
 
         mainLayout = QVBoxLayout()
@@ -185,6 +189,39 @@ class WidgetGallery(QWidget):
         layout.addWidget(widget)
         return ret
 
+    def createItemViewTabWidget(self) -> QTabWidget:
+        result = QTabWidget()
+        result.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Ignored)
+
+        treeView = QTreeView()
+        fileSystemModel = QFileSystemModel(treeView)
+        fileSystemModel.setRootPath(QDir.rootPath())
+        treeView.setModel(fileSystemModel)
+
+        tableWidget = QTableWidget()
+        tableWidget.setRowCount(10)
+        tableWidget.setColumnCount(10)
+
+        listModel = QStandardItemModel(0, 1, result)
+        dirOpenIcon = QIcon(":/qt-project.org/styles/commonstyle/images/diropen-128.png")
+        computerIcon = QIcon(":/qt-project.org/styles/commonstyle/images/computer-32.png")
+
+        listModel.appendRow(QStandardItem(dirOpenIcon, "Directory"))
+        listModel.appendRow(QStandardItem(computerIcon, "Compute"))
+
+        listView = QListView()
+        listView.setModel(listModel)
+
+        iconModelListView = QListView()
+        iconModelListView.setViewMode(QListView.IconMode)
+        iconModelListView.setModel(listModel)
+
+        result.addTab(self.embedIntoHBoxLayout(treeView), "&Tree View")
+        result.addTab(self.embedIntoHBoxLayout(tableWidget), "T&able")
+        result.addTab(self.embedIntoHBoxLayout(listView), "&List")
+        result.addTab(self.embedIntoHBoxLayout(iconModelListView), "&Icon Model List")
+        return result
+
     def createTextToolBox(self) -> QToolBox:
         textToolBox = QToolBox()
 
@@ -211,7 +248,7 @@ class WidgetGallery(QWidget):
         textToolBox.addItem(self.embedIntoHBoxLayout(self.systemInfoTextBrowser), "Text Browser")
         return textToolBox
 
-    @staticmethod
+    @ staticmethod
     def highDpiScaleFactorRoundingPolicy():
         policy = QGuiApplication.highDpiScaleFactorRoundingPolicy()
         if policy[-1] == ')':
@@ -241,26 +278,11 @@ class WidgetGallery(QWidget):
         pass
 
 
-def loadStyleSheet() -> str:
-    here = os.path.dirname(os.path.abspath(__file__))
-    print(f"loadStyleSteet() -> You are {here}")
-    darkss_dir = os.path.join(here, "styles", "dark")
-    sys.path.append(darkss_dir)
-    import stylesheet_rc
-
-    darkss_path = os.path.join(darkss_dir, "stylesheet.css")
-    assert os.path.exists(darkss_path)
-    print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
-    stylesheet = ""
-    with open(darkss_path, "r") as f:
-        stylesheet = f.read()
-    return stylesheet
-
-
 def main():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = PyQtApp(sys.argv)
+    app.setStyle("Fusion")
 
     w = WidgetGallery()
     w.setStyleSheet(app.getStyleSheet("Chocolaf"))

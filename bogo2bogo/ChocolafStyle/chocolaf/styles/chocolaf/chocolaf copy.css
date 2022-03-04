@@ -1,13 +1,13 @@
 /************************************************************************
  *  ChocoLaf for Qt/PyQt - dark chocolate style theme for Qt & PyQt apps
- *  [based on QDarkStyle stylesheet by
+ *  [based on QDarkStyle stylesheet by 
  *
  *  @author : Manish Bhobe
  *  My experiments with Python, PyQt, Data Science & ML
  *  Code is made available as-is. Use at your own risk!!
  ***********************************************************************/
 
-/*
+/* 
   See Qt documentation for examples of how to Theme widgets
   - https://doc.qt.io/qt-5/stylesheet.html
   - https://doc.qt.io/qt-5/stylesheet-reference.html
@@ -18,10 +18,8 @@
   * [Y] - Global
   * [Y] - QWidget
   * [Y] - QMainWindow
-  * [Y] - QMDiArea
   * [Y] - QToolTip
   * [Y] - QStatusBar
-  * [Y] - QToolBar
   * [Y] - QCheckBox
   * [Y] - QGroupBox
   * [Y] - QRadioButton
@@ -35,6 +33,7 @@
   * [Y] - QPlainTextEdit
   * [Y] - QSizeGrip
   * [ ] - QStackWidget
+  * [Y] - QToolBar
   * [Y] - QAbstractSpinBox
   * [Y] - QLabel
   * [Y] - QTextBrowser
@@ -44,7 +43,7 @@
   * [Y] - QProgressBar
   * [Y] - QPushButton
   * [Y] - QToolButton
-  * [Y] - QCommandLinkButton
+  * [Y] - QCommandLinkButton 
   * [Y] - QComboBox
   * [Y] - QSlider
   * [Y] - QLineEdit
@@ -58,7 +57,7 @@
   * [Y] - QToolBox
   * [ ] - QFrame
   * [ ] - QSplitter
-  * [ ] - QDateEdit
+  * [ ] - QDateEdit 
   * [ ] - QTimeEdit
   * [Y] - QAbstractView
   * [ ] - QPlotWidget
@@ -92,7 +91,7 @@ QWidget {
   padding: 0px;
   color: rgb(220, 220, 220);
   selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175); */
-  selection-color:  rgb(220, 220, 220);
+  selection-color:  rgb(220, 220, 220); 
 }
 
 QWidget:disabled {
@@ -131,7 +130,7 @@ QMainWindow::separator:horizontal {
   min-width: 8px; /* 5px; */
   margin-top: 2px;
   margin-bottom: 2px;
-  image: url(":/toolbar_separator_vertical.png");
+  image: url(":/toolbar_separator_vertical.png"); 
 }
 
 QMainWindow::separator:vertical {
@@ -181,7 +180,7 @@ QStatusBar::item {
 
 QStatusBar QToolTip {
   background-color: rgb(224, 227, 176);
-  border: none;
+  border: none; 
   color: rgb(0, 0, 0);
   /* Remove padding, for fix combo box tooltip */
   padding: 0px;
@@ -203,12 +202,12 @@ QToolBar {
   border-top: none; /* 1px solid rgb(102, 102, 102); */ /* #19232D; */
   padding: 6px;
   font-weight: bold;
-  spacing: 4px;
+  spacing: 2px;
 }
 
 QToolBar:disabled {
   /* Fixes #272 */
-  background-color: rgb(42, 42, 42); /* transparent; */ /* rgb(32, 32, 32); */
+  background-color: transparent; /* rgb(32, 32, 32); */
 }
 
 QToolBar::handle:horizontal {
@@ -244,7 +243,7 @@ QToolButton#qt_toolbar_ext_button {
 
 QGroupBox {
   font-weight: bold;
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */
+  background-color: transparent; /* rgb(54, 54, 54); */
   border: 1px solid rgb(127, 127, 127);
   border-radius: 4px;
   padding: 2px;
@@ -310,34 +309,34 @@ QPushButton {
     min-height: 1.2em;
     min-width: 4em;
     /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
+    padding-right: 4px; 
 }
 
 QPushButton:disabled {
-    background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+    background-color: transparent; /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
     color: rgb(127, 127, 127);
     border: 1px solid rgb(127, 127, 127);
     border-radius: 4px;
     /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
+    padding-right: 4px; 
 }
 
 QPushButton:flat {
-    background-color: rgb(42, 42, 42); /* transparent */
+    background-color: transparent;
     color: rgb(220, 220, 220);
     border: none;
     border-radius: 4px;
     /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
+    padding-right: 4px; 
 }
 
 QPushButton:hover, QPushButton:flat:hover {
@@ -365,9 +364,9 @@ QPushButton:checked {
     border: 1px solid rgb(127, 127, 127);
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -376,9 +375,9 @@ QPushButton:checked:selected, QPushButton:checked:hover {
     border-color:  rgb(0, 114, 198); /* rgb(75, 110, 175); */
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -391,9 +390,9 @@ QPushButton:checked:disabled {
     color: rgb(127, 127, 127);
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -402,9 +401,9 @@ QPushButton:default {
     border: 1px solid rgb(127, 127, 127);
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -413,9 +412,9 @@ QPushButton:default:hover {
     border: 1px solid rgb(255, 255, 255); /* rgb(75, 110, 175); */
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -424,9 +423,9 @@ QPushButton:default:pressed {
     border: 1px solid rgb(46, 144, 232);
     border-radius: 4px;
       /* padding: 2px; */
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
+    padding-top: 2px; 
+    padding-bottom: 2px; 
+    padding-left: 4px; 
     padding-right: 4px;
 }
 
@@ -448,7 +447,7 @@ QDialogButtonBox QPushButton {
 /*********************************/
 
 QAbstractSpinBox {
-    background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /* rgb(54, 54, 54); */
+    background-color: transparent; /* rgb(54, 54, 54); */ /* rgb(54, 54, 54); */
     border: 1px solid rgb(127, 127, 127);
     color: rgb(220, 220, 220);
     selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175); */
@@ -475,7 +474,7 @@ QAbstractSpinBox:selected {
 }
 
 QAbstractSpinBox:up-button {
-    background-color: rgb(42, 42, 42); /* transparent *//* rgb(59, 59, 59); */
+    background-color: transparent rgb(54, 54, 54); /* rgb(59, 59, 59); */
     subcontrol-origin: border;
     subcontrol-position: top right;
     border-left: 1px solid rgb(127, 127, 127);
@@ -508,7 +507,7 @@ QAbstractSpinBox::up-arrow:hover {
 }
 
 QAbstractSpinBox:down-button {
-    background-color: rgb(42, 42, 42); /* transparent */  /* rgb(59, 59, 59); */
+    background-color: transparent rgb(54, 54, 54);  /* rgb(59, 59, 59); */
     subcontrol-origin: border;
     subcontrol-position: bottom right;
     border-left: 1px solid rgb(127, 127, 127);
@@ -535,7 +534,7 @@ QAbstractSpinBox::down-arrow:hover {
 /*********************************/
 
 QSizeGrip {
-  background: rgb(42, 42, 42); /* transparent */
+  background: transparent;
   width: 20px;
   height: 20px;
   image: url(":/window_grip.png");
@@ -546,7 +545,7 @@ QSizeGrip {
 /*********************************/
 
 QDateEdit, QDateTimeEdit {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /* rgb(54, 54, 54); */
+  background-color: transparent; /* rgb(54, 54, 54); */ /* rgb(54, 54, 54); */
   border: 1px solid rgb(127, 127, 127);
   color: rgb(220, 220, 220);
   selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175); */
@@ -576,18 +575,17 @@ QDateEdit::down-arrow, QDateTimeEdit::down-arrow {
   width: 8px;
 }
 
-QDateEdit::down-arrow:on, QDateEdit::down-arrow:hover, QDateEdit::down-arrow:focus,
-QDateTimeEdit::down-arrow:on, QDateTimeEdit::down-arrow:hover,
-QDateTimeEdit::down-arrow:focus {
+QDateEdit::down-arrow:on, QDateEdit::down-arrow:hover, QDateEdit::down-arrow:focus, QDateTimeEdit::down-arrow:on, QDateTimeEdit::down-arrow:hover, QDateTimeEdit::down-arrow:focus {
   image: url(":/arrow_down.png");
 }
 
 QDateEdit QAbstractItemView, QDateTimeEdit QAbstractItemView {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   border-radius: 4px;
   border: 1px solid rgb(127,127,127);
   selection-background-color: rgb(0, 114, 198);
 }
+
 
 /*********************************/
 /* QAbstractItemView             */
@@ -644,7 +642,7 @@ https://stackoverflow.com/questions/14581498/qt-stylesheet-for-hline-vline-color
 }
 
 /*********************************/
-/* QAbstractScrollArea           */
+/* QAbstractScrollArea           */ 
 /*********************************/
 
 QAbstractScrollArea {
@@ -656,7 +654,7 @@ QAbstractScrollArea {
 }
 
 QAbstractScrollArea:disabled {
-  background-color: rgb(42, 42, 42);
+  background-color: rgb(42, 42, 42); 
   color: rgb(127, 127, 127);
 }
 
@@ -670,11 +668,11 @@ QAbstractScrollArea:focus {
 } */
 
 /*********************************/
-/* QScrollArea                   */
+/* QScrollArea                   */ 
 /*********************************/
 
 QScrollArea QWidget QWidget:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */
+  background-color: transparent; /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */
   color: rgb(127, 127, 127);
 }
 
@@ -683,7 +681,7 @@ QScrollArea QWidget QWidget:disabled {
 /*********************************/
 
 QLabel {
-    background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */
+    background-color: transparent; /* rgb(54, 54, 54); */
     color: rgb(220, 220, 220);
     border: none; /* 0px solid rgb(127, 127, 127); */
     padding: 2px;
@@ -691,7 +689,7 @@ QLabel {
 }
 
 QLabel:disabled {
-    background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */
+    background-color: transparent; /* rgb(54, 54, 54); */
     border: none; /* 0px solid rgb(127, 127, 127); */
     color: rgb(127, 127, 127);
 }
@@ -704,7 +702,7 @@ QLabel:disabled {
 /* @see: https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qcombobox */
 
 QComboBox {
-    background-color: rgb(42, 42, 42); /* transparent */
+    background-color: transparent;
     color: rgb(220, 220, 220);
     border: 1px solid rgb(127, 127, 127);
     border-radius: 4px;
@@ -732,11 +730,11 @@ QComboBox:!editable:on, QComboBox::drop-down:editable:on {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0 rgb(52, 52, 52), stop: 0.4 rgb(65, 65, 65),
                                 stop: 0.5 rgb(64, 64, 64), stop: 1.0 rgb(92, 92, 92));
-}
+} 
 */
 
 QComboBox:disabled {
-    background-color: rgb(42, 42, 42); /* transparent */
+    background-color: transparent;
     border-color: rgb(127, 127, 127);
     color: rgb(127, 127, 127);
 }
@@ -760,19 +758,19 @@ QComboBox:on {
 QComboBox::indicator {
     border: none;
     border-radius: 0;
-    background-color: rgb(42, 42, 42); /* transparent */
-    selection-background-color: rgb(42, 42, 42); /* transparent */
-    color: rgb(42, 42, 42); /* transparent */
-    selection-color: rgb(42, 42, 42); /* transparent */
-}
+    background-color: transparent;
+    selection-background-color: transparent;
+    color: transparent;
+    selection-color: transparent;
+} 
 
 QComboBox::indicator:alternate {
-    background: rgb(54, 54, 54);
+    background: rgb(54, 54, 54); 
 }
 
 /*
 QComboBox::item:alternate {
-    background: rgb(64, 64, 64);
+    background: rgb(64, 64, 64); 
 } */
 
 QComboBox::item:checked {
@@ -822,10 +820,10 @@ QComboBox QAbstractItemView {
     border: 1px solid rgb(127, 127, 127);
     selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175); */
     border-radius: 2px;
-}
+} 
 
 QComboBox QAbstractView::item {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   color: rgb(220, 220, 220);
 }
 
@@ -836,7 +834,7 @@ QComboBox QAbstractItemView::item:selected {
 
 /*
 QComboBox QAbstractItemView:alternate {
-  background: rgb(83, 88, 90);
+  background: rgb(83, 88, 90); 
 } */
 
 /*********************************/
@@ -848,7 +846,8 @@ QScrollBar:horizontal {
     margin: 2px 16px 2px 16px;
     border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
-    background-color: rgb(64, 64, 64);
+    background-color: rgb(64, 64, 64); 
+    /* background-color: transparent; */
 }
 
 /* rgb(75, 110, 175);  */
@@ -876,7 +875,8 @@ QScrollBar:vertical {
     margin: 16px 2px 16px 2px;
     border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
-    background-color: rgb(64, 64, 64);
+    background-color: rgb(64, 64, 64); 
+    /* background-color: transparent; */
 }
 
 QScrollBar::handle:vertical {
@@ -1029,18 +1029,18 @@ QLineEdit:selected /* , QTextEdit:selected */ {
 }
 
 /*********************************/
-/* QTextBrowser                  */
+/* QTextBrowser                  */ 
 /*********************************/
 
 QTextBrowser {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   border: none; /* 1px solid rgb(0, 114, 198); */
   color: rgb(220, 220, 220);
   border-radius: 4px;
 }
 
 QTextBrowser:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   border: none; /* 1px solid rgb(127,127,127); */
   color: rgb(127,127,127);
   border-radius: 4px;
@@ -1052,11 +1052,11 @@ QTextBrowser:hover, QTextBrowser:!hover, QTextBrowser:selected, QTextBrowser:pre
 }
 
 /*********************************/
-/* QProgressBar                  */
+/* QProgressBar                  */ 
 /*********************************/
 
 QProgressBar {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(69, 73, 74); */
+  background-color: transparent; /* rgb(69, 73, 74); */
   border: 1px solid rgb(127, 127, 127);
   /*color: rgb(200, 200, 200); */  /* color from QWidget */
   border-radius: 4px;
@@ -1094,12 +1094,12 @@ QProgressBar:selected {
 }
 
 /*********************************/
-/* QSlider                       */
+/* QSlider                       */ 
 /*********************************/
 
 /*
 QSlider:disabled {
-  background: rgb(60, 63, 65);
+  background: rgb(60, 63, 65); 
 } */
 
 QSlider:focus {
@@ -1145,12 +1145,12 @@ QSlider::groove:horizontal:disabled {
 }*/
 
 QSlider::sub-page:horizontal:disabled {
-  background: rgb(54, 88, 128);
+  background: rgb(54, 88, 128); 
   border: 1px solid rgb(54, 88, 128); /*rgb(127, 127, 127);*/
 }
 
 QSlider::add-page:vertical:disabled {
-  background:  rgb(54, 88, 128);
+  background:  rgb(54, 88, 128); 
   border: 1px solid rgb(54, 88, 128); /*rgb(127, 127, 127);*/
 }
 
@@ -1160,7 +1160,7 @@ QSlider::handle:horizontal {
   width: 8px;
   height: 8px;
   margin: -8px 0px;
-  border-radius: 4px;
+  border-radius: 4px;   
 }
 
 QSlider::handle:vertical {
@@ -1193,11 +1193,11 @@ QSlider::handle:vertical:focus {
 }
 
 /*********************************/
-/* QCheckBox                     */
+/* QCheckBox                     */ 
 /*********************************/
 QCheckBox {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
-  color: rgb(220, 220, 220);
+  background-color: transparent; /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  color: rgb(220, 220, 220); 
   spacing: 4px;
   outline: none;
   padding-top: 4px;
@@ -1209,7 +1209,7 @@ QCheckBox:focus {
 }
 
 QCheckBox QWidget:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /* rgb(62, 62, 62); */ /* rgb(59, 59, 59); */ /* rgb(60, 63, 65); */
+  background-color: transparent; /* rgb(54, 54, 54); */ /* rgb(62, 62, 62); */ /* rgb(59, 59, 59); */ /* rgb(60, 63, 65); */
   color: rgb(127, 127, 127);
 }
 
@@ -1223,9 +1223,7 @@ QCheckBox::indicator:unchecked {
   image: url(":/checkbox_unchecked.png");
 }
 
-QCheckBox::indicator:unchecked:hover,
-QCheckBox::indicator:unchecked:focus,
-QCheckBox::indicator:unchecked:pressed {
+QCheckBox::indicator:unchecked:hover, QCheckBox::indicator:unchecked:focus, QCheckBox::indicator:unchecked:pressed {
   border: none;
   image: url(":/checkbox_unchecked_focus.png");
 }
@@ -1238,9 +1236,7 @@ QCheckBox::indicator:checked {
   image: url(":/checkbox_checked.png");
 }
 
-QCheckBox::indicator:checked:hover,
-QCheckBox::indicator:checked:focus,
-QCheckBox::indicator:checked:pressed {
+QCheckBox::indicator:checked:hover, QCheckBox::indicator:checked:focus, QCheckBox::indicator:checked:pressed {
   border: none;
   image: url(":/checkbox_checked_focus.png");
 }
@@ -1257,19 +1253,17 @@ QCheckBox::indicator:indeterminate:disabled {
   image: url(":/checkbox_indeterminate_disabled.png");
 }
 
-QCheckBox::indicator:indeterminate:focus,
-QCheckBox::indicator:indeterminate:hover,
-QCheckBox::indicator:indeterminate:pressed {
+QCheckBox::indicator:indeterminate:focus, QCheckBox::indicator:indeterminate:hover, QCheckBox::indicator:indeterminate:pressed {
   image: url(":/checkbox_indeterminate_focus.png");
 }
 
 /*********************************/
-/* QRadioButton                  */
+/* QRadioButton                  */ 
 /*********************************/
 
 QRadioButton {
-  background-color: rgb(42, 42, 42); /* transparent *//* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
-  color: rgb(220, 220, 220);
+  background-color: transparent; /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  color: rgb(220, 220, 220); 
   spacing: 4px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1282,15 +1276,15 @@ QRadioButton:focus {
 }
 
 QRadioButton:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /* rgb(62, 62, 62); */ /* rgb(59, 59, 59); */ /* rgb(60, 63, 65); */
+  background-color: transparent; /* rgb(54, 54, 54); */ /* rgb(62, 62, 62); */ /* rgb(59, 59, 59); */ /* rgb(60, 63, 65); */
   color: rgb(127, 127, 127);
   border: none;
   outline: none;
 }
 
 QRadioButton QWidget {
-  background-color: rgb(42, 42, 42); /* transparent */ /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
-  color: rgb(220, 220, 220);
+  background-color: transparent; /* rgb(54, 54, 54); */ /*rgb(62, 62, 62); */ /*rgb(59, 59, 59); */ /*rgb(60, 63, 65); */
+  color: rgb(220, 220, 220); 
   spacing: 4px;
   padding: 0px;
   outline: none;
@@ -1309,9 +1303,7 @@ QRadioButton::indicator:unchecked {
   image: url(":/radio_unchecked.png");
 }
 
-QRadioButton::indicator:unchecked:hover,
-QRadioButton::indicator:unchecked:focus,
-QRadioButton::indicator:unchecked:pressed {
+QRadioButton::indicator:unchecked:hover, QRadioButton::indicator:unchecked:focus, QRadioButton::indicator:unchecked:pressed {
   border: none;
   outline: none;
   image: url(":/radio_unchecked_focus.png");
@@ -1327,9 +1319,7 @@ QRadioButton::indicator:checked {
   image: url(":/radio_checked.png");
 }
 
-QRadioButton::indicator:checked:hover,
-QRadioButton::indicator:checked:focus,
-QRadioButton::indicator:checked:pressed {
+QRadioButton::indicator:checked:hover, QRadioButton::indicator:checked:focus, QRadioButton::indicator:checked:pressed {
   border: none;
   outline: none;
   image: url(":/radio_checked_focus.png");
@@ -1341,7 +1331,7 @@ QRadioButton::indicator:checked:disabled {
 }
 
 /*********************************/
-/* QMenuBar                      */
+/* QMenuBar                      */ 
 /*********************************/
 
 QMenuBar {
@@ -1363,7 +1353,7 @@ QMenuBar::item {
 
 QMenuBar::item:selected {
   padding: 4px;
-  background: rgb(42, 42, 42); /* transparent */
+  background: transparent;
   border: 0px solid rgb(102, 102, 102);
   background-color: rgb(0, 114, 198);
 }
@@ -1378,11 +1368,11 @@ QMenuBar::item:pressed {
 }
 
 /*********************************/
-/* QMenu                         */
+/* QMenu                         */ 
 /*********************************/
 
 QMenu {
-  background-color: rgb(45, 45, 45); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
+  background-color: rgb(45, 45, 45); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */ 
   color: rgb(220, 220, 220);
   margin: 0px;
   border: 1px solid rgb(83, 88, 90); /* rgb(64, 64, 64); */ /*rgb(127, 127, 127);*/
@@ -1399,7 +1389,7 @@ QMenu::separator {
 }
 
 QMenu::item {
-  background-color: rgb(45, 45, 45); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
+  background-color: rgb(45, 45, 45); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */ 
   padding: 6px 24px 6px 24px;
   border: 1px transparent rgb(220, 220, 220);
 }
@@ -1503,12 +1493,12 @@ QMenu::right-arrow {
 }
 
 /*********************************/
-/* QToolButton                   */
+/* QToolButton                   */ 
 /*********************************/
 
 QToolButton {
   background-color: transparent; /* rgb(68, 68, 68); */ /* rgb(76, 80, 82); *//*#455364;*/
-  color: rgb(220, 220, 220);
+  color: rgb(220, 220, 220); 
   /* border-color: rgb(127, 127, 127); */
   border-radius: 4px;
   padding: 2px;
@@ -1526,12 +1516,12 @@ QToolButton:disabled {
 QToolButton:hover {
   background-color: rgb(83, 88, 90); /*#54687A;*/
   border: 1px solid rgb(127, 127, 127); /*rgb(0, 114, 198); */ /* rgb(75, 110, 175); */
-  color: rgb(220, 220, 220);
+  color: rgb(220, 220, 220); 
 }
 
 QToolButton:pressed {
   background-color: rgb(91, 95, 98);
-  border: 1px solid rgb(127, 127, 127);
+  border: 1px solid rgb(127, 127, 127); 
   border-radius: 4px;
 }
 
@@ -1557,7 +1547,7 @@ QToolButton:checked:selected {
 
 QToolButton:checked:disabled {
   background-color: rgb(91, 95, 98);
-  color: rgb(127, 127, 127);
+  color: rgb(127, 127, 127); 
   border-radius: 4px;
   padding: 2px;
   outline: none;
@@ -1565,7 +1555,7 @@ QToolButton:checked:disabled {
 
 QToolButton:checked:hover {
   background-color: rgb(83, 88, 90); /*#54687A;*/
-  color: rgb(220, 220, 220);
+  color: rgb(220, 220, 220); 
   border: 1px solid rgb(127, 127, 127); /* rgb(75, 110, 175); */
 }
 
@@ -1640,10 +1630,10 @@ QToolButton::menu-arrow:hover {
 }
 
 /*********************************/
-/* QCommandLinkButton            */
+/* QCommandLinkButton            */ 
 /*********************************/
 QCommandLinkButton {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   border: 1px solid rgb(127, 127, 127);
   color: rgb(220, 220, 220);
   border-radius: 4px;
@@ -1652,12 +1642,12 @@ QCommandLinkButton {
 }
 
 QCommandLinkButton:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   color: rgb(127, 127, 127);
 }
 
 /*********************************/
-/* QToolBox                      */
+/* QToolBox                      */ 
 /*********************************/
 
 QToolBox {
@@ -1730,14 +1720,14 @@ QToolBox QScrollArea QWidget QWidget {
 /* QGraphicsView                 */
 /*********************************/
 QGraphicsView {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   border: 1px solid rgb(127, 127, 127); /* #455364; */
   color: rgb(220, 220, 220); /* #E0E1E3; */
   border-radius: 4px;
 }
 
 QGraphicsView:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   border: 1px solid rgb(127, 127, 127); /* #455364; */
   color: rgb(127, 127, 127); /* #9DA9B5; */
   border-radius: 4px;
@@ -1749,13 +1739,13 @@ QGraphicsView:hover, QGraphicsView:!hover, QGraphicsView:selected, QGraphicsView
 
 
 /*********************************/
-/* QCalendarWidget               */
+/* QCalendarWidget               */ 
 /*********************************/
 
 /* @see: https://stackoverflow.com/questions/57049775/how-to-customize-qcalendarwidget */
 
 QCalendarWidget {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   color: rgb(220, 220, 220);
   border: 1px solid rgb(127, 127, 127);
   border-radius: 4px;
@@ -1763,13 +1753,13 @@ QCalendarWidget {
 
 /* the calendar's month & year cycler */
 QCalendarWidget QToolButton {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   color: rgb(220, 220, 220);
   icon-size: 30px;
 }
 
 QCalendarWidget QMenu {
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   color: rgb(220, 220, 220);
 }
 
@@ -1784,24 +1774,17 @@ QCalendarWidget QAbstractItemView:disabled {
   color: rgb(102, 102, 120);
 }
 
-/*
-QWidget#qt_weekday_header
-{
-    background-color: #424242;
-    border: 1px solid #4f4f4f;
-}
-*/
 
 /*********************************/
 /* QLCDNumber                    */
 /*********************************/
 QLCDNumber {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   color: rgb(220, 220, 220); /* #E0E1E3; */
 }
 
 QLCDNumber:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   color: rgb(127, 127, 127); /* #9DA9B5; */
 }
 
@@ -1833,7 +1816,7 @@ QTabWidget::pane {
 
 QTabWidget::pane:selected {
   /* background-color: rgb(83, 88, 90); */ /* #455364; */
-  background-color: rgb(42, 42, 42); /* transparent */
+  background-color: transparent;
   border: 1px solid rgb(127, 127, 127); /* #346792; */
 }
 
@@ -1870,7 +1853,7 @@ QTabBar::tab:!selected {
 }
 
 /*********************************/
-/* QHeaderView                   */
+/* QHeaderView                   */ 
 /*********************************/
 QHeaderView {
   background-color: rgb(42, 42, 42); /* #455364; */
@@ -1949,7 +1932,7 @@ QHeaderView::up-arrow {
 }
 
 /**********************************/
-/* QTreeView QListView QTableView */
+/* QTreeView QListView QTableView */ 
 /**********************************/
 QTreeView:branch:selected, QTreeView:branch:hover {
   background: url(":/transparent.png");
@@ -2049,7 +2032,7 @@ QTreeView,
 QListView,
 QTableView,
 QColumnView {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   border: 1px solid rgb(127, 127, 127); /* #455364; */
   color: rgb(220, 220, 220); /* #E0E1E3; */
   gridline-color: rgb(102, 102, 102); /* #455364; */
@@ -2060,7 +2043,7 @@ QTreeView:disabled,
 QListView:disabled,
 QTableView:disabled,
 QColumnView:disabled {
-  background-color: rgb(42, 42, 42); /* transparent */ /* #19232D; */
+  background-color: transparent; /* #19232D; */
   color: rgb(127, 127, 127); /* #9DA9B5; */
 }
 
@@ -2129,3 +2112,8 @@ QAbstractView:selected {
   background: rgb(0, 114, 198); /* #346792; */
   color: rgb(220, 220, 220); /* #455364; */
 }
+
+
+
+
+

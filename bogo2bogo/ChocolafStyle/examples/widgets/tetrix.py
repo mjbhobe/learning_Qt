@@ -17,8 +17,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 NoShape, ZShape, SShape, LineShape, TShape, SquareShape, LShape, MirroredLShape = range(8)
@@ -470,13 +472,15 @@ def main():
 
     win = TetrixWindow()
     win.setStyleSheet(app.getStyleSheet("Chocolaf"))
+    win.setWindowTitle("Tetrix - Chocolaf Theme")
     win.move(50, 50)
     win.show()
 
     rect = win.geometry()
     win1 = TetrixWindow()
     win1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
-    win1.move(rect.left() + rect.width() // 2 + 20, rect.top() + rect.height() + 10)
+    win1.setWindowTitle("Tetrix - QDarkStyle(dark) Theme")
+    win1.move(rect.left() + rect.width() + 20, rect.top() + 10)
     win1.show()
 
     return app.exec()

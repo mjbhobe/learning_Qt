@@ -14,8 +14,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
 
 
@@ -407,7 +409,7 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
 
     app = PyQtApp(sys.argv)
-    app.setStyle("Chocolaf")
+    app.setStyle("QDarkStyle-dark")
     mainWin = MainWindow()
     mainWin.show()
     sys.exit(app.exec())

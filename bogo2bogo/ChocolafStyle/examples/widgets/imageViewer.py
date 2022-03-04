@@ -17,8 +17,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtPrintSupport import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
 
 
@@ -35,12 +37,13 @@ class ImageViewer(QMainWindow):
         self.imageLabel.setScaledContents(True)
 
         self.scrollArea = QScrollArea()
-        self.scrollArea.setBackgroundRole(QPalette.Dark)
+        self.scrollArea.setBackgroundRole(QPalette.Base)
         self.scrollArea.setWidget(self.imageLabel)
         self.setCentralWidget(self.scrollArea)
 
         self.createActions()
         self.createMenus()
+        self.createToolBars()
 
         self.statusBar()
 
@@ -185,6 +188,17 @@ class ImageViewer(QMainWindow):
         self.menuBar().addMenu(self.fileMenu)
         self.menuBar().addMenu(self.viewMenu)
         self.menuBar().addMenu(self.helpMenu)
+
+    def createToolBars(self):
+        fileToolBar = self.addToolBar("File")
+        fileToolBar.addAction(self.openAct)
+        fileToolBar.addAction(self.printAct)
+        fileToolBar.addAction(self.exitAct)
+
+        viewToolBar = self.addToolBar("View")
+        viewToolBar.addAction(self.zoomInAct)
+        viewToolBar.addAction(self.zoomOutAct)
+        viewToolBar.addAction(self.fitToWindowAct)
 
     def updateActions(self):
         self.zoomInAct.setEnabled(not self.fitToWindowAct.isChecked())

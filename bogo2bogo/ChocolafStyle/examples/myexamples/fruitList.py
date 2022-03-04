@@ -12,8 +12,10 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 
 FRUITS = ["Banana", "Apple", "Elderberry", "Clementine", "Fig",
           "Guava", "Mango", "Honeydew Melon", "Date", "Watermelon",

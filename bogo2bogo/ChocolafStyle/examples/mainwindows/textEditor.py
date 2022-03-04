@@ -1,6 +1,8 @@
 """
 * textEditor.py - simple text editor in PyQt
-* @author: Manish Bhobe
+* @author (Chocolaf): Manish Bhobe
+*
+* PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
 * Use at your own risk!!
@@ -14,8 +16,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
 
 
@@ -34,7 +38,7 @@ class Example(QMainWindow):
         self.setCentralWidget(self.textEdit)
         self.textEdit.setText(" ")
 
-        exitAction = QAction(QIcon(':/edit_delete.png'), 'Exit', self)
+        exitAction = QAction(QIcon(':/on-off.png'), 'Exit', self)
         exitAction.setShortcut('Ctrl+Q')
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(self.close)

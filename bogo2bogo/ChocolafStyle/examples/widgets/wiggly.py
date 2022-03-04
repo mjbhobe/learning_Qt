@@ -17,8 +17,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtPrintSupport import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-from pyqt5_utils import PyQtApp
+# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
+# from pyqt5_utils import PyQtApp
+import chocolaf
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class WigglyWidget(QWidget):
@@ -87,10 +89,10 @@ class Dialog(QDialog):
 
         lineEdit.textChanged.connect(wigglyWidget.setText)
 
-        lineEdit.setText("Hello world!")
+        lineEdit.setText("PyQt5 with Chocolaf Theme")
 
         self.setWindowTitle("Wiggly")
-        self.resize(360, 145)
+        self.resize(650, 200)
 
 
 def main():
