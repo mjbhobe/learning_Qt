@@ -1,8 +1,9 @@
 """
-* wiggly.py - wiggly widget in a QDialog using Chocolaf theme
+* findDialog.py - implements rudimentary FindDialog
 * @author (Chocolaf): Manish Bhobe
 *
-* PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets
+* PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets, with changes done for
+* displaying widgets using Chocolaf & other styles
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
 * Use at your own risk!!
@@ -52,7 +53,7 @@
 import os
 import pathlib
 import sys
-import unicodedata
+import webbrowser
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -65,91 +66,69 @@ import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 
 
-class WigglyWidget(QWidget):
+class FindDialog(QDialog):
     def __init__(self, parent=None):
-        super(WigglyWidget, self).__init__(parent)
+        super(FindDialog, self).__init__(parent)
 
-        self.setBackgroundRole(QPalette.Midlight)
-        self.setAutoFillBackground(True)
-
-        newFont = self.font()
-        newFont.setPointSize(newFont.pointSize() + 20)
-        self.setFont(newFont)
-
-        self.timer = QBasicTimer()
-        self.text = ''
-
-        self.step = 0
-        self.timer.start(60, self)
-
-    def paintEvent(self, event):
-        sineTable = (0, 38, 71, 92, 100, 92, 71, 38, 0, -38, -71, -92, -100, -92, -71, -38)
-
-        metrics = QFontMetrics(self.font())
-        x = (self.width() - metrics.width(self.text)) / 2
-        y = (self.height() + metrics.ascent() - metrics.descent()) / 2
-        color = QColor()
-
-        painter = QPainter(self)
-
-        for i, ch in enumerate(self.text):
-            index = (self.step + i) % 16
-            color.setHsv((15 - index) * 16, 255, 191)
-            painter.setPen(color)
-            painter.drawText(x, y - ((sineTable[index] * metrics.height()) / 400), ch)
-            x += metrics.width(ch)
-
-    def setText(self, newText):
-        self.text = newText
-
-    def timerEvent(self, event):
-        if event.timerId() == self.timer.timerId():
-            self.step += 1
-            self.update()
-        else:
-            super(WigglyWidget, self).timerEvent(event)
-
-
-class Dialog(QDialog):
-    def __init__(self, parent=None):
-        super(Dialog, self).__init__(parent)
-
-        wigglyWidget = WigglyWidget()
+        label = QLabel("Find &what:")
         lineEdit = QLineEdit()
-        closeBtn = QPushButton("Close")
-        closeBtn.clicked.connect(self.accept)
+        label.setBuddy(lineEdit)
 
-        hlayout = QHBoxLayout()
-        hlayout.addWidget(lineEdit)
-        hlayout.addWidget(closeBtn)
+        caseCheckBox = QCheckBox("Match &case")
+        fromStartCheckBox = QCheckBox("Search from &start")
+        fromStartCheckBox.setChecked(True)
 
-        layout = QVBoxLayout()
-        layout.addWidget(wigglyWidget)
-        # layout.addWidget(lineEdit)
-        layout.addLayout(hlayout)
-        self.setLayout(layout)
+        findButton = QPushButton("&Find")
+        findButton.setDefault(True)
 
-        lineEdit.textChanged.connect(wigglyWidget.setText)
+        moreButton = QPushButton("&More")
+        moreButton.setCheckable(True)
+        moreButton.setAutoDefault(False)
 
-        lineEdit.setText("PyQt5 with Chocolaf Theme")
+        extension = QWidget()
 
-        self.setWindowTitle("Wiggly")
-        self.resize(650, 200)
+        wholeWordsCheckBox = QCheckBox("&Whole words")
+        backwardCheckBox = QCheckBox("Search &backward")
+        searchSelectionCheckBox = QCheckBox("Search se&lection")
+
+        buttonBox = QDialogButtonBox(Qt.Vertical)
+        buttonBox.addButton(findButton, QDialogButtonBox.ActionRole)
+        buttonBox.addButton(moreButton, QDialogButtonBox.ActionRole)
+
+        moreButton.toggled.connect(extension.setVisible)
+
+        extensionLayout = QVBoxLayout()
+        extensionLayout.setContentsMargins(0, 0, 0, 0)
+        extensionLayout.addWidget(wholeWordsCheckBox)
+        extensionLayout.addWidget(backwardCheckBox)
+        extensionLayout.addWidget(searchSelectionCheckBox)
+        extension.setLayout(extensionLayout)
+
+        topLeftLayout = QHBoxLayout()
+        topLeftLayout.addWidget(label)
+        topLeftLayout.addWidget(lineEdit)
+
+        leftLayout = QVBoxLayout()
+        leftLayout.addLayout(topLeftLayout)
+        leftLayout.addWidget(caseCheckBox)
+        leftLayout.addWidget(fromStartCheckBox)
+
+        mainLayout = QGridLayout()
+        mainLayout.setSizeConstraint(QLayout.SetFixedSize)
+        mainLayout.addLayout(leftLayout, 0, 0)
+        mainLayout.addWidget(buttonBox, 0, 1)
+        mainLayout.addWidget(extension, 1, 0, 1, 2)
+        mainLayout.setRowStretch(2, 1)
+        self.setLayout(mainLayout)
+
+        self.setWindowTitle("Find what?")
+        extension.hide()
 
 
-def main():
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-    os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+if __name__ == '__main__':
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
 
-    win = Dialog()
-    win.move(100, 100)
-    win.show()
-
-    return app.exec()
-
-
-if __name__ == "__main__":
-    main()
+    dialog = FindDialog()
+    dialog.show()
+    sys.exit(app.exec())

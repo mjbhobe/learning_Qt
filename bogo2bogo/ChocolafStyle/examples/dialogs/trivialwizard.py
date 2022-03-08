@@ -1,8 +1,9 @@
 """
-* wiggly.py - wiggly widget in a QDialog using Chocolaf theme
+* trivialwizard.py - illustrated a trivial wizard style dialog using Chocolaf & QDarkStyle-dark styles
 * @author (Chocolaf): Manish Bhobe
 *
-* PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets
+* PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets, with changes done for
+* displaying widgets using Chocolaf & other styles
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
 * Use at your own risk!!
@@ -52,7 +53,7 @@
 import os
 import pathlib
 import sys
-import unicodedata
+import webbrowser
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -65,91 +66,80 @@ import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 
 
-class WigglyWidget(QWidget):
-    def __init__(self, parent=None):
-        super(WigglyWidget, self).__init__(parent)
+def createIntroPage():
+    page = QWizardPage()
+    page.setTitle("Introduction")
 
-        self.setBackgroundRole(QPalette.Midlight)
-        self.setAutoFillBackground(True)
+    label = QLabel(
+        "This wizard will help you register your copy of Super Product "
+        "Two.")
+    label.setWordWrap(True)
 
-        newFont = self.font()
-        newFont.setPointSize(newFont.pointSize() + 20)
-        self.setFont(newFont)
+    layout = QVBoxLayout()
+    layout.addWidget(label)
+    page.setLayout(layout)
 
-        self.timer = QBasicTimer()
-        self.text = ''
-
-        self.step = 0
-        self.timer.start(60, self)
-
-    def paintEvent(self, event):
-        sineTable = (0, 38, 71, 92, 100, 92, 71, 38, 0, -38, -71, -92, -100, -92, -71, -38)
-
-        metrics = QFontMetrics(self.font())
-        x = (self.width() - metrics.width(self.text)) / 2
-        y = (self.height() + metrics.ascent() - metrics.descent()) / 2
-        color = QColor()
-
-        painter = QPainter(self)
-
-        for i, ch in enumerate(self.text):
-            index = (self.step + i) % 16
-            color.setHsv((15 - index) * 16, 255, 191)
-            painter.setPen(color)
-            painter.drawText(x, y - ((sineTable[index] * metrics.height()) / 400), ch)
-            x += metrics.width(ch)
-
-    def setText(self, newText):
-        self.text = newText
-
-    def timerEvent(self, event):
-        if event.timerId() == self.timer.timerId():
-            self.step += 1
-            self.update()
-        else:
-            super(WigglyWidget, self).timerEvent(event)
+    return page
 
 
-class Dialog(QDialog):
-    def __init__(self, parent=None):
-        super(Dialog, self).__init__(parent)
+def createRegistrationPage():
+    page = QWizardPage()
+    page.setTitle("Registration")
+    page.setSubTitle("Please fill both fields.")
 
-        wigglyWidget = WigglyWidget()
-        lineEdit = QLineEdit()
-        closeBtn = QPushButton("Close")
-        closeBtn.clicked.connect(self.accept)
+    nameLabel = QLabel("Name:")
+    nameLineEdit = QLineEdit()
 
-        hlayout = QHBoxLayout()
-        hlayout.addWidget(lineEdit)
-        hlayout.addWidget(closeBtn)
+    emailLabel = QLabel("Email address:")
+    emailLineEdit = QLineEdit()
 
-        layout = QVBoxLayout()
-        layout.addWidget(wigglyWidget)
-        # layout.addWidget(lineEdit)
-        layout.addLayout(hlayout)
-        self.setLayout(layout)
+    layout = QGridLayout()
+    layout.addWidget(nameLabel, 0, 0)
+    layout.addWidget(nameLineEdit, 0, 1)
+    layout.addWidget(emailLabel, 1, 0)
+    layout.addWidget(emailLineEdit, 1, 1)
+    page.setLayout(layout)
 
-        lineEdit.textChanged.connect(wigglyWidget.setText)
-
-        lineEdit.setText("PyQt5 with Chocolaf Theme")
-
-        self.setWindowTitle("Wiggly")
-        self.resize(650, 200)
+    return page
 
 
-def main():
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-    os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+def createConclusionPage():
+    page = QWizardPage()
+    page.setTitle("Conclusion")
+
+    label = QLabel("You are now successfully registered. Have a nice day!")
+    label.setWordWrap(True)
+
+    layout = QVBoxLayout()
+    layout.addWidget(label)
+    page.setLayout(layout)
+
+    return page
+
+
+if __name__ == '__main__':
+
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
 
-    win = Dialog()
-    win.move(100, 100)
-    win.show()
+    wizard = QWizard()
+    wizard.addPage(createIntroPage())
+    wizard.addPage(createRegistrationPage())
+    wizard.addPage(createConclusionPage())
 
-    return app.exec()
+    wizard.setWindowTitle("Trivial Wizard - using Chocolaf")
+    wizard.move(100, 100)
+    wizard.show()
 
+    rect = wizard.geometry()
+    wizard2 = QWizard()
+    wizard2.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    wizard2.addPage(createIntroPage())
+    wizard2.addPage(createRegistrationPage())
+    wizard2.addPage(createConclusionPage())
 
-if __name__ == "__main__":
-    main()
+    wizard2.setWindowTitle("Trivial wizard2 - using QDarkStyle-dark")
+    wizard2.move(rect.left() + rect.width() + 20, rect.top() + 10)
+    wizard2.show()
+
+    sys.exit(app.exec_())
