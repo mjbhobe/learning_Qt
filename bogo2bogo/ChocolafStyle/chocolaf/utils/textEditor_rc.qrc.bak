@@ -64,6 +64,7 @@
 	  <file alias="export_2_pdf.png">images/export_2_pdf.png</file>
 	  <file alias="export_2_pdf-d.png">images/export_2_pdf-d.png</file>
 	  
+
       <file alias="text_editor_icon.png">images/text_editor_icon.png</file>
 	  <file alias="image_viewer_icon.png">images/image_viewer_icon.png</file>
 	  <file alias="qt_logo.png">images/qt_logo.png</file>

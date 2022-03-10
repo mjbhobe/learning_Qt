@@ -41,6 +41,10 @@
       <file alias="toolbar_move_vertical.png">images/toolbar_move_vertical.png</file>
       <file alias="toolbar_separator_vertical.png">images/toolbar_separator_vertical.png</file>
       <file alias="transparent.png">images/transparent.png</file>
+      <file alias="window_close.png">images/window_close.png</file>
+      <file alias="window_close_disabled.png">images/window_close_disabled.png</file>
+      <file alias="window_close_focus.png">images/window_close_focus.png</file>
+      <file alias="window_close_pressed.png">images/window_close_pressed.png</file>
       <file alias="window_grip.png">images/window_grip.png</file>
   </qresource>
 </RCC>

@@ -61,7 +61,7 @@ from PyQt5.QtPrintSupport import *
 
 # sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
 # from pyqt5_utils import PyQtApp
-import chocolaf
+from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
 import scribble_rc
@@ -72,8 +72,7 @@ class ScribbleArea(QWidget):
         super(ScribbleArea, self).__init__(parent)
 
         self.setAttribute(Qt.WA_StaticContents)
-        # self.palette().color(QPalette.Dark)  # qRgba(255, 255, 255, 20)
-        self.imageFillColor: QColor = qRgb(42, 42, 42)
+        self.imageFillColor: QColor = ChocolafPalette.Window_Color
         self.modified = False
         self.scribbling = False
         self.myPenWidth = 5

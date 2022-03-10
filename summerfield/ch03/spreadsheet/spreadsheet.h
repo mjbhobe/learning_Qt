@@ -7,7 +7,7 @@ class Spreadsheet : public QWidget
 {
   Q_OBJECT
 public:
-  Spreadsheet(QObject *parent=nullptr): QObject(parent) {}
+  Spreadsheet(QObject *parent = nullptr) : QWidget(parent) {}
   ~Spreadsheet();
 };
 

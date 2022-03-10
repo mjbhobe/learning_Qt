@@ -33,13 +33,13 @@
   * [Y] - QTextEdit
   * [Y] - QPlainTextEdit
   * [Y] - QSizeGrip
-  * [ ] - QStackedWidget
+  * [Y] - QStackedWidget
   * [Y] - QToolBar
   * [Y] - QAbstractSpinBox
   * [Y] - QLabel
   * [Y] - QTextBrowser
-  * [ ] - QGraphicsView
-  * [-] - QCalendarWidget
+  * [Y] - QGraphicsView
+  * [Y] - QCalendarWidget
   * [Y] - QLCDNumber
   * [Y] - QProgressBar
   * [Y] - QPushButton
@@ -55,8 +55,8 @@
   * [Y] - QHeaderView
   * [Y] - QToolBox
   * [ ] - QFrame
-  * [ ] - QSplitter
-  * [ ] - QDateEdit/QTimeEdit/QDateTimeEdit
+  * [Y] - QSplitter
+  * [-] - QDateEdit/QTimeEdit/QDateTimeEdit
   * [Y] - QAbstractView
   * [ ] - PlotWidget
   */
@@ -410,14 +410,13 @@ QRadioButton::indicator:checked:disabled {
 
 QToolBar {
   background-color: rgb(52, 52, 52); /* rgb(32, 32, 32); */ /* #455364; */
-  border-top: none; /* 1px solid rgb(102, 102, 102); */ /* #19232D; */
+  border-top: 1px solid rgb(72, 72, 72); /* #19232D; */
   padding: 6px;
   font-weight: bold;
   spacing: 4px;
 }
 
 QToolBar:disabled {
-  /* Fixes #272 */
   background-color: rgb(42, 42, 42); /* transparent; */ /* rgb(32, 32, 32); */
 }
 
@@ -697,6 +696,17 @@ QSizeGrip {
   height: 20px;
   image: url(":/window_grip.png");
 }
+
+/*********************************/
+/* QStackedWidget                */
+/*********************************/
+
+QStackedWidget {
+  padding: 2px;
+  border: 1px solid rgb(127, 127, 127);
+  border: 1px solid rgb(42, 42, 42);
+}
+
 
 /*********************************/
 /* QDateEdit/QTimeEdit           */
@@ -1157,12 +1167,12 @@ QLineEdit, QTextEdit, QPlainTextEdit {
     border-radius: 4px;
     selection-color: rgb(220, 220, 220);/*rgb(200, 200, 200); */
     selection-background-color: rgb(0, 114, 198); /* rgb(75, 110, 175);*/ /*rgb(0, 109, 201);*/
+    line-height: 1.5em;
 }
 
 QTextEdit, QPlainTextEdit {
   border: none;
   background-color: rgb(42, 42, 42);
-  line-height: 1.5em;
 }
 
 QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled {
@@ -1892,21 +1902,18 @@ QTabWidget::tab-bar {
 }
 
 QTabWidget QWidget {
-  /* Fixes #189 */
   border-radius: 4px;
 }
 
-/* the tab widget frame */
+/* the tab widget's frame */
 QTabWidget::pane {
-  border: 1px solid rgb(127, 127, 127); /* #455364; */
+  border: 1px solid rgb(127, 127, 127); 
   border-radius: 4px;
   margin: 2px;
-  /* Fixes double border inside pane with pyqt5 */
   padding: 0px;
 }
 
 QTabWidget::pane:selected {
-  /* background-color: rgb(83, 88, 90); */ /* #455364; */
   background-color: rgb(42, 42, 42); /* transparent */
   border: 1px solid rgb(127, 127, 127); /* #346792; */
 }
@@ -1916,10 +1923,10 @@ QTabBar::tab {
                               stop: 0 rgb(64, 64, 64), stop: 0.4 rgb(54, 54, 54),
                               stop: 0.5 rgb(42, 42, 42), stop: 1.0 rgb(32, 32, 32));
     border: 1px solid rgb(48, 48, 48);
-    border-bottom-color: rgb(52, 52, 52); /* #C2C7CB; */ /* same as the pane color */
+    border-bottom-color: rgb(52, 52, 52);  /* same as the pane color */
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    min-width: 20ex;
+    min-width: 20ex;    /* approx length of 20 x's */
     padding: 4px;
     /* margin: 4px; */
 }

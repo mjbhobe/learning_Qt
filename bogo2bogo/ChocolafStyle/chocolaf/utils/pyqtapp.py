@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-* pyqt5_utils.py - utility functions for PyQt5 GUI programming
+* pyqtapp.py - utility QApplication derived class to set various themes
 * @author: Manish Bhobe
 * My experiments with Python, PyQt, Data Science & Deep Learning
 * The code is made available for illustration purposes only.
@@ -11,13 +10,11 @@
 import sys
 import os
 import chocolaf
+from chocolaf.palettes import ChocolafPalette
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
-__version__ = "1.0"
-__author__ = "Manish Bhobe"
 
 
 class PyQtApp(QApplication):
@@ -33,43 +30,28 @@ class PyQtApp(QApplication):
         self.setFont(QApplication.font("QMenu"))
         self.loadStyleSheets()
 
-    # def loadChocoLaf(self) -> str:
-    #     """ loads the chocolaf stylesheet from ./styes/chocolaf """
-    #     here = os.path.dirname(os.path.abspath(__file__))
-    #     chocolaf_dir = os.path.join(here, "styles", "chocolaf")
-    #     sys.path.append(chocolaf_dir)
-    #     import stylesheet_rc
-
-    #     chocolaf_ss_path = os.path.join(chocolaf_dir, "stylesheet.css")
-    #     assert os.path.exists(chocolaf_ss_path)
-    #     print(f"loadChocoLaf() -> loading stylesheet from {chocolaf_ss_path}")
-    #     stylesheet = ""
-    #     with open(chocolaf_ss_path, "r") as f:
-    #         stylesheet = f.read()
-    #     return stylesheet
-
     def getPalette(self) -> QPalette:
         palette = QPalette()
         # @see: https://doc.qt.io/qt-5/qpalette.html
-        palette.setColor(QPalette.Window, QColor(qRgb(42, 42, 42)))         # general background color
-        palette.setColor(QPalette.WindowText, QColor(qRgb(220, 220, 220)))  # general foreground color
-        palette.setColor(QPalette.Base, QColor(qRgb(52, 52, 52)))           # background for text entry widgets
+        palette.setColor(QPalette.Window, ChocolafPalette.Window_Color)         # general background color
+        palette.setColor(QPalette.WindowText, ChocolafPalette.WindowText_Color) # general foreground color
+        palette.setColor(QPalette.Base, ChocolafPalette.Base_Color)        # background for text entry widgets
         # background color for views with alternating colors
-        palette.setColor(QPalette.AlternateBase, QColor(qRgb(62, 62, 62)))
-        palette.setColor(QPalette.ToolTipBase, QColor(qRgb(224, 227, 176)))  # background for tooltips
-        palette.setColor(QPalette.ToolTipText, QColor(qRgb(0, 0, 0)))
-        palette.setColor(QPalette.Text, QColor(qRgb(220, 220, 220)))        # foreground color to use with Base
-        palette.setColor(QPalette.Button, QColor(qRgb(62, 62, 62)))         # pushbutton colors
-        palette.setColor(QPalette.ButtonText, QColor(qRgb(220, 220, 220)))  # pushbutton's text color
-        palette.setColor(QPalette.Link, Qt.blue)
-        palette.setColor(QPalette.LinkVisited, Qt.magenta)
-        palette.setColor(QPalette.Highlight, QColor(qRgb(0, 114, 198)))     # highlight color
-        palette.setColor(QPalette.HighlightedText, QColor(qRgb(220, 220, 220)))
-
-        palette.setColor(QPalette.Disabled, QPalette.ButtonText, QColor(qRgb(127, 127, 127)))
-        palette.setColor(QPalette.Disabled, QPalette.WindowText, QColor(qRgb(127, 127, 127)))
-        palette.setColor(QPalette.Disabled, QPalette.Text, QColor(qRgb(127, 127, 127)))
-        palette.setColor(QPalette.Disabled, QPalette.Light, QColor(qRgb(102, 102, 102)))
+        palette.setColor(QPalette.AlternateBase, ChocolafPalette.AlternateBase_Color)
+        palette.setColor(QPalette.ToolTipBase, ChocolafPalette.ToolTipBase_Color)  # background for tooltips
+        palette.setColor(QPalette.ToolTipText, ChocolafPalette.ToolTipText_Color)
+        palette.setColor(QPalette.Text, ChocolafPalette.Text_Color)             # foreground color to use with Base
+        palette.setColor(QPalette.Button, ChocolafPalette.Button_Color)         # pushbutton colors
+        palette.setColor(QPalette.ButtonText, ChocolafPalette.ButtonText_Color) # pushbutton's text color
+        palette.setColor(QPalette.Link, ChocolafPalette.Link_Color)
+        palette.setColor(QPalette.LinkVisited, ChocolafPalette.LinkVisited_Color)
+        palette.setColor(QPalette.Highlight, ChocolafPalette.Highlight_Color)     # highlight color
+        palette.setColor(QPalette.HighlightedText, ChocolafPalette.HighlightedText_Color)
+        # colors for disabled elements
+        palette.setColor(QPalette.Disabled, QPalette.ButtonText, ChocolafPalette.Disabled_ButtonText_Color)
+        palette.setColor(QPalette.Disabled, QPalette.WindowText, ChocolafPalette.Disabled_WindowText_Color)
+        palette.setColor(QPalette.Disabled, QPalette.Text, ChocolafPalette.Disabled_Text_Color)
+        palette.setColor(QPalette.Disabled, QPalette.Light, ChocolafPalette.Disabled_Light_Color)
 
         return palette
 
