@@ -60,7 +60,7 @@ from PyQt5.QtWidgets import *
 
 # sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
 # from pyqt5_utils import PyQtApp
-import chocolaf
+from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.pyqtapp import PyQtApp
 
 
@@ -144,7 +144,7 @@ class CharacterWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.fillRect(event.rect(), QColor(42, 42, 42))  # Qt.white)
+        painter.fillRect(event.rect(), ChocolafPalette.Window_Color) # QColor(42, 42, 42))  # Qt.white)
         painter.setFont(self.displayFont)
 
         redrawRect = event.rect()
@@ -153,7 +153,7 @@ class CharacterWidget(QWidget):
         beginColumn = redrawRect.left() // self.squareSize
         endColumn = redrawRect.right() // self.squareSize
 
-        painter.setPen(QColor(102, 102, 102))  # Qt.gray)
+        painter.setPen(ChocolafPalette.Disabled_Light_Color) # QColor(102, 102, 102))  # Qt.gray)
         for row in range(beginRow, endRow + 1):
             for column in range(beginColumn, endColumn + 1):
                 painter.drawRect(column * self.squareSize,
@@ -161,7 +161,7 @@ class CharacterWidget(QWidget):
                                  self.squareSize)
 
         fontMetrics = QFontMetrics(self.displayFont)
-        painter.setPen(QColor(220, 220, 220))  # Qt.black)
+        painter.setPen(ChocolafPalette.WindowText_Color) #QColor(220, 220, 220))  # Qt.black)
         for row in range(beginRow, endRow + 1):
             for column in range(beginColumn, endColumn + 1):
                 key = row * self.columns + column

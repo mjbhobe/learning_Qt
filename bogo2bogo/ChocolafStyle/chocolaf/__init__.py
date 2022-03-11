@@ -21,7 +21,6 @@ __author__ = "Manish Bhobe"
 
 _logger = logging.getLogger(__name__)
 
-
 def loadStyleSheet() -> str:
     """ loads the chocolaf stylesheet from ./styes/chocolaf """
     here = os.path.dirname(os.path.abspath(__file__))
