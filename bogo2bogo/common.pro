@@ -10,6 +10,7 @@ INCLUDEPATH += .
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+CHOCOLAF_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/ChocolafStyle/chocolaf
 COMMON_FILES_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/common_files
 INCLUDEPATH += $${COMMON_FILES_HOME}
 

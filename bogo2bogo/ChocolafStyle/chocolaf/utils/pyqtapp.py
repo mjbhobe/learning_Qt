@@ -24,9 +24,6 @@ class PyQtApp(QApplication):
         # map of stylesheets
         self.styles = {}
         self.palettes = {}
-        # self.font: QFont = QFont("Segoe UI", 11) if sys.platform == "win32" \
-        #     else QApplication.font("QMenu")
-
         self.setFont(QApplication.font("QMenu"))
         self.loadStyleSheets()
 
