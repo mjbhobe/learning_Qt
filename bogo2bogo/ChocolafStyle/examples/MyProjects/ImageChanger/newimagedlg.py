@@ -39,13 +39,15 @@ class NewImageDlg(QDialog, ui_newimagedlg.Ui_NewImageDlg):
                 (Qt.DiagCrossPattern, "Diagonal Cross")):
             self.brushComboBox.addItem(text, value)
 
-        self.connect(self.colorButton, SIGNAL("clicked()"),
-                     self.getColor)
-        self.connect(self.brushComboBox, SIGNAL("activated(int)"),
-                     self.setColor)
+        # self.connect(self.colorButton, SIGNAL("clicked()"),
+        #              self.getColor)
+        # self.connect(self.brushComboBox, SIGNAL("activated(int)"),
+        #              self.setColor)
+
+        self.colorButton.clicked.connect(self.getColor)
+        self.brushComboBox.activated.connect(self.setColor)
         self.setColor()
         self.widthSpinBox.setFocus()
-
 
     def getColor(self):
         color = QColorDialog.getColor(Qt.black, self)
@@ -53,17 +55,14 @@ class NewImageDlg(QDialog, ui_newimagedlg.Ui_NewImageDlg):
             self.color = color
             self.setColor()
 
-
     def setColor(self):
         pixmap = self._makePixmap(60, 30)
         self.colorLabel.setPixmap(pixmap)
-
 
     def image(self):
         pixmap = self._makePixmap(self.widthSpinBox.value(),
                                   self.heightSpinBox.value())
         return QPixmap.toImage(pixmap)
-
 
     def _makePixmap(self, width, height):
         pixmap = QPixmap(width, height)
@@ -83,4 +82,3 @@ if __name__ == "__main__":
     form = NewImageDlg()
     form.show()
     app.exec_()
-

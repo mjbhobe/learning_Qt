@@ -14,8 +14,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class Form(QWidget):
@@ -101,13 +100,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = Form()
-    w.setStyleSheet(app.getStylesheet("chocolaf"))
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(500, 100)
     w.show()
 
     rect = w.geometry()
     w1 = Form()
-    w1.setStyleSheet(app.getStylesheet("qdarkstyle_dark"))
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() + 20, rect.top() + rect.height() // 4 + 20)
     w1.show()
 

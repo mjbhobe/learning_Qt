@@ -12,9 +12,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
-
+from chocolaf.utils.pyqtapp import PyQtApp
 
 class PenPropertiesDlg(QDialog):
     def __init__(self, parent: QWidget = None):
@@ -77,9 +75,9 @@ def loadStyleSheet() -> str:
 
 def main():
     app = PyQtApp(sys.argv)
+    app.setStyle("Chocolaf")
 
     dialog = PenPropertiesDlg(None)
-    dialog.setStyleSheet(loadStyleSheet())
     dialog.widthSpinBox.setValue(2)
     dialog.beveledCheckBox.setChecked(True)
     dialog.styleComboBox.setCurrentIndex(4)

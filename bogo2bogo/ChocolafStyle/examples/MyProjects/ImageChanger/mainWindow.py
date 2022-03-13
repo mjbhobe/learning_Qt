@@ -8,7 +8,6 @@
 // My experiments with the Qt Framework with PyQt. Use at your own risk!!
 // ============================================================================
 """
-import sys
 import os
 import platform
 
@@ -54,73 +53,21 @@ class MainWindow(QMainWindow):
         status = self.statusBar()
         status.setSizeGripEnabled(False)
         status.addPermanentWidget(self.sizeLabel)
-        status.showMessage("Ready", 5000)
+        status.showMessage(f"PyQt {PYQT_VERSION_STR} ImageViewe using Chocolaf", 5000)
 
-        fileNewAction = self.createAction("&New...", self.fileNew, QKeySequence.New, "filenew", "Create an image file")
-        fileOpenAction = self.createAction("&Open...", self.fileOpen, QKeySequence.Open,
-                                           "fileopen", "Open an existing image file")
-        fileSaveAction = self.createAction("&Save", self.fileSave, QKeySequence.Save, "filesave", "Save the image")
-        fileSaveAsAction = self.createAction("Save &As...", self.fileSaveAs,
-                                             icon="filesaveas", tip="Save the image using a new name")
-        filePrintAction = self.createAction(
-            "&Print", self.filePrint, QKeySequence.Print, "fileprint", "Print the image")
-        fileQuitAction = self.createAction("&Quit", self.close, "Ctrl+Q", "filequit", "Close the application")
-        editInvertAction = self.createAction("&Invert", self.editInvert, "Ctrl+I",
-                                             "editinvert", "Invert the image's colors", True, "toggled(bool)")
-        editSwapRedAndBlueAction = self.createAction("Sw&ap Red and Blue", self.editSwapRedAndBlue, "Ctrl+A", "editswap",
-                                                     "Swap the image's red and blue color components", True, "toggled(bool)")
-        editZoomAction = self.createAction("&Zoom...", self.editZoom, "Alt+Z", "editzoom", "Zoom the image")
-        mirrorGroup = QActionGroup(self)
-        editUnMirrorAction = self.createAction("&Unmirror", self.editUnMirror, "Ctrl+U", "editunmirror",
-                                               "Unmirror the image", True, "toggled(bool)")
-        mirrorGroup.addAction(editUnMirrorAction)
-        editMirrorHorizontalAction = self.createAction("Mirror &Horizontally", self.editMirrorHorizontal,
-                                                       "Ctrl+H", "editmirrorhoriz", "Horizontally mirror the image", True, "toggled(bool)")
-        mirrorGroup.addAction(editMirrorHorizontalAction)
-        editMirrorVerticalAction = self.createAction("Mirror &Vertically", self.editMirrorVertical,
-                                                     "Ctrl+V", "editmirrorvert", "Vertically mirror the image", True, "toggled(bool)")
-        mirrorGroup.addAction(editMirrorVerticalAction)
-        editUnMirrorAction.setChecked(True)
-        helpAboutAction = self.createAction("&About Image Changer", self.helpAbout)
-        helpHelpAction = self.createAction("&Help", self.helpHelp, QKeySequence.HelpContents)
+        self.createActions()
+        self.createMenus()
+        self.createToolbars()
 
-        self.fileMenu = self.menuBar().addMenu("&File")
-        self.fileMenuActions = (fileNewAction, fileOpenAction, fileSaveAction,
-                                fileSaveAsAction, None, filePrintAction, fileQuitAction)
-        self.fileMenu.aboutToShow.connect(self.updateFileMenu)
-        # self.connect(self.fileMenu, SIGNAL("aboutToShow()"), self.updateFileMenu)
+        self.imageLabel.addAction(self.editInvertAction)
+        self.imageLabel.addAction(self.editSwapRedAndBlueAction)
+        self.imageLabel.addAction(self.editUnMirrorAction)
+        self.imageLabel.addAction(self.editMirrorVerticalAction)
+        self.imageLabel.addAction(self.editMirrorHorizontalAction)
 
-        editMenu = self.menuBar().addMenu("&Edit")
-        self.addActions(editMenu, (editInvertAction, editSwapRedAndBlueAction, editZoomAction))
-        mirrorMenu = editMenu.addMenu(QIcon(":/editmirror.png"), "&Mirror")
-        self.addActions(mirrorMenu, (editUnMirrorAction, editMirrorHorizontalAction, editMirrorVerticalAction))
-        helpMenu = self.menuBar().addMenu("&Help")
-        self.addActions(helpMenu, (helpAboutAction, helpHelpAction))
-
-        fileToolbar = self.addToolBar("File")
-        fileToolbar.setObjectName("FileToolBar")
-        self.addActions(fileToolbar, (fileNewAction, fileOpenAction, fileSaveAsAction))
-        editToolbar = self.addToolBar("Edit")
-        editToolbar.setObjectName("EditToolBar")
-        self.addActions(editToolbar, (editInvertAction, editSwapRedAndBlueAction, editUnMirrorAction,
-                                      editMirrorVerticalAction, editMirrorHorizontalAction))
-        self.zoomSpinBox = QSpinBox()
-        self.zoomSpinBox.setRange(1, 400)
-        self.zoomSpinBox.setSuffix(" %")
-        self.zoomSpinBox.setValue(100)
-        self.zoomSpinBox.setToolTip("Zoom the image")
-        self.zoomSpinBox.setStatusTip(self.zoomSpinBox.toolTip())
-        self.zoomSpinBox.setFocusPolicy(Qt.NoFocus)
-        self.zoomSpinBox.valueChanged.connect(self.showImage)
-        editToolbar.addWidget(self.zoomSpinBox)
-
-        self.addActions(self.imageLabel, (editInvertAction,
-                                          editSwapRedAndBlueAction, editUnMirrorAction,
-                                          editMirrorVerticalAction, editMirrorHorizontalAction))
-
-        self.resetableActions = ((editInvertAction, False),
-                                 (editSwapRedAndBlueAction, False),
-                                 (editUnMirrorAction, True))
+        self.resetableActions = ((self.editInvertAction, False),
+                                 (self.editSwapRedAndBlueAction, False),
+                                 (self.editUnMirrorAction, True))
 
         settings = QSettings()
         self.recentFiles = settings.value("RecentFiles") or []
@@ -128,35 +75,165 @@ class MainWindow(QMainWindow):
         self.restoreState(settings.value("MainWindow/State", QByteArray()))
 
         self.setWindowTitle("Image Changer")
-        self.updateFileMenu()
+        # self.updateFileMenu()
         QTimer.singleShot(0, self.loadInitialFile)
 
-    def createAction(self, text, slot=None, shortcut=None, icon=None,
-                     tip=None, checkable=False, signal="triggered()"):
-        action = QAction(text, self)
-        if icon is not None:
-            action.setIcon(QIcon(":/{}.png".format(icon)))
-        if shortcut is not None:
-            action.setShortcut(shortcut)
-        if tip is not None:
-            action.setToolTip(tip)
-            action.setStatusTip(tip)
-        if slot is not None:
-            self.connect(action, SIGNAL(signal), slot)
-        if checkable:
-            action.setCheckable(True)
-        return action
+    def createActions(self):
+        self.fileNewAction = QAction(QIcon(":/file_new.png"), "&New", self)
+        self.fileNewAction.triggered.connect(self.fileNew)
+        self.fileNewAction.setShortcut(QKeySequence.New)
+        self.fileNewAction.setStatusTip("Create a new image file")
 
-    def addActions(self, target, actions):
-        for action in actions:
-            if action is None:
-                target.addSeparator()
-            else:
-                target.addAction(action)
+        self.fileOpenAction = QAction(QIcon(":/file_open.png"), "&Open...", self)
+        self.fileOpenAction.triggered.connect(self.fileOpen)
+        self.fileOpenAction.setShortcut(QKeySequence.Open)
+        self.fileOpenAction.setStatusTip("Open an existing image file")
+
+        self.fileSaveAction = QAction(QIcon(":/file_save.png"), "&Save", self)
+        self.fileSaveAction.triggered.connect(self.fileSave)
+        self.fileSaveAction.setShortcut(QKeySequence.Save)
+        self.fileSaveAction.setStatusTip("Save the image")
+
+        self.fileSaveAsAction = QAction(QIcon(":/file_saveas.png"), "&Save as...", self)
+        self.fileSaveAsAction.triggered.connect(self.fileSaveAs)
+        self.fileSaveAsAction.setStatusTip("Save the image using a new name")
+
+        self.filePrintAction = QAction(QIcon(":/file_print.png"), "&Print...", self)
+        self.filePrintAction.triggered.connect(self.filePrint)
+        self.filePrintAction.setShortcut(QKeySequence.Print)
+        self.filePrintAction.setStatusTip("Print the image")
+
+        self.fileQuitAction = QAction(QIcon(":/file_quit.png"), "&Quit", self)
+        self.fileQuitAction.triggered.connect(self.close)
+        self.fileQuitAction.setShortcut("Ctrl+Q")
+        self.fileQuitAction.setStatusTip("Close the application")
+
+        self.editInvertAction = QAction(QIcon(":/edit_invert.png"), "&Invert", self)
+        self.editInvertAction.toggled.connect(self.editInvert)
+        self.editInvertAction.setShortcut("Ctrl+I")
+        self.editInvertAction.setStatusTip("Invert the image's colors")
+        self.editInvertAction.setCheckable(True)
+
+        self.editSwapRedAndBlueAction = QAction(QIcon(":/edit_swap.png"), "Sw&ap Red and Blue", self)
+        self.editSwapRedAndBlueAction.toggled.connect(self.editSwapRedAndBlue)
+        self.editSwapRedAndBlueAction.setShortcut("Ctrl+A")
+        self.editSwapRedAndBlueAction.setStatusTip("Swap the images red & blue color components")
+        self.editSwapRedAndBlueAction.setCheckable(True)
+
+        self.editZoomAction = QAction(QIcon(":/edit_zoom.png"), "&Zoom...", self)
+        self.editZoomAction.triggered.connect(self.editZoom)
+        self.editZoomAction.setShortcut("Alt+Z")
+        self.editZoomAction.setStatusTip("Zoom the image")
+
+        self.mirrorGroup = QActionGroup(self)
+
+        self.editUnMirrorAction = QAction(QIcon(":/edit_unmirror.png"), "&Unmirror", self)
+        self.editUnMirrorAction.toggled.connect(self.editUnMirror)
+        self.editUnMirrorAction.setShortcut("Ctrl+U")
+        self.editUnMirrorAction.setStatusTip("Unmirror the image")
+        self.editUnMirrorAction.setCheckable(True)
+        self.mirrorGroup.addAction(self.editUnMirrorAction)
+
+        self.editMirrorHorizontalAction = QAction(QIcon(":/edit_mirrorhoriz.png"), "Mirror &Horizontally", self)
+        self.editMirrorHorizontalAction.toggled.connect(self.editMirrorHorizontal)
+        self.editMirrorHorizontalAction.setShortcut("Ctrl+H")
+        self.editMirrorHorizontalAction.setStatusTip("Horizontally mirror the image")
+        self.editMirrorHorizontalAction.setCheckable(True)
+        self.mirrorGroup.addAction(self.editMirrorHorizontalAction)
+
+        self.editMirrorVerticalAction = QAction(QIcon(":/edit_mirrorvert.png"), "Mirror &Vertically", self)
+        self.editMirrorVerticalAction.toggled.connect(self.editMirrorVertical)
+        self.editMirrorVerticalAction.setShortcut("Ctrl+H")
+        self.editMirrorVerticalAction.setStatusTip("Vertically mirror the image")
+        self.editMirrorVerticalAction.setCheckable(True)
+        self.mirrorGroup.addAction(self.editMirrorVerticalAction)
+
+        self.editUnMirrorAction.setChecked(True)
+
+        self.helpAboutAction = QAction("&About Image Changer...", self)
+        self.helpAboutAction.triggered.connect(self.helpAbout)
+        self.helpAboutAction.setStatusTip("Display information about application")
+
+        self.helpHelpAction = QAction("&Help", self)
+        self.helpHelpAction.setShortcut(QKeySequence.HelpContents)
+        self.helpHelpAction.triggered.connect(self.helpHelp)
+
+    def createMenus(self):
+        self.fileMenu = self.menuBar().addMenu("&File")
+        #self.fileMenu.aboutToShow.connect(self.updateFileMenu)
+        self.fileMenu.addAction(self.fileNewAction)
+        self.fileMenu.addAction(self.fileOpenAction)
+        self.fileMenu.addAction(self.fileSaveAction)
+        self.fileMenu.addAction(self.fileSaveAsAction)
+        self.fileMenu.addSeparator()
+        self.fileMenu.addAction(self.filePrintAction)
+        self.fileMenu.addSeparator()
+        self.fileMenu.addAction(self.fileQuitAction)
+
+        self.editMenu = self.menuBar().addMenu("&Edit")
+        self.editMenu.addAction(self.editInvertAction)
+        self.editMenu.addAction(self.editSwapRedAndBlueAction)
+        self.editMenu.addAction(self.editZoomAction)
+        mirrorMenu = self.editMenu.addMenu(QIcon(":/edit_mirror.png"), "&Mirror")
+        mirrorMenu.addAction(self.editUnMirrorAction)
+        mirrorMenu.addAction(self.editMirrorHorizontalAction)
+        mirrorMenu.addAction(self.editMirrorVerticalAction)
+
+        self.helpMenu = self.menuBar().addMenu("&Help")
+        self.helpMenu.addAction(self.helpAboutAction)
+        self.helpMenu.addAction(self.helpHelpAction)
+
+    def createToolbars(self):
+        self.fileToolbar = self.addToolBar("File")
+        self.fileToolbar.setObjectName("FileToolBar")
+        self.fileToolbar.addAction(self.fileNewAction)
+        self.fileToolbar.addAction(self.fileOpenAction)
+        self.fileToolbar.addAction(self.fileSaveAsAction)
+
+        self.editToolbar=self.addToolBar("Edit")
+        self.editToolbar.setObjectName("EditToolBar")
+        self.editToolbar.addAction(self.editInvertAction)
+        self.editToolbar.addAction(self.editSwapRedAndBlueAction)
+        self.editToolbar.addAction(self.editUnMirrorAction)
+        self.editToolbar.addAction(self.editMirrorVerticalAction)
+        self.editToolbar.addAction(self.editMirrorHorizontalAction)
+
+        self.zoomSpinBox=QSpinBox()
+        self.zoomSpinBox.setRange(1, 400)
+        self.zoomSpinBox.setSuffix(" %")
+        self.zoomSpinBox.setValue(100)
+        self.zoomSpinBox.setToolTip("Zoom the image")
+        self.zoomSpinBox.setStatusTip(self.zoomSpinBox.toolTip())
+        self.zoomSpinBox.setFocusPolicy(Qt.NoFocus)
+        self.zoomSpinBox.valueChanged.connect(self.showImage)
+        self.editToolbar.addWidget(self.zoomSpinBox)
+
+    # def createAction(self, text, slot = None, shortcut = None, icon = None,
+    #                  tip = None, checkable = False, signal = "triggered()"):
+    #     action=QAction(text, self)
+    #     if icon is not None:
+    #         action.setIcon(QIcon(":/{}.png".format(icon)))
+    #     if shortcut is not None:
+    #         action.setShortcut(shortcut)
+    #     if tip is not None:
+    #         action.setToolTip(tip)
+    #         action.setStatusTip(tip)
+    #     if slot is not None:
+    #         self.connect(action, SIGNAL(signal), slot)
+    #     if checkable:
+    #         action.setCheckable(True)
+    #     return action
+
+    # def addActions(self, target, actions):
+    #     for action in actions:
+    #         if action is None:
+    #             target.addSeparator()
+    #         else:
+    #             target.addAction(action)
 
     def closeEvent(self, event):
         if self.okToContinue():
-            settings = QSettings()
+            settings=QSettings()
             settings.setValue("LastFile", self.filename)
             settings.setValue("RecentFiles", self.recentFiles or [])
             settings.setValue("MainWindow/Geometry", self.saveGeometry())
@@ -166,7 +243,7 @@ class MainWindow(QMainWindow):
 
     def okToContinue(self):
         if self.dirty:
-            reply = QMessageBox.question(self, "Image Changer - Unsaved Changes",
+            reply=QMessageBox.question(self, "Image Changer - Unsaved Changes",
                                          "Save unsaved changes?",
                                          QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
             if reply == QMessageBox.Cancel:
@@ -176,8 +253,8 @@ class MainWindow(QMainWindow):
         return True
 
     def loadInitialFile(self):
-        settings = QSettings()
-        fname = settings.value("LastFile")
+        settings=QSettings()
+        fname=settings.value("LastFile")
         if fname and QFile.exists(fname):
             self.loadFile(fname)
 
@@ -196,15 +273,15 @@ class MainWindow(QMainWindow):
     def updateFileMenu(self):
         self.fileMenu.clear()
         self.addActions(self.fileMenu, self.fileMenuActions[:-1])
-        current = self.filename
-        recentFiles = []
+        current=self.filename
+        recentFiles=[]
         for fname in self.recentFiles:
             if fname != current and QFile.exists(fname):
                 recentFiles.append(fname)
         if recentFiles:
             self.fileMenu.addSeparator()
             for i, fname in enumerate(recentFiles):
-                action = QAction(QIcon(":/icon.png"),
+                action=QAction(QIcon(":/icon.png"),
                                  "&{} {}".format(i + 1, QFileInfo(
                                      fname).fileName()), self)
                 action.setData(fname)

@@ -3,15 +3,13 @@
 import sys
 import os
 import pathlib
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
-import darkdetect
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+from chocolaf.utils.pyqtapp import PyQtApp
 
 import TextFinderForm
 
@@ -19,17 +17,14 @@ import TextFinderForm
 class TextFinder(QWidget):
     def __init__(self):
         super(TextFinder, self).__init__()
-        # self.setWindowTitle(f'Text Finder Demo: PySide {PySide2.__version__}')
         self.setWindowTitle(f'Text Finder Demo: PyQt {PYQT_VERSION_STR}')
         p = pathlib.Path(__file__)
         uiFilePath = os.path.join(os.path.split(str(p))[0], "TextFinder.ui")
-        # uiFilePath = os.path.join(str(p.parent[1]), "TextFinder.ui")
         self.ui = uic.loadUi(uiFilePath, self)
-        # self.ui = uiLoader.load(uiFilePath, self)
         self.loadTextFile()
         # self.ui.textEdit.setEnabled(False)
         self.ui.textEdit.setReadOnly(True)
-        # self.ui.textEdit.setLineWrapMode(QPlainTextEdit.NoWrap)
+        self.ui.textEdit.setLineWrapMode(QTextEdit.WidgetWidth)
         # self.ui.findButton.setMinimumWidth(100)
         self.ui.findButton.clicked.connect(self.findButtonClicked)
         self.ui.openButton.clicked.connect(self.openButtonClicked)
@@ -82,6 +77,7 @@ def loadStyleSheet() -> str:
     assert os.path.exists(darkss_path)
     print(f"LoasStyleSheet() -> loading dark stylesheet from {darkss_path}")
     stylesheet = ""
+    # noinspection PyInterpreter
     with open(darkss_path, "r") as f:
         stylesheet = f.read()
     return stylesheet
@@ -89,6 +85,7 @@ def loadStyleSheet() -> str:
 
 def main():
     app = PyQtApp(sys.argv)
+    # app.setStyle("Chocolaf")
 
     w = TextFinder()
     w.setStyleSheet(app.getStyleSheet("Chocolaf"))

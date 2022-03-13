@@ -50,18 +50,14 @@
 ##
 #############################################################################
 
-import os
-import pathlib
 import sys
-import webbrowser
+import glob
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtPrintSupport import *
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import PyQtApp
 import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 
@@ -102,7 +98,7 @@ class Window(QDialog):
         self.setLayout(mainLayout)
 
         self.setWindowTitle("Find Files")
-        self.resize(700, 300)
+        self.resize(700, 450)
 
     def browse(self):
         directory = QFileDialog.getExistingDirectory(self, "Find Files",
@@ -133,8 +129,9 @@ class Window(QDialog):
         self.currentDir = QDir(path)
         if not fileName:
             fileName = "*"
-        files = self.currentDir.entryList([fileName],
-                                          QDir.Files | QDir.NoSymLinks)
+        # files = self.currentDir.entryList([fileName],
+        #                                   QDir.Files | QDir.NoSymLinks | QDir.NoDot | QDir.NoDotDot | QDir.Dirs)
+        files = glob.glob(f"{path}/{fileName}", recursive=True)
 
         if text:
             files = self.findFiles(files, text)
@@ -157,7 +154,8 @@ class Window(QDialog):
             if progressDialog.wasCanceled():
                 break
 
-            inFile = QFile(self.currentDir.absoluteFilePath(files[i]))
+            # inFile = QFile(self.currentDir.absoluteFilePath(files[i]))
+            inFile = QFile(files[i])
 
             if inFile.open(QIODevice.ReadOnly):
                 stream = QTextStream(inFile)

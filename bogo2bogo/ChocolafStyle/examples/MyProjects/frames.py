@@ -13,8 +13,7 @@ import sys
 
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class Form(QWidget):
@@ -53,7 +52,7 @@ class Form(QWidget):
 
 def main():
     app = PyQtApp(sys.argv)
-    app.setStyle("Fusion")
+    app.setStyle("Chocolaf")
 
     w = Form()
     w.setStyleSheet(app.getStyleSheet("Chocolaf"))

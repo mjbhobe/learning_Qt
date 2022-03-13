@@ -50,20 +50,19 @@
 
 
 import os
-import pathlib
 import sys
-import unicodedata
+import platform
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtPrintSupport import *
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import PyQtApp
 import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
+
+__version__ = "1.0.0"
 
 
 class ImageViewer(QMainWindow):
@@ -159,19 +158,22 @@ class ImageViewer(QMainWindow):
 
     def about(self):
         QMessageBox.about(self, "About Image Viewer",
-                          "<p>The <b>Image Viewer</b> example shows how to combine "
-                          "QLabel and QScrollArea to display an image. QLabel is "
-                          "typically used for displaying text, but it can also display "
-                          "an image. QScrollArea provides a scrolling view around "
-                          "another widget. If the child widget exceeds the size of the "
-                          "frame, QScrollArea automatically provides scroll bars.</p>"
-                          "<p>The example demonstrates how QLabel's ability to scale "
-                          "its contents (QLabel.scaledContents), and QScrollArea's "
-                          "ability to automatically resize its contents "
-                          "(QScrollArea.widgetResizable), can be used to implement "
-                          "zooming and scaling features.</p>"
-                          "<p>In addition the example shows how to use QPainter to "
-                          "print an image.</p>")
+                          f"<p>The <b>Image Viewer</b> example shows how to combine " +
+                          f"QLabel and QScrollArea to display an image. QLabel is " +
+                          f"typically used for displaying text, but it can also display " +
+                          f"an image. QScrollArea provides a scrolling view around " +
+                          f"another widget. If the child widget exceeds the size of the " +
+                          f"frame, QScrollArea automatically provides scroll bars.</p>" +
+                          f"<p>Version {__version__}</p>" +
+                          f"<p>The example demonstrates how QLabel's ability to s cale " +
+                          f"its contents (QLabel.scaledContents), and QScrollArea's " +
+                          f"ability to automatically resize its contents " +
+                          f"(QScrollArea.widgetResizable), can be used to implement " +
+                          f"zooming and scaling features.</p>" +
+                          f"<p>In addition the example shows how to use QPainter to " +
+                          f"print an image.</p>" +
+                          f"Using Python {platform.python_version()} - Qt {QT_VERSION_STR} - PyQt {PYQT_VERSION_STR} on {platform.system()}"
+                          )
 
     def createActions(self):
         self.openAct = QAction(QIcon(":/file_open.png"), "&Open...", self, shortcut="Ctrl+O",

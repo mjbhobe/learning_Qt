@@ -154,7 +154,7 @@ QToolTip {
   color: rgb(0, 0, 0);
   font: 1em;
   /* If you remove the border property, background stops working on Windows */
-  border: none;
+  border: 1px solid rgb(224, 227, 176); /* none; */
   border-radius: 4px;
   font-size: 0.65em;
   /* Remove padding, for fix combo box tooltip */
@@ -1171,7 +1171,7 @@ QLineEdit, QTextEdit, QPlainTextEdit {
 }
 
 QTextEdit, QPlainTextEdit {
-  border: none;
+  /* border: none; */
   background-color: rgb(42, 42, 42);
 }
 
@@ -1909,7 +1909,7 @@ QTabWidget QWidget {
 QTabWidget::pane {
   border: 1px solid rgb(127, 127, 127); 
   border-radius: 4px;
-  margin: 2px;
+  /* margin: 2px; */  /* space separating tabs from content */
   padding: 0px;
 }
 
@@ -1926,8 +1926,8 @@ QTabBar::tab {
     border-bottom-color: rgb(52, 52, 52);  /* same as the pane color */
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    min-width: 20ex;    /* approx length of 20 x's */
-    padding: 4px;
+    /*min-width: 14ex; */ /* 20ex; */    /* approx length of 20 x's */
+    padding: 8px;
     /* margin: 4px; */
 }
 

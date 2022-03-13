@@ -51,17 +51,13 @@
 #############################################################################
 
 
-import pathlib
 import sys
-import qdarkstyle
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from sklearn.manifold import trustworthiness
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import PyQtApp
 import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 
@@ -332,7 +328,7 @@ def main():
 
     rect = w.geometry()
     w1 = WidgetGallery()
-    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    # w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() + 50,
             rect.top() + rect.height() // 4 + 50)
     w1.show()
