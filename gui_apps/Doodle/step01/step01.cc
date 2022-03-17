@@ -24,9 +24,9 @@ int main(int argc, char **argv)
 
    // create the GUI
    QMainWindow mainWindow;
-   mainWindow.setWindowTitle("Qt Scribble Tutorial - Step01");
+   mainWindow.setWindowTitle("Qt5 Doodle - Step01: Basic Window");
    // mainWindow.setStyleSheet("background-color: white;");
-   mainWindow.resize(640, 480);
+   mainWindow.resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
    mainWindow.show();
 
    return app.exec();

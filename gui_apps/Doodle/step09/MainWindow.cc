@@ -12,7 +12,7 @@
 #include <QToolBar>
 
 const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step09: Adding Toolbar & Statusbar");
+const QString WindowTitle("Qt Doodle - Step09: Building a concious GUI");
 
 MainWindow::MainWindow()
 {
@@ -79,16 +79,16 @@ void MainWindow::createActions()
    fileSaveAsAction->setStatusTip(tr("Save scribble document to disk with different name."));
    QObject::connect(fileSaveAsAction, SIGNAL(triggered()), _drawWindow, SLOT(fileSaveAs()));
 
-   exitAction = new QAction(QIcon(":/icons/exit.png"), tr("E&xit"), this);
+   exitAction = new QAction(tr("E&xit"), this);
    exitAction->setStatusTip(tr("Save all pending changes and quit application."));
    QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApp()));
 
-   penWidthAction = new QAction(QIcon(":/icons/lineThickness.png"), tr("Change pen &width..."), this);
+   penWidthAction = new QAction(QIcon(":/icons/penWidth.png"), tr("Change pen &width..."), this);
    penWidthAction->setShortcut(tr("Ctrl+W"));
    penWidthAction->setStatusTip(tr("Change the width of default pen."));
    QObject::connect(penWidthAction, SIGNAL(triggered()), _drawWindow, SLOT(changePenWidth()));
 
-   penColorAction = new QAction(QIcon(":/icons/lineColor.png"), tr("Change pen &color..."), this);
+   penColorAction = new QAction(QIcon(":/icons/penColor.png"), tr("Change pen &color..."), this);
    penColorAction->setShortcut(tr("Ctrl+L"));
    penColorAction->setStatusTip(tr("Change the color of default pen."));
    QObject::connect(penColorAction, SIGNAL(triggered()), _drawWindow, SLOT(changePenColor()));

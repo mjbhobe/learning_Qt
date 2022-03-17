@@ -56,12 +56,12 @@ class DrawWindow(QMainWindow):
             # color = QColor(53, 53, 53) if darkdetect.isDark() \
             #     else QColor(240, 240, 240)
             color = ChocolafPalette.Window_Color
-            print(f'QPalette.Window color = {color.name()}')
+            #print(f'QPalette.Window color = {color.name()}')
             painter.begin(self)
+            painter.setRenderHint(QPainter.Antialiasing, True)
             painter.setBrush(color)
             painter.setPen(color)
             painter.drawRect(0, 0, width, height)
-            painter.setRenderHint(QPainter.Antialiasing, True)
             self.drawSquiggles(painter)
         finally:
             painter.end()

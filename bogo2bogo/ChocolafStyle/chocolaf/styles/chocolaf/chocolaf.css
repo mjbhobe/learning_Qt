@@ -50,11 +50,11 @@
   * [Y] - QLineEdit
   * [Y] - QTabWidget
   * [Y] - QTabBar
-  * [ ] - QDockWidget
+  * [Y] - QDockWidget
   * [Y] - QTreeView/QListView/QTableView
   * [Y] - QHeaderView
   * [Y] - QToolBox
-  * [ ] - QFrame
+  * [Y] - QFrame
   * [Y] - QSplitter
   * [-] - QDateEdit/QTimeEdit/QDateTimeEdit
   * [Y] - QAbstractView
@@ -103,8 +103,8 @@ QWidget::item:selected {
 }
 
 QWidget::item:hover:!selected {
-  background: rgb(83, 88, 90); /* rgb(13, 41, 62); */ /*#346792;*/
-  color: rgb(220, 220, 220); /* rgb(13, 41, 62); */ /*#346792;*/
+  background: rgb(83, 88, 90); /* rgb(13, 41, 62); */ 
+  color: rgb(220, 220, 220); /* rgb(13, 41, 62); */ 
 }
 
 /*********************************/
@@ -112,15 +112,15 @@ QWidget::item:hover:!selected {
 /*********************************/
 
 QMainWindow::separator {
-  background-color: rgb(52, 52, 52); /* #455364; */
-  border: 1px solid rgb(42, 42, 42); /* #19232D; */
+  background-color: rgb(52, 52, 52); 
+  border: 1px solid rgb(42, 42, 42); 
   spacing: 0px;
   padding: 2px;
 }
 
 QMainWindow::separator:hover {
-  background-color: rgb(62, 62, 62); /* #60798B; */
-  border: 1px solid rgb(102, 102, 102); /* #1A72BB; */
+  background-color: rgb(62, 62, 62); 
+  border: 1px solid rgb(102, 102, 102); 
 }
 
 QMainWindow::separator:horizontal {
@@ -1405,7 +1405,7 @@ QMenuBar:focus {
 
 QMenuBar::item {
   background: transparent;
-  padding: 4px 10px 4px 10px;
+  padding: 4px 5px 4px 5px;
 }
 
 QMenuBar::item:selected {

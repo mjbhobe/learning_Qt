@@ -15,7 +15,8 @@ from PyQt5.QtWidgets import *
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt Doodle - Step01: Basic Window")
+        # resize window to use 4/5 of the screen
         self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)

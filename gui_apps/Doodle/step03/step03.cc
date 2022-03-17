@@ -13,7 +13,7 @@
 #include <QtGui>
 
 const QString AppTitle("Qt Scribble");
-const QString WinTitle("Qt Scribble - Step03: Handling mouse clicks");
+const QString WinTitle("Qt Doodle - Step03: Handling mouse clicks");
 
 void DrawMainWindow::closeEvent(QCloseEvent *event)
 {
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
    DrawMainWindow mainWindow(drawWidget);
    mainWindow.setWindowTitle(WinTitle);
    mainWindow.setCentralWidget(drawWidget);
-   mainWindow.resize(640, 480);
+   mainWindow.resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
    mainWindow.show();
 
    return app.exec();

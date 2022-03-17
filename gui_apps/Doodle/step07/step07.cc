@@ -16,9 +16,6 @@ int main(int argc, char **argv)
   QApplication app(argc, argv);
   app.setStyle("Fusion");
 
-  QFont font = QFont("SF UI Text", QApplication::font("QMenu").pointSize());
-  app.setFont(font);
-
 #ifdef Q_OS_WINDOWS
   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
     setWinDarkPalette(&app);
@@ -26,7 +23,6 @@ int main(int argc, char **argv)
 
   // create the GUI
   DrawWindow mainWindow;
-  mainWindow.setFont(font); 
   mainWindow.show();
 
   return app.exec();

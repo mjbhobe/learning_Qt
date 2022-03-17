@@ -10,7 +10,7 @@
 #include "common.hxx"
 
 const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step06: Drawing multiple lines");
+const QString WindowTitle("Qt Doodle - Step06: Drawing multiple lines");
 
 DrawWindow::DrawWindow()
 {

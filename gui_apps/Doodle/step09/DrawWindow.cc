@@ -179,19 +179,19 @@ void DrawWindow::resizeEvent(QResizeEvent *event)
 
 void DrawWindow::paintEvent(QPaintEvent *event)
 {
-  /* QPainter painter(this);
+   QPainter painter(this);
    painter.setRenderHint(QPainter::Antialiasing);
 
    // we just blit the from image to device
    QRect dirtyRect = event->rect();
    qDebug() << "DrawWindow::paintEvent() - dirtyRect = " << dirtyRect;
    painter.drawImage(dirtyRect, _image, dirtyRect);
-   */
-  QColor color = getPaletteColor(QPalette::Window);
+
+  /*QColor color = getPaletteColor(QPalette::Window);
   _image.fill(color);
   QPainter painter(&_image);
   painter.setRenderHint(QPainter::Antialiasing);
-  _doodle->draw(painter);
+  _doodle->draw(painter);*/
 }
 
 void DrawWindow::resizeImage(const QSize &newSize, bool force /*=false*/)
@@ -199,17 +199,17 @@ void DrawWindow::resizeImage(const QSize &newSize, bool force /*=false*/)
   if (force || (_image.size() != newSize)) {
     qDebug() << "Resizing & repaining image as " << (force ? "forced" : "resized");
     QImage newImage(newSize, QImage::Format_RGB32);
-    // QColor color = getPaletteColor(QPalette::Window);
+    QColor color = getPaletteColor(QPalette::Window);
     // qDebug() << "   New background color: " << color;
-    // newImage.fill(color);
-    _image = newImage;
-    // newImage.fill(qRgb(255,255,255));
+    newImage.fill(color);
+    //_image = newImage;
+    newImage.fill(qRgb(255,255,255));
     // draw existing image over new image
-    /*QPainter painter(&newImage);
-      painter.setRenderHint(QPainter::Antialiasing);
-      painter.drawImage(QPoint(0, 0), _image);
-      _image = newImage; */
-    update();
+    QPainter painter(&newImage);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.drawImage(QPoint(0, 0), _image);
+    _image = newImage;
+    //update();
   }
 }
 
@@ -220,11 +220,11 @@ void DrawWindow::fileNew()
 {
   if (canClose()) {
     _doodle->newDoodle();
-    clearImage(false);
-    // QColor color = getPaletteColor(QPalette::Window);
-    // _image.fill(color);
-    // _image.fill(qRgb(255, 255, 255));
-    // update();
+    //clearImage(false);
+    QColor color = getPaletteColor(QPalette::Window);
+    _image.fill(color);
+    //_image.fill(qRgb(255, 255, 255));
+    update();
   }
 }
 
@@ -234,17 +234,17 @@ void DrawWindow::fileOpen()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Qt Scribble File"),
                                                     QDir::currentPath(), ScribbleFiles);
     if (!fileName.isEmpty() && _doodle->load(fileName)) {
-      clearImage(false);
-      update();
-      // QColor color = getPaletteColor(QPalette::Window);
-      // _image.fill(color);
+      //clearImage(false);
+      //update();
+      QColor color = getPaletteColor(QPalette::Window);
+      _image.fill(color);
       //_image.fill(qRgb(255,255,255));
       // clearImage(false);
 
-      // QPainter painter(&_image);
-      // painter.setRenderHint(QPainter::Antialiasing);
-      //_doodle->draw(painter);
-      // update();
+      QPainter painter(&_image);
+      painter.setRenderHint(QPainter::Antialiasing);
+      _doodle->draw(painter);
+      update();
     }
   }
 }

@@ -9,16 +9,22 @@
 // ============================================================================
 """
 import sys
+import platform
 from PyQt5.QtGui import *
 from mainWindow import *
 
+# code to import Chocolaf theme files
 from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.pyqtapp import PyQtApp
+
+__version__ = "1.0"
 
 
 def main():
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
+    print(f"PyQt Doodle - developed with Python {platform.python_version()}, " +
+          f"Qt {QT_VERSION_STR}, PyQt {PYQT_VERSION_STR} on {platform.system()}")
 
     mainWindow = MainWindow()
     mainWindow.show()

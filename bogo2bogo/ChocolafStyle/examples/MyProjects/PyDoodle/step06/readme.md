@@ -76,6 +76,13 @@ class Squiggle(QObject):
                 lastPt = pt
 ```
 
+The above code represents a single `Squiggle`, with functions that help you:
+* Get/Set pen width - `penColor()` getter & setter methods using `@property` and `@property.setter` annotations
+* Get/Set pen color - `penColor()` getter & setter methods using `@property` and `@property.setter` annotations
+* `numPoints(self)` - to return count of points in the Squiggle
+* `append(self, pt: QPoint)` - to add a new point to the Squiggle, and
+* `draw(self, painter: QPainter)` - to draw the squiggle on instance of a `painter` using the Squiggle's set `penColor` and `penWidth` properties.
+
 
 <span style="background-color:yellow; color:black"><b>TODO:</b>Complete Tutorial above....</span>
 

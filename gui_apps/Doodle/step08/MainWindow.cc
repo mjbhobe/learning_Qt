@@ -23,7 +23,7 @@
 #include <QtWidgets>
 
 const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step08: Loading & Saving files");
+const QString WindowTitle("Qt Doodle - Step08: Loading & Saving files");
 
 MainWindow::MainWindow()
 {
@@ -132,7 +132,7 @@ void MainWindow::createMenus()
 
 void MainWindow::createToolbar()
 {
-   QToolBar *toolBar = addToolBar("Main", this);
+   QToolBar *toolBar = new QToolBar("Main", this);
 
    toolBar->addAction(fileNewAction);
    toolBar->addAction(fileOpenAction);

@@ -12,7 +12,7 @@ We have already seen how to handle the `mouse press` event before. In this step,
 
 The `mouse drag` event is sent to your event handler class when the mouse is _dragged_ after a `mouse press`. For example, when you press the left mouse button & then drag the mouse across the window _keeping the left mouse button pressed_. Similarly, you will also receive the `mouse drag` event if you _drag_ the right mouse button.
 
-**NOTE: for the window to receive `mouse drag` events, you must _enable mouse tracking_ by calling `setMouseTracking(True)` before you _expect_ any mouse events.** A good place to call `setMouseTracking(True)` would be in your window's `__init__()` function.
+**NOTE: for the window to receive `mouse drag` events, you must _enable mouse tracking_ by calling `setMouseTracking(True)` before you _expect_ any mouse events.** A good place to call `setMouseTracking(True)` would be in your window's `__init__()` method.
 
 A `mouse release` event is sent when the mouse button is released. This is the _oppisite_ of the `mouse press` event. A `mouse release` event will be sent when either the left or the right mouse button is released _after_ it is first pressed.
 
@@ -20,26 +20,24 @@ A `mouse release` event is sent when the mouse button is released. This is the _
 Before we start, create a new sub-directory `step04` under our _root folder_ and copy `step03/mainWindow.py` to `step04/mainWindow.py`. Also copy `step03/step03.py` to `step04/step04.py`.
 
 #### Modifying the `__init__()` function
-First, we need to make some modifications to the _constructor_ of our `MainWindow` class. The modified `__init__()` function is shown below:
+First, we need to make some modifications to the `MainWidow` class' _constructor_. The modified `__init__()` function is shown below:
 
 ```python
-# step04/mainWindow.py
-class MainWindow(QMainWindow):
+    # step04/mainWindow.py
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step04: Drawing a Squiggle")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
+        self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.modified = False
         self.points = []
-        # new code....
         self.dragging = False
         self.penColor = QColor(qRgb(0, 85, 255))
         self.penWidth = 3
+        # enable mouse drags to send events to window
         self.setMouseTracking(True)
 ```
 We have added the last 4 lines in the code above:
-- `self.dragging = False` : adds a boolean attribute `dragging` to the class as a flag that helps us determine if the mouse is being dragged (=True) or not (=False). You'll see how this is used when we code the `mouse` events.
+- `self.dragging = False` : adds a boolean attribute `dragging` to the class as a flag that helps us determine if the mouse is being dragged (`=True`) or not (`=False`). You'll see how this is used when we code the `mouse` events.
 - `self.penColor` and `self.penWidth` are two attributes that determine the squiggle's color and thickness respectively.
 - The last line enables mouse tracking, as explained above. If you forget to add this, our `MainWindow` will not receive any events when the mouse is _dragged_.
 
@@ -154,4 +152,6 @@ This completes our code to draw a squiggle. You can now run the `step04/step04.p
 
 <br/>
 
-__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
+## **NOTE**
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.

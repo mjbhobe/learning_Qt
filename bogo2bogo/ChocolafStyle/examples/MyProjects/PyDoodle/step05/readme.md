@@ -27,7 +27,7 @@ In this step, we'll be using the `QInputDialog` and the `QColorDialog` to help w
 
 Recall that we had defined 2 attributes of the `MainWindow` class - `penWidth` and `penColor`. We'll now proceed to show you how you can get the user to change values for these attributes using standard dialogs.
 
-### Changing the `penWidth`
+## Changing the `penWidth`
 We will use the `QInputDialog.getInt(...)` call to get the new pen width from the user. Here is how you call the dialog:
 
 ```python
@@ -156,11 +156,11 @@ If you run the code now and do the following steps:
 
 - Right press the mouse button while holding down the `Ctrl` key (`Command` key on the Mac). You should see the `QColorDialog` as shown below:
 
-Notice that the default color has been selected by the dialog - this is because we passed this value as the _initial_ color (`= RGB(0,65,255)`)
+Notice that the default color has been selected by the dialog - this is because we passed this value as the _initial_ color (`= RGB(0, 65, 255)`)
 
 ![Color Dialog](./images/Step05-ColorDialog.png)
 
-- Select a new pen color of your choice. For example, I have selected green color (`=(RGB(0,120,0)`)
+- Select a new pen color of your choice. For example, I have selected orangish color (`= RGB(255, 170, 0)`)
 
 ![Pick New Color](./images/Step05-ColorDialogColorSelect.png)
 
@@ -174,4 +174,6 @@ Notice that the default color has been selected by the dialog - this is because 
 
 <br/>
 
-__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
+## **NOTE**
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.

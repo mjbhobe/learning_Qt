@@ -15,9 +15,10 @@
 #include <QScreen>
 #include <QStatusBar>
 #include <QtGui>
+#include <QToolBar>
 
 const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step07: Adding Actions + Menus + handlers");
+const QString WindowTitle("Qt Doodle - Step07: Adding Actions + Menus + handlers");
 
 DrawWindow::DrawWindow()
 {
@@ -27,6 +28,7 @@ DrawWindow::DrawWindow()
 
    createActions();
    createMenus();
+   createToolbar();
    statusBar()->showMessage("Qt Scribble - Doodling Application. Created by Manish Bhobe");
 
    // resize(640,480);
@@ -102,6 +104,19 @@ void DrawWindow::createMenus()
    menuBar()->addMenu(fileMenu);
    menuBar()->addMenu(optionsMenu);
    menuBar()->addMenu(helpMenu);
+}
+
+void DrawWindow::createToolbar()
+{
+   this->toolbar = new QToolBar();
+   this->toolbar->addAction(fileNewAction);
+   this->toolbar->addAction(fileOpenAction);
+   this->toolbar->addAction(fileSaveAction);
+   this->toolbar->addAction(fileSaveAsAction);
+   this->toolbar->addSeparator();
+   this->toolbar->addAction(penWidthAction);
+   this->toolbar->addAction(penColorAction);
+   addToolBar(this->toolbar);
 }
 
 bool DrawWindow::canClose()

@@ -6,15 +6,16 @@ Our application will include a standard menu bar & toolbar and will allow us to 
 
 The final version will look somewhat like the image below.
 
-<div style='background-color: yellow'>
+<div style='background-color: yellow; color: black;'>
 [TODO: Insert Final Image]()
 </div>
 
 ## Requirements
-- Python 3.0+ (I used Python 3.7)
-- PyQt5 framework.
+- Python 3.0+ (I used Python 3.7+)
+- PyQt5 framework (I use PyQt 5.15.x, with Qt 5.15.x)
 - PyQt5 tools, like Designer to layout forms & dialogs.
-- A text editor of your choice that provides syntax highlighting of Python code and allows you to run `*.py` files from the editor. I use the Atom editor with the script plugin.
+- A text editor of your choice that provides syntax highlighting of Python code and allows you to run `*.py` files from the editor. I use the Atom editor with the script plugin and Visual Studio code with Python plugins alternatively.
+
 
 ### Installing PyQt5
 It is assumed that you have Python installed. A full scientific Python stack (like the one available at Ananconda.com is highly recommended, but not required)
@@ -36,4 +37,5 @@ $> python step05.py
 ```
 
 ## **NOTE**
-I have written this tutorial on an Ubuntu Linux machine. All the screen-shots enclosed in the documentation are from the Ubuntu Linux platform. However, due to Python's cross-platform nature, the _same_ code can run on both Windows and Mac without any changes. Your Window's look and feel would then be native to the platform on which you code.
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.

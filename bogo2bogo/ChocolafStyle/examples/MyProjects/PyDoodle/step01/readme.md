@@ -13,6 +13,7 @@ In this step, the application does nothing else but display the main window, whi
 
 ```python
 # step01/mainWindow.py - main window of application
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -21,16 +22,13 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt Doodle - Step01: Basic Window")
-        self.setStyleSheet("background-color: white")
-        self.setGeometry(QRect(100,100,640,480))
-
-
+        # resize window to use 4/5 of the screen
+        self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
 ```
 
 For this step, just the constructor `__init__()` method is enough. In this method, we define some customizations for the main window:
 - We set the title of the main window using the `setWindowTitle()` method
-- We also set the background color of the client area of the window using the `setStyleSheet()` function
-- Finally, we set the initial size of the window using the `setGeometry()` call.
+- Finally, we set the initial size of the window to 4/5th of screen size.
 
 4. Next create the Python module that will call this class & initiate the event loop. Create another file `step01.py` in the `step01` directory. Here is the code for `step01/step01.py`
 
@@ -40,13 +38,20 @@ import sys
 from PyQt5.QtGui import *
 from mainWindow import *
 
+# code to import Chocolaf theme files
+from chocolaf.palettes import ChocolafPalette
+from chocolaf.utils.pyqtapp import PyQtApp
+
 def main():
-    app = QApplication(sys.argv)
+    # NOTE: PyQtApp is a class derived from QApplication
+    app = PyQtApp(sys.argv)
+    app.setStyle("Chocolaf") # use Chocolaf theme
 
     mainWindow = MainWindow()
     mainWindow.show()
 
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()
@@ -63,4 +68,6 @@ This is a simple high level window which can be moved, resized, minimized, maxim
 
 <span style="color:blue">This completes Step1 of our tutorial.</span>  In the next step we will add code to handle operating system events.
 
-__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
+## **NOTE**
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.

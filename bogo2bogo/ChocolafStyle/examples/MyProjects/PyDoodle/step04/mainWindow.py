@@ -18,13 +18,13 @@ class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("PyQt5 Doodle - Step04: Drawing a Squiggle")
-        #self.setGeometry(QRect(100, 100, 640, 480))
         self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.modified = False
         self.points = []
         self.dragging = False
         self.penColor = QColor(qRgb(0, 85, 255))
         self.penWidth = 3
+        # enable mouse drags to send events to window
         self.setMouseTracking(True)
 
     # operating system Events

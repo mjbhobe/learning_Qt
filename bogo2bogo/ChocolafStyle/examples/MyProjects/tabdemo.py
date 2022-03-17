@@ -64,6 +64,7 @@ class TabDemoWindow(QWidget):
         layout.addWidget(widget)
         self.setLayout(layout)
         self.setWindowTitle("QTabWidget Demo")
+        self.resize(640, 200)
 
 
 def main():

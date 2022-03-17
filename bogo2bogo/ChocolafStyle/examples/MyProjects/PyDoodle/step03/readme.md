@@ -42,8 +42,8 @@ We have added 2 class attributes to the class:
 - `self.modified`, is a `boolean` flag to detect if the doodle has been _modified_ or not. Every time a new point is added to `self.points` list, the doodle is flagged as modified and `self.modified` is set to `True`
 
 Here is the code to handle the `mouse press` event:
-- when the `left` mouse button is pressed, we save the point where it was pressed in the `self.points` list
-- when the `right` mouse button is pressed, we clear the list of points saved.
+- when the `left` mouse button is pressed, we save the point where it was pressed in the `self.points` list, and we set a flag to indicate that our doodle is modified (`self.modified = True`)
+- when the `right` mouse button is pressed, we clear the list of points saved, and we clear the modified flag (`self.modified = False`)
 
 ```python
 # step03/mainWidow.py
@@ -85,16 +85,18 @@ Here's our `paintEvent(...)` method:
 ```python
 # step03/mainWidow.py
 class MainWindow(QMainWindow):
-    ...
-    # other methods omitted for brevity
+    ... # other code
+
     def paintEvent(self, e: QPaintEvent) -> None:
         painter = QPainter()
         painter.begin(self)
         try:
-            font = QFont("Monospace", 10)
-            painter.setFont(font)
-
             if len(self.points) > 0:
+                # draw only if I have points to draw!
+                font = QFont("Monospace", 10)
+                painter.setFont(font)
+                painter.setRenderHint(QPainter.Antialiasing, True)
+
                 for pt in self.points:
                     pos = f"({pt.x()},{pt.y()})"
                     painter.drawText(pt.x(), pt.y(), pos)
@@ -105,7 +107,7 @@ We iterate over the points, if any, that we have _accumulated_ in the `self.poin
 
 __NOTE:__ I have use the `try/finally` block to ensure that `end()` is _always_ called, even if the painting code throws some sort of error/exception. This is not required, but a good practice to follow.
 
-If you can run `step03/step03.py` now. Once the window comes up, left-mouse click all around the client area and you should see something like the screen-shot below. If you right-mouse click, all the points will disappear!
+If you can run `step03/step03.py` now. Once the window comes up, left-mouse click all around the client area and you should see that the mouse click position is painted with each click. After multiple random clicks, your window should look something like the screen-shot below. If you right-mouse click, all the points will disappear!
 
 ![Left Mouse Press](./images/Step03-LeftMousePress.png)
 
@@ -129,10 +131,12 @@ class MainWindow(QMainWindow):
         else:
             e.accept()
 ```
-Notice that the `QMessageBox.question(...)` call is now called only if `self.modified` is `True` (i.e. when the drawing is _modified_). If drawing is not modified, we just `accept()` the event, which closes the window _without_ asking the user.
+Notice that the user is prompted (i.e. `QMessageBox.question(...)` is called) only if the doodle is modified (i.e. `self.modified` is `True`). Otherwise, we just `accept()` the event, which closes the window _without_ prompting the user.
 
 <hr/>
 
 <span style="color:blue">This completes Step3 of our tutorial</span>, where we demonstrated how `paint()` events can be handled. In the next step we will start drawing doodles.<br/>
 
-__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
+## **NOTE**
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.

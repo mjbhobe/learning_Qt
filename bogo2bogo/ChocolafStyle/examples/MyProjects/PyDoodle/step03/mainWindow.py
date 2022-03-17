@@ -40,10 +40,12 @@ class MainWindow(QMainWindow):
         painter = QPainter()
         painter.begin(self)
         try:
-            font = QFont("monospace", 11)
-            painter.setFont(font)
-
             if len(self.points) > 0:
+                # draw only if I have points to draw!
+                font = QFont("Monospace", 10)
+                painter.setFont(font)
+                painter.setRenderHint(QPainter.Antialiasing, True)
+
                 for pt in self.points:
                     pos = f"({pt.x()},{pt.y()})"
                     painter.drawText(pt.x(), pt.y(), pos)

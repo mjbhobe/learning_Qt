@@ -10,13 +10,11 @@
 import os
 import pathlib
 import sys
-import qdarkstyle
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import PyQtApp
+from chocolaf.utils.pyqtapp import PyQtApp
 
 
 class RadioForm(QWidget):
@@ -163,13 +161,13 @@ def main():
     app = PyQtApp(sys.argv)
 
     w = RadioGroupForm()
-    w.setStyleSheet(loadStyleSheet())
+    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(100, 100)
     w.show()
 
     rect = w.geometry()
     w1 = RadioGroupForm()
-    w1.setStyleSheet(qdarkstyle.load_stylesheet())
+    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
     w1.move(rect.left() + rect.width() + 20,
             rect.top() + rect.height() // 4 + 20)
     w1.show()

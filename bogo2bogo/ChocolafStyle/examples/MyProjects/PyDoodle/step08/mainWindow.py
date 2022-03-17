@@ -27,7 +27,6 @@ import textEditor_rc
 
 WinTitle = "PyQt5 Doodle - Step08: Adding Menus, Toolbars, Statusbars"
 
-
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
@@ -128,6 +127,8 @@ class MainWindow(QMainWindow):
         toolBar.addSeparator()
         toolBar.addAction(self.penWidthAction)
         toolBar.addAction(self.penColorAction)
+        toolBar.addSeparator()
+        toolBar.addAction(self.exitAction)
 
         self.addToolBar(toolBar)
 
@@ -168,10 +169,10 @@ class MainWindow(QMainWindow):
             self.drawWindow.doodle.defPenColor = newColor
 
     def helpAbout(self):
-        about = QMessageBox.about(self, "About PyDoodle...",
-                                  "PyQt Doodle - random doodles.\n" + "\n" +
-                                  "Developed using PyQt5 GUI Library for Python\n" +
-                                  "Created by Manish Bhobe")
+        QMessageBox.about(self, "About PyDoodle...",
+                          "PyQt Doodle - random doodles.\n" + "\n" +
+                          "Developed using PyQt5 GUI Library for Python\n" +
+                          "Created by Manish Bhobe")
 
     # operating system Events
     def closeEvent(self, e):

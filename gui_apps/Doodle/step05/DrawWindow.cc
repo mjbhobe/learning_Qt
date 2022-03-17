@@ -9,7 +9,7 @@
 #include <QtGui>
 
 const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step05: Adding Lines");
+const QString WindowTitle("Qt Doodle - Step05: Changing Line color & thickness");
 
 DrawWindow::DrawWindow()
 {
@@ -71,6 +71,7 @@ void DrawWindow::mousePressEvent(QMouseEvent *event)
       // left mouse button pressed
       if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
          // display message box & get new width of pen
+         // NOTE: this is not the best way to call up a dialog!!! It'll do for now
          bool ok;
          int newPenWidth = QInputDialog::getInt(this, AppTitle, QString("Enter new pen width (2-12):"),
                                                 _line->penWidth(), 2, 12, 1, &ok);

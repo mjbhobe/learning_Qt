@@ -74,6 +74,8 @@ class Example(QMainWindow):
     def initUI(self):
 
         self.textEdit = QTextEdit()
+        # remove border
+        self.textEdit.setStyleSheet("QTextEdit {border: 0;}")
         self.editorFont = QFont("Consolas", 12)
         self.textEdit.setFont(self.editorFont)
         self.setCentralWidget(self.textEdit)

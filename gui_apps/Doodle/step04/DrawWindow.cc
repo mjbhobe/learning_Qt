@@ -4,8 +4,8 @@
 #include <QMessageBox>
 #include <QtGui>
 
-const QString AppTitle("Qt Scribble");
-const QString WindowTitle("Qt Scribble - Step04: Drawing Lines");
+static const QString AppTitle = {"Qt Scribble"};
+static const QString WindowTitle = {"Qt Scribble - Step04: Drawing Lines"};
 
 DrawWindow::DrawWindow()
 {
@@ -41,6 +41,7 @@ void DrawWindow::drawLineTo(const QPoint &pt)
 {
    // draw line from _lastPt to pt
    QPainter painter(&_image);
+   painter.setRenderHint(QPainter::Antialiasing, true);
    QPen pen(_penColor, _penWidth);
    painter.setPen(pen);
    painter.drawLine(_lastPt, pt);

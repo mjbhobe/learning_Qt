@@ -162,7 +162,8 @@ void DrawWindow::resizeEvent(QResizeEvent *event)
     resizeImage(QSize(newWidth, newHeight));
     update();
   }
-  QWidget::resizeEvent(event);
+  else
+     QWidget::resizeEvent(event);
 }
 
 void DrawWindow::paintEvent(QPaintEvent *event)
@@ -209,8 +210,8 @@ void DrawWindow::fileNew()
 void DrawWindow::fileOpen()
 {
   if (canClose()) {
-    QString fileName = QFileDialog::getOpenFileName(this, 
-        tr("Open Qt Scribble File"), QDir::currentPath(), ScribbleFiles);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Qt Scribble File"),
+                                                    QCoreApplication::applicationDirPath(), ScribbleFiles);
     if (!fileName.isEmpty() && _doodle->load(fileName)) {
       //clearImage();
       QColor color = getPaletteColor(QPalette::Window); 

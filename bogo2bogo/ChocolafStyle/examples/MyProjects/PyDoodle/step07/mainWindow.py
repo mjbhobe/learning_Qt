@@ -21,7 +21,7 @@ from doodle import Doodle
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(QMainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("PyQt5 Doodle - Step07: Separating the Doodle")
+        self.setWindowTitle("PyQt5 Doodle - Step07: Separating the Squiggle Implementation")
         #self.setGeometry(QRect(100, 100, 640, 480))
         self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.drawWindow = DrawWindow()

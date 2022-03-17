@@ -6,13 +6,13 @@ In this step we will add code to handle operating system (OS) events.
 
 Most GUI applications are event based. When you interact with a GUI application, your actions (e.g. pressing the left mouse button or dragging the mouse across the client area, selecting a menu item, clicking on a toolbar button, closing the window etc.) result in the underlying operating system sending your main window a specific `event`. For example, when the mouse is pressed over the window a `mouse press event` will be sent to the main window, when the window is closed, a `close event` will be sent, when a part of the window needs to be re-drawn a `paint` event is sent and so on.
 
-Each `event` may include additional information specific to that event. For example, the `mouse press` will include information like the `(X,Y)` co-ordinates where the mouse was clicked; the `paint` event would include information about the _area_ of the window that needs to be re-painted and so on.
+Each `event` may include additional information specific to that event. For example, the `mouse press` will include information like the `(x, y)` co-ordinates where the mouse was clicked; the `paint` event would include information about the _area_ of the window that needs to be re-painted and so on.
 
-Now imagine that the _event processing loop_ in our `app.exec()` call has code that reads these events from the OS. Further, depending on the event received, it _cracks open_ the additional information _enclosed_ with the event. This information is the _packaged_ in an event specific `PyQt` class which is then _dispatched_ to our main window. For example, a `mouse press` event will enclose event specific information in a `QMouseEvent` instance, from which you can get the `(X, Y)` co-ordinates of the mouse click and other information that we will discuss later. A `paint` event will have information in a `QPaintEvent`, which will have information on which area needs to be re-painted and so on.
+Now imagine that the _event processing loop_ in our `app.exec()` call has code that reads these events from the OS. Further, depending on the event received, it _cracks open_ the additional information _enclosed_ with the event. This information is the _packaged_ in an event specific `PyQt` class which is then _dispatched_ to our main window. For example, a `mouse press` event will enclose event specific information in a `QMouseEvent` instance, from which you can get the `(x, y)` co-ordinates of the mouse click and other information that we will discuss later. A `paint` event will have information in a `QPaintEvent`, which will have information on which area needs to be re-painted and so on.
 
 Any `PyQt` class derived from `QWidget` class can _handle events_. Our `MainWindow` class derives from `QMainWindow`, which derives from `QWidget`, so it can _handle events_. _Handling an event_ means overloading a function, with a specific function signature in our derived class. As you can imagine, `QWidget` will have code (generic) to reasonably handle all possible OS events. When we provide an _event handler_ in our derived class, the magic of _inheritance_ results in _our_ function getting called. We can choose to _ignore_ and event; in which case we _will not_ overload the _event handler_ function. In this case (you guessed it!), the `QWidget` provided code will get called, which provides reasonable default response.
 
-Ok, enough theory. Let's get to the code now. 
+Ok, enough theory. Let's get to the code now.
 
 In this step we will provide event handlers for the `mouse press` and `close` events. Specifically,
 - When the _left mouse button_ is pressed over the window, we will _handle_ this event and display a message box to the user informing her that the "left mouse button was pressed".
@@ -98,7 +98,7 @@ A few points to note:
 - If the user clicks `Yes` on the message box displayed, we accept the event `e.accept()`. Accepting a `close` event usually implies closing the window and quitting the application.
 - Conversely, if the user clicks the `No` button, we ignore the event `e.ignore()`. Ignoring an event means _don't process this event_, which in our case would imply _don't quit the application yet_.
 
-**NOTE:** the `e.ignore()` is another way you can _programattically_ ignore an event. This call us usually used in an event handler, where you want to ignore the event in response to a specific condition. In our case, we ignore the event if user chooses `No`. 
+**NOTE:** the `e.ignore()` is another way you can _programattically_ ignore an event. This call us usually used in an event handler, where you want to ignore the event in response to a specific condition. In our case, we ignore the event if user chooses `No`.
 
 After adding this new method to the `MainWindow` class, run `step01.py`. When the main window is displayed, click on the `X` button on the title bar. You should see the following message box.
 
@@ -111,4 +111,6 @@ After adding this new method to the `MainWindow` class, run `step01.py`. When th
 
 <span style="color:blue">This completes Step2 of our tutorial.</span> In the next step, we will add code to draw text in the client area when the mouse button is pressed.
 
-__NOTE:__ I have written this tutorial on a Ubuntu Linux machine, so the window look & feel is specific to my OS. On a Windows machine, the look & feel will be native to Windows, and likewise on a Mac. However, you won't have to change your code - PyQt5 handles the low level stuff for you.
+## **NOTE**
+- All code has been developed & tested on a Windows 10 and a Linux machine running KDE Plasma 5.24 (Manjaro Linux). **I have not tested this code on a Mac (as I don't own one :( )**. Screen-shots captured alternate between Windows 10 & KDE Plasma.
+- The code uses a custom dark-chocolate theme (Chocolaf), developed by your's truly.
