@@ -1,6 +1,7 @@
 /************************************************************************
  *  ChocoLaf for Qt/PyQt - dark chocolate style theme for Qt & PyQt apps
- *  [based on QDarkStyle stylesheet by
+ *  [based on QDarkStyle stylesheet by Colin Duquesnoy
+ *  (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
  *
  *  @author : Manish Bhobe
  *  My experiments with Python, PyQt, Data Science & ML
@@ -1848,7 +1849,7 @@ QCalendarWidget {
 QCalendarWidget QToolButton {
   background-color: rgb(42, 42, 42); /* transparent */
   color: rgb(220, 220, 220);
-  icon-size: 30px;
+  icon-size: 18px; /* 30px; */
 }
 
 QCalendarWidget QMenu {

@@ -10,13 +10,11 @@
 
 """
 import sys
-import os
 import cv2
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5 import uic
 
 from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.pyqtapp import PyQtApp
@@ -28,10 +26,10 @@ Window_Title = "PyQt Displaying Images with OpenCV"
 # add some custom styling above & beyond stysheet set
 style_sheet = """
     QLabel#ImageLabel {
-        border: 2px dashed rgb(102, 102, 102)
+        border: 2px dashed rgb(102, 102, 102);
     }
     QLabel {
-        qproperty-alignment: AlignCenter
+        qproperty-alignment: AlignCenter;
     }
 """
 
@@ -94,6 +92,7 @@ class DisplayImageWindow(QMainWindow):
 
     def openImage(self):
         picsLoc = QStandardPaths.standardLocations(QStandardPaths.PicturesLocation)
+        print(f"{picsLoc[-1]}")
         image_file, _ = QFileDialog.getOpenFileName(self, "Open Image", picsLoc[-1],
                                                     "Image files (*.png, *.tiff. *.jpg *.jpeg *.bmp)")
         if image_file:
