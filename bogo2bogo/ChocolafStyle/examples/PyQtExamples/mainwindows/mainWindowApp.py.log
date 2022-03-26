@@ -225,3 +225,16 @@ INFO:qdarkstyle:Found version patches to be applied.
 INFO:qdarkstyle:Found application patches to be applied.
 INFO:__main__:Settings read: pos = PyQt5.QtCore.QPoint(298, 69), size = PyQt5.QtCore.QSize(1211, 796), fontFamily = Consolas, fontSize = 12
 INFO:__main__:Settings written: pos = PyQt5.QtCore.QPoint(298, 69), size = PyQt5.QtCore.QSize(1211, 796), fontFamily = Consolas, fontSize = 12
+INFO:chocolaf:Loaded chocolaf stylesheet from /home/mjbhobe/code/git-projects/learning_Qt/bogo2bogo/ChocolafStyle/chocolaf/styles/chocolaf/chocolaf.css
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle/dark/style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle/light/style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
+INFO:__main__:Settings read: pos = PyQt5.QtCore.QPoint(200, 200), size = PyQt5.QtCore.QSize(400, 400), fontFamily = monospaced, fontSize = 11
+INFO:__main__:Settings written: pos = PyQt5.QtCore.QPoint(222, 27), size = PyQt5.QtCore.QSize(864, 546), fontFamily = monospaced, fontSize = 11

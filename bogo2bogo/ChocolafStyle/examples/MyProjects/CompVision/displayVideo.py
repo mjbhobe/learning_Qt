@@ -10,17 +10,14 @@
 
 """
 import sys
-import os
+
 import cv2
 import numpy as np
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.pyqtapp import PyQtApp
-
 import textEditor_rc
 
 Window_Title = "PyQt Displaying Videos with OpenCV"
@@ -71,6 +68,11 @@ class VideoWorkerThread(QThread):
 class DisplayVideoWindow(QMainWindow):
     def __init__(self):
         super(DisplayVideoWindow, self).__init__()
+        self.stopButton = None
+        self.startButton = None
+        self.displayVideoPathLine = None
+        self.videoDisplayLabel = None
+        self.videoThreadWorker = None
         self.thread_is_running = False
         self.initializeUi()
 
@@ -120,9 +122,16 @@ class DisplayVideoWindow(QMainWindow):
         openAction.setShortcut(QKeySequence.Open)
         openAction.triggered.connect(self.openVideo)
 
+        exitAction = QAction(QIcon(":/on-off.png"), "E&xit", self)
+        exitAction.setStatusTip("Quit the application")
+        exitAction.setShortcut("Ctrl+Q")
+        exitAction.triggered.connect(qApp.exit)
+
         menuBar = self.menuBar()
         fileMenu = menuBar.addMenu("&File")
         fileMenu.addAction(openAction)
+        fileMenu.addSeparator()
+        fileMenu.addAction(exitAction)
 
     def startVideo(self):
         self.thread_is_running = True

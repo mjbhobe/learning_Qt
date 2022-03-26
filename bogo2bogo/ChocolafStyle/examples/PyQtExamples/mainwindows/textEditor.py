@@ -57,8 +57,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import PyQtApp
 import chocolaf
 from chocolaf.utils.pyqtapp import PyQtApp
 import textEditor_rc
@@ -76,7 +74,7 @@ class Example(QMainWindow):
         self.textEdit = QTextEdit()
         # remove border
         self.textEdit.setStyleSheet("QTextEdit {border: 0;}")
-        self.editorFont = QFont("Consolas", 12)
+        self.editorFont = QFont("Source Code Pro Medium, Consolas, Monospace", 11)
         self.textEdit.setFont(self.editorFont)
         self.setCentralWidget(self.textEdit)
         self.textEdit.setText(" ")
@@ -94,7 +92,7 @@ class Example(QMainWindow):
         openAction = QAction(QIcon(':/file_open.png'), 'Open...', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open File')
-        openAction.triggered.connect(self.openo)
+        openAction.triggered.connect(self.open)
 
         saveAction = QAction(QIcon(':/file_save.png'), 'Save', self)
         saveAction.setShortcut('Ctrl+S')
@@ -189,7 +187,7 @@ class Example(QMainWindow):
             self.save()
             event.accept()
 
-    def openo(self):
+    def open(self):
         self.statusBar().showMessage('Open Text Files ')
         docsPath = QStandardPaths.standardLocations(QStandardPaths.DocumentsLocation)
         fname = QFileDialog.getOpenFileName(self, 'Open file',

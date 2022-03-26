@@ -24,6 +24,7 @@ class TextFinder(QWidget):
         self.loadTextFile()
         # self.ui.textEdit.setEnabled(False)
         self.ui.textEdit.setReadOnly(True)
+        self.ui.textEdit.setFont(QFont("Source Code Pro, Consolas, SF Mono, Monospace", 11))
         self.ui.textEdit.setLineWrapMode(QTextEdit.WidgetWidth)
         # self.ui.findButton.setMinimumWidth(100)
         self.ui.findButton.clicked.connect(self.findButtonClicked)

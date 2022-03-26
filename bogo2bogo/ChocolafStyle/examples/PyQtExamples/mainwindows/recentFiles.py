@@ -75,7 +75,8 @@ class MainWindow(QMainWindow):
         self.setAttribute(Qt.WA_DeleteOnClose)
 
         self.textEdit = QTextEdit()
-        self.textEdit.setFont(QFont("Consolas", 12))
+        self.textEdit.setStyleSheet("QTextEdit {border: None;}")
+        self.textEdit.setFont(QFont("Consolas, Source Code Pro, Driod Mono, Monospace", 12))
         self.setCentralWidget(self.textEdit)
 
         self.createActions()
