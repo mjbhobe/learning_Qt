@@ -160,7 +160,7 @@ class MainWindow(QMainWindow):
 
     def createMenus(self):
         self.fileMenu = self.menuBar().addMenu("&File")
-        #self.fileMenu.aboutToShow.connect(self.updateFileMenu)
+        # self.fileMenu.aboutToShow.connect(self.updateFileMenu)
         self.fileMenu.addAction(self.fileNewAction)
         self.fileMenu.addAction(self.fileOpenAction)
         self.fileMenu.addAction(self.fileSaveAction)
@@ -190,7 +190,7 @@ class MainWindow(QMainWindow):
         self.fileToolbar.addAction(self.fileOpenAction)
         self.fileToolbar.addAction(self.fileSaveAsAction)
 
-        self.editToolbar=self.addToolBar("Edit")
+        self.editToolbar = self.addToolBar("Edit")
         self.editToolbar.setObjectName("EditToolBar")
         self.editToolbar.addAction(self.editInvertAction)
         self.editToolbar.addAction(self.editSwapRedAndBlueAction)
@@ -198,7 +198,7 @@ class MainWindow(QMainWindow):
         self.editToolbar.addAction(self.editMirrorVerticalAction)
         self.editToolbar.addAction(self.editMirrorHorizontalAction)
 
-        self.zoomSpinBox=QSpinBox()
+        self.zoomSpinBox = QSpinBox()
         self.zoomSpinBox.setRange(1, 400)
         self.zoomSpinBox.setSuffix(" %")
         self.zoomSpinBox.setValue(100)
@@ -233,7 +233,7 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self.okToContinue():
-            settings=QSettings()
+            settings = QSettings()
             settings.setValue("LastFile", self.filename)
             settings.setValue("RecentFiles", self.recentFiles or [])
             settings.setValue("MainWindow/Geometry", self.saveGeometry())
@@ -243,7 +243,7 @@ class MainWindow(QMainWindow):
 
     def okToContinue(self):
         if self.dirty:
-            reply=QMessageBox.question(self, "Image Changer - Unsaved Changes",
+            reply = QMessageBox.question(self, "Image Changer - Unsaved Changes",
                                          "Save unsaved changes?",
                                          QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
             if reply == QMessageBox.Cancel:
@@ -253,8 +253,8 @@ class MainWindow(QMainWindow):
         return True
 
     def loadInitialFile(self):
-        settings=QSettings()
-        fname=settings.value("LastFile")
+        settings = QSettings()
+        fname = settings.value("LastFile")
         if fname and QFile.exists(fname):
             self.loadFile(fname)
 
@@ -273,15 +273,15 @@ class MainWindow(QMainWindow):
     def updateFileMenu(self):
         self.fileMenu.clear()
         self.addActions(self.fileMenu, self.fileMenuActions[:-1])
-        current=self.filename
-        recentFiles=[]
+        current = self.filename
+        recentFiles = []
         for fname in self.recentFiles:
             if fname != current and QFile.exists(fname):
                 recentFiles.append(fname)
         if recentFiles:
             self.fileMenu.addSeparator()
             for i, fname in enumerate(recentFiles):
-                action=QAction(QIcon(":/icon.png"),
+                action = QAction(QIcon(":/icon.png"),
                                  "&{} {}".format(i + 1, QFileInfo(
                                      fname).fileName()), self)
                 action.setData(fname)
@@ -319,7 +319,7 @@ class MainWindow(QMainWindow):
                                             "Image Changer - Choose Image", dir,
                                             "Image files ({})".format(" ".join(formats)))
         if fname:
-            self.loadFile(fname)
+            self.loadFile(fname[0])
 
     def loadFile(self, fname=None):
         if fname is None:

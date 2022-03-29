@@ -795,8 +795,9 @@ QFrame {
   /* HLine */
 }
 
+/*
 .QFrame[frameShape="0"] {
-  /* frameShape - no frame */
+  / * frameShape - no frame * /
   border-radius: 4px;
   border: 1px transparent rgb(127, 127, 127);
 }
@@ -812,6 +813,7 @@ QFrame {
   border: none;
   background-color: rgb(127, 127, 127)
 }
+*/
 
 /*********************************/
 /* QAbstractScrollArea           */
@@ -1713,8 +1715,9 @@ QCommandLinkButton:disabled {
 QToolBox {
   padding: 0px;
   border: 0px;
-  border: 1px solid rgb(127, 127, 127);
-  border-radius: 4px;
+  /*border: 1px solid rgb(127, 127, 127);
+  border-radius: 4px; */
+  border: None;
 }
 
 QToolBox:selected {

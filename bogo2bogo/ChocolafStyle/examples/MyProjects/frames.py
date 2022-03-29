@@ -52,29 +52,29 @@ class Form(QWidget):
 
 def main():
     app = PyQtApp(sys.argv)
-    app.setStyle("Chocolaf")
+    app.setStyle("QDarkStyle-dark")
 
     w = Form()
-    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
+    # w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(100, 100)
     w.show()
 
-    rect = w.geometry()
-    w1 = Form()
-    w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
-    w1.move(rect.left() + rect.width() + 20, rect.top())
-    w1.show()
+    # rect = w.geometry()
+    # w1 = Form()
+    # w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    # w1.move(rect.left() + rect.width() + 20, rect.top())
+    # w1.show()
 
-    rect = w1.geometry()
-    w2 = Form()
-    w2.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
-    w2.move(rect.left() + rect.width() + 20, rect.top())
-    w2.show()
+    # rect = w1.geometry()
+    # w2 = Form()
+    # w2.setStyleSheet(app.getStyleSheet("QDarkStyle-light"))
+    # w2.move(rect.left() + rect.width() + 20, rect.top())
+    # w2.show()
 
-    rect = w2.geometry()
-    w3 = Form()
-    w3.move(rect.left() + rect.width() + 20, rect.top())
-    w3.show()
+    # rect = w2.geometry()
+    # w3 = Form()
+    # w3.move(rect.left() + rect.width() + 20, rect.top())
+    # w3.show()
 
     return app.exec()
 

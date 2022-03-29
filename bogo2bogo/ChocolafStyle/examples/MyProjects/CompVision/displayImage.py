@@ -38,6 +38,8 @@ class DisplayImageWindow(QMainWindow):
     def __init__(self, parent: QWidget = None):
         super(DisplayImageWindow, self).__init__(parent)
         self.initializeUi()
+        # add custom styling to window
+        self.setStyleSheet(style_sheet)
 
     def initializeUi(self):
         """ initialize all UI elements of window """
@@ -133,8 +135,6 @@ class DisplayImageWindow(QMainWindow):
 if __name__ == "__main__":
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
-    # add custom styling
-    app.setStyleSheet(style_sheet)
 
     win = DisplayImageWindow()
     win.show()

@@ -24,6 +24,7 @@ class PyQtApp(QApplication):
         # map of stylesheets
         self.styles = {}
         self.palettes = {}
+        #self.font = QFont("")
         self.setFont(QApplication.font("QMenu"))
         self.loadStyleSheets()
 

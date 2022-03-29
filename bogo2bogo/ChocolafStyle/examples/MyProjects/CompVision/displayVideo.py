@@ -75,6 +75,8 @@ class DisplayVideoWindow(QMainWindow):
         self.videoThreadWorker = None
         self.thread_is_running = False
         self.initializeUi()
+        # add custom styling to window
+        self.setStyleSheet(style_sheet)
 
     def initializeUi(self):
         """ initialize the window & display contents to the screen """
@@ -195,7 +197,7 @@ if __name__ == "__main__":
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
     # # add custom styling
-    app.setStyleSheet(style_sheet)
+    # app.setStyleSheet(style_sheet)
 
     win = DisplayVideoWindow()
     win.show()

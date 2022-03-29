@@ -27,7 +27,8 @@ import textEditor_rc
 Window_Title = "PyQt Image Processing with OpenCV"
 
 # add some custom styling above & beyond stysheet set
-style_sheet = """ QLabel {
+style_sheet = """ 
+    QLabel#ImageLabel {
         border: 2px dashed rgb(102, 102, 102);
         qproperty-alignment: AlignCenter;
     }
@@ -38,6 +39,8 @@ class ImageProcessingWindow(QMainWindow):
     def __init__(self, parent: QWidget = None):
         super(ImageProcessingWindow, self).__init__(parent)
         self.initializeUi()
+        # add custom styling
+        self.setStyleSheet(style_sheet)
 
     def initializeUi(self):
         """ initialize all UI elements of window """
@@ -241,8 +244,6 @@ class ImageProcessingWindow(QMainWindow):
 if __name__ == "__main__":
     app = PyQtApp(sys.argv)
     app.setStyle("Chocolaf")
-    # add custom styling
-    # app.setStyleSheet(style_sheet)
 
     win = ImageProcessingWindow()
     win.imageLabel.setStyleSheet(style_sheet)
