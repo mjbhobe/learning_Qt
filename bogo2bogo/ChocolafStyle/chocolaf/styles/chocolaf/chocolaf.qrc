@@ -47,4 +47,7 @@
       <file alias="window_close_pressed.png">images/window_close_pressed.png</file>
       <file alias="window_grip.png">images/window_grip.png</file>
   </qresource>
+  <qresource prefix="chocolaf">
+      <file>chocolaf.css</file>
+  </qresource>
 </RCC>

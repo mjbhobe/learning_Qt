@@ -1,0 +1,21 @@
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle\dark\style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle\light\style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
+INFO:chocolaf:Loaded chocolaf stylesheet from C:\Dev\Code\git-projects\learning_Qt\bogo2bogo\ChocolafStyle\chocolaf\styles\chocolaf\chocolaf.css
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle\dark\style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
+DEBUG:qdarkstyle:Reading QSS file in: :qdarkstyle\light\style.qss
+INFO:qdarkstyle:QSS file sucessfuly loaded.
+DEBUG:qdarkstyle:Checking patches for being applied.
+INFO:qdarkstyle:Found version patches to be applied.
+INFO:qdarkstyle:Found application patches to be applied.
