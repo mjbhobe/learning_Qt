@@ -1,8 +1,7 @@
-# CONFIG += msys2
 TEMPLATE = app
 TARGET = ImageEditor
 
-include (../../common.pro)
+include (../../../../../chocolaf/common_files/common.pro)
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

@@ -29,13 +29,7 @@ ImageEditor::ImageEditor(QWidget *parent)
    createActions();
    createMenus();
    createToolbar();
-   statusBar()->showMessage("");
-   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
-      statusBar()->setStyleSheet(
-         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}");
-   else
-      statusBar()->setStyleSheet(
-         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}");
+   statusBar()->showMessage(QString("ImageViewer with Qt %1 and Chocolaf theme").arg(QT_VERSION_STR));
 
    // set initial size to 4/5 of screen
    resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
@@ -55,9 +49,11 @@ QString getIconPath(QString baseName, bool darkTheme = false)
 void ImageEditor::createActions()
 {
    bool usingDarkTheme = true;
+   /*
 #ifdef Q_OS_WINDOWS
    usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
 #endif
+*/
    openAction = new QAction("&Open...", this);
    openAction->setShortcut(QKeySequence::Open);
    // openAction->setIcon(QIcon(":/open.png"));
@@ -186,12 +182,14 @@ void ImageEditor::createToolbar()
 {
    QToolBar *toolBar = addToolBar("&Main");
 
+   /*
    QPalette palette = toolBar->palette();
    if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
       palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77)); //QColor(59, 59, 59));
    else
       palette.setColor(QPalette::Window, QColor(240, 240, 240));
    toolBar->setPalette(palette);
+   */
 
    toolBar->addAction(openAction);
    toolBar->addAction(printAction);

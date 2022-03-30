@@ -11,7 +11,6 @@ INCLUDEPATH += .
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 COMMON_FILES_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/ChocolafStyle/chocolaf
-# COMMON_FILES_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/common_files
 INCLUDEPATH += $${COMMON_FILES_HOME}/common_files
 
 # You can also make your code fail to compile if you use deprecated APIs.
@@ -54,4 +53,4 @@ QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 # HEADERS += $${COMMON_FILES_HOME}/common_funcs.h $${COMMON_FILES_HOME}/winDark.h
 SOURCES += $${COMMON_FILES_HOME}/common_files/common_funcs.cpp $${COMMON_FILES_HOME}/common_files/chocolaf.cpp
 HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h $${COMMON_FILES_HOME}/common_files/chocolaf.h
-RESOURCES += $${COMMON_FILES_HOME}/styles/chocolaf.qrc
+RESOURCES += $${COMMON_FILES_HOME}/styles/chocolaf/chocolaf.qrc

@@ -57,11 +57,11 @@ ImageViewer::ImageViewer(QWidget *parent)
    imageLabel = new QLabel("");
    scrollArea = new QScrollArea();
 
-   imageLabel->setBackgroundRole(QPalette::Base);
+   //imageLabel->setBackgroundRole(QPalette::Base);
    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
    imageLabel->setScaledContents(true);
 
-   scrollArea->setBackgroundRole(QPalette::Dark);
+   //scrollArea->setBackgroundRole(QPalette::Dark);
    scrollArea->setWidget(imageLabel);
    scrollArea->setVisible(false);
    setCentralWidget(scrollArea);
@@ -69,13 +69,15 @@ ImageViewer::ImageViewer(QWidget *parent)
    createActions();
    createMenus();
    createToolbar();
-   statusBar()->showMessage("");
+   statusBar()->showMessage(QString("Qt %1 ImageViewer with Chocolaf theme").arg(QT_VERSION_STR));
+   /*
    if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
       statusBar()->setStyleSheet(
          "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}");
    else
       statusBar()->setStyleSheet(
          "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}");
+   */
 
    // set initial size to 3/5 of screen
    resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
@@ -95,9 +97,11 @@ QString getIconPath(QString baseName, bool darkTheme = false)
 void ImageViewer::createActions()
 {
    bool usingDarkTheme = true;
+   /*
 #ifdef Q_OS_WINDOWS
    usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
 #endif
+*/
    openAction = new QAction("&Open...", this);
    openAction->setShortcut(QKeySequence::Open);
    // openAction->setIcon(QIcon(":/open.png"));
@@ -200,13 +204,15 @@ void ImageViewer::createMenus()
 void ImageViewer::createToolbar()
 {
    QToolBar *toolBar = addToolBar("&Main");
+   /*
    QPalette palette = toolBar->palette();
    if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
       palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77)); //QColor(59, 59, 59));
    else
       palette.setColor(QPalette::Window, QColor(240, 240, 240));
-
    toolBar->setPalette(palette);
+   */
+
    toolBar->addAction(openAction);
    toolBar->addAction(printAction);
 

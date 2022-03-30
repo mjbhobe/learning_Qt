@@ -1,0 +1,46 @@
+# ignore data folder & all sub-folders
+data
+debug
+release
+Makefile
+Makefile.Debug
+Makefile.Release
+
+# ignore .vscode folder (Visual Studio code settings)
+.vscode
+.vs
+.idea
+.qt_for_python
+
+# ignore intermediate build files & "executables"
+.o
+.obj
+.exe
+.dll
+.pch
+.ilk
+.log
+.pdb
+.idb
+.tlog
+.recipe
+.pro.user
+.cache
+.qtc_clang
+ui_*
+moc_*
+.Debug
+.Release
+
+# ignore stash files
+.qmake.stash
+
+# ignore __pycache__
+__pycache__
+.qt_for_python
+
+# ignore pyc files
+*.pyc
+
+# ignore pt (checkpoint) files
+*.pt

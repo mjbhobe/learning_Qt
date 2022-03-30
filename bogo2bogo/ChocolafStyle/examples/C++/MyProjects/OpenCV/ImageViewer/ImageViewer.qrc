@@ -23,6 +23,6 @@
       <file alias="sharpen_dark.png">images/dark/sharpen24.png</file>
       <file alias="erode_light.png">images/light/erode24.png</file>
       <file alias="erode_dark.png">images/dark/erode24.png</file>
-      <file alias="ImageEditor-icon.png">images/ImageViewer-icon.png</file>
+      <file alias="ImageViewer-icon.png">images/ImageViewer-icon.png</file>
   </qresource>
 </RCC>

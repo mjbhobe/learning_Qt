@@ -8,8 +8,8 @@
 
 int main(int argc, char *argv[])
 {
-   ChocolafApp app(argc, argv);
-   app.setFont(QApplication::font("QMenu"));
+   Chocolaf::ChocolafApp app(argc, argv);
+   //app.setFont(QApplication::font("QMenu"));
    app.setStyle("Chocolaf");
 
    ImageViewer w;
