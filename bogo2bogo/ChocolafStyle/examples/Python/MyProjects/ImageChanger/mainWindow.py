@@ -24,14 +24,14 @@ __version__ = "1.0.1"
 
 class MainWindow(QMainWindow):
 
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super(MainWindow, self).__init__(parent)
 
         self.image = QImage()
         self.dirty = False
         self.filename = None
-        self.mirroredvertically = False
-        self.mirroredhorizontally = False
+        self.mirroredVertically = False
+        self.mirroredHorizontally = False
 
         self.imageLabel = QLabel()
         self.imageLabel.setMinimumSize(200, 200)
@@ -263,7 +263,7 @@ class MainWindow(QMainWindow):
         self.listWidget.addItem(message)
         if self.filename:
             self.setWindowTitle("Image Changer - {}[*]".format(
-                                os.path.basename(self.filename)))
+                os.path.basename(self.filename)))
         elif not self.image.isNull():
             self.setWindowTitle("Image Changer - Unnamed[*]")
         else:
@@ -321,7 +321,7 @@ class MainWindow(QMainWindow):
         if fname:
             self.loadFile(fname[0])
 
-    def loadFile(self, fname=None):
+    def loadFile(self, fname = None):
         if fname is None:
             action = self.sender()
             if isinstance(action, QAction):
@@ -345,7 +345,7 @@ class MainWindow(QMainWindow):
                 self.showImage()
                 self.dirty = False
                 self.sizeLabel.setText("{} x {}".format(
-                                       image.width(), image.height()))
+                    image.width(), image.height()))
                 message = "Loaded {}".format(os.path.basename(fname))
             self.updateStatus(message)
 
@@ -367,7 +367,7 @@ class MainWindow(QMainWindow):
                 return True
             else:
                 self.updateStatus("Failed to save {}".format(
-                                  self.filename))
+                    self.filename))
                 return False
 
     def fileSaveAs(self):
@@ -423,9 +423,9 @@ class MainWindow(QMainWindow):
     def editUnMirror(self, on):
         if self.image.isNull():
             return
-        if self.mirroredhorizontally:
+        if self.mirroredHorizontally:
             self.editMirrorHorizontal(False)
-        if self.mirroredvertically:
+        if self.mirroredVertically:
             self.editMirrorVertical(False)
 
     def editMirrorHorizontal(self, on):
@@ -433,7 +433,7 @@ class MainWindow(QMainWindow):
             return
         self.image = self.image.mirrored(True, False)
         self.showImage()
-        self.mirroredhorizontally = not self.mirroredhorizontally
+        self.mirroredHorizontally = not self.mirroredHorizontally
         self.dirty = True
         self.updateStatus(("Mirrored Horizontally"
                            if on else "Unmirrored Horizontally"))
@@ -443,7 +443,7 @@ class MainWindow(QMainWindow):
             return
         self.image = self.image.mirrored(False, True)
         self.showImage()
-        self.mirroredvertically = not self.mirroredvertically
+        self.mirroredVertically = not self.mirroredVertically
         self.dirty = True
         self.updateStatus(("Mirrored Vertically"
                            if on else "Unmirrored Vertically"))
@@ -457,7 +457,7 @@ class MainWindow(QMainWindow):
         if ok:
             self.zoomSpinBox.setValue(percent)
 
-    def showImage(self, percent=None):
+    def showImage(self, percent = None):
         if self.image.isNull():
             return
         if percent is None:

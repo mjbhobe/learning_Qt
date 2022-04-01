@@ -11,7 +11,7 @@
 ImageEditor::ImageEditor(QWidget *parent)
    : QMainWindow(parent) /*, m_pixmap(nullptr) */, imageSpinner(nullptr)
 {
-   setWindowTitle(QString("Qt %1 Image Editor").arg(QT_VERSION_STR));
+   setWindowTitle(QString("Qt %1 Image Editor with Chocolaf").arg(QT_VERSION_STR));
    scaleFactor = 1.0;
    imageLoaded = false;
    imageLabel = new QLabel("");
@@ -49,11 +49,6 @@ QString getIconPath(QString baseName, bool darkTheme = false)
 void ImageEditor::createActions()
 {
    bool usingDarkTheme = true;
-   /*
-#ifdef Q_OS_WINDOWS
-   usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
-#endif
-*/
    openAction = new QAction("&Open...", this);
    openAction->setShortcut(QKeySequence::Open);
    // openAction->setIcon(QIcon(":/open.png"));
@@ -107,14 +102,6 @@ void ImageEditor::createActions()
    zoomOutAction->setStatusTip("Zoom out of the image by 25%");
    QObject::connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
    zoomOutAction->setEnabled(false);
-
-   /* not needed, as fitToWindowAction is a 'checkable' action
-   zoomNormalAction = new QAction("&Normal size", this);
-   zoomNormalAction->setShortcut(QKeySequence("Ctrl+0"));
-   zoomNormalAction->setStatusTip("Zoom to normal size (reset zoom)");
-   QObject::connect(zoomNormalAction, SIGNAL(triggered()), this, SLOT(normalSize()));
-   zoomNormalAction->setEnabled(false);
-   */
 
    fitToWindowAction = new QAction("Fit to &window", this);
    fitToWindowAction->setShortcut(QKeySequence("Ctrl+1"));
@@ -181,15 +168,6 @@ void ImageEditor::createMenus()
 void ImageEditor::createToolbar()
 {
    QToolBar *toolBar = addToolBar("&Main");
-
-   /*
-   QPalette palette = toolBar->palette();
-   if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
-      palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77)); //QColor(59, 59, 59));
-   else
-      palette.setColor(QPalette::Window, QColor(240, 240, 240));
-   toolBar->setPalette(palette);
-   */
 
    toolBar->addAction(openAction);
    toolBar->addAction(printAction);
@@ -325,20 +303,6 @@ void ImageEditor::blurImage()
 {
    // qDebug() << "This will blur the image...";
    if (imageLoaded) {
-      /*
-      const QPixmap *pixmap = imageLabel->pixmap();
-      QImage image = pixmap->toImage();
-      // convert to format compatible with OpenCV
-      image = image.convertToFormat(QImage::Format_RGB888);
-      cv::Mat mat = cv::Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
-      // blur operation
-      cv::Mat tmp;
-      cv::blur(mat, tmp, cv::Size(8, 8));
-      mat = tmp;
-      // & back to QImage
-      QImage blurredImage(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-      imageLabel->setPixmap(QPixmap::fromImage(blurredImage));
-      */
       MatOp blurOp(*(imageLabel->pixmap()));
       imageLabel->setPixmap(blurOp.blur());
       imageLabel->adjustSize();
@@ -350,21 +314,6 @@ void ImageEditor::blurImage()
 void ImageEditor::sharpenImage()
 {
    if (imageLoaded) {
-      /*
-      const QPixmap *pixmap = imageLabel->pixmap();
-      QImage image = pixmap->toImage();
-      // convert to format compatible with OpenCV
-      image = image.convertToFormat(QImage::Format_RGB888);
-      cv::Mat mat = cv::Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
-      // sharpen operation
-      int intensity = 2;
-      cv::Mat tmp;
-      cv::GaussianBlur(mat, tmp, cv::Size(9, 9), 0);
-      tmp = mat + (mat - tmp) * intensity;
-      // & back to QImage
-      QImage sharpenedImage(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-      imageLabel->setPixmap(QPixmap::fromImage(sharpenedImage));
-      */
       MatOp sharpenOp(*(imageLabel->pixmap()));
       imageLabel->setPixmap(sharpenOp.sharpen());
       imageLabel->adjustSize();
@@ -429,9 +378,11 @@ void ImageEditor::nextImage()
 
 void ImageEditor::about()
 {
-   QString str = QString("<p><b>Image Viewer</b> application to view images on desktop.</p>"
-                         "<p>Developed with Qt %1 by Manish Bhobe</p>"
-                         "<p>Free to use, but use at your own risk!!")
+   QString str = QString(
+                    "<p><b>Image Viewer</b> application to view images on desktop.</p>"
+                    "<p>Developed with Qt %1 by Manish Bhobe</p>"
+                    "<p>Uses Chocolaf dark theme for Windows & Linux</p>"
+                    "<p>Free to use, but use at your own risk!!")
                     .arg(QT_VERSION_STR);
    QMessageBox::about(this, tr("About Image Viewer"), str);
 }

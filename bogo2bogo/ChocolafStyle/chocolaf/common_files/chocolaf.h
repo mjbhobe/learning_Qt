@@ -52,7 +52,7 @@ public:
    const QColor Disabled_Light_Color = QColor(qRgb(102, 102, 102));
 };
 
-extern struct __ChocolafPalette ChocolafPalette;
+extern const struct __ChocolafPalette ChocolafPalette;
 extern const QString __version__;
 extern const QString __author__;
 

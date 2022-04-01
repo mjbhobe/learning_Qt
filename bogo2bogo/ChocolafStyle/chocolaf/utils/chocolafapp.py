@@ -20,7 +20,10 @@ from PyQt5.QtWidgets import *
 class ChocolafApp(QApplication):
     def __init__(self, *args, **kwargs):
         super(ChocolafApp, self).__init__(*args, **kwargs)
-        # self.setStyle("Fusion")
+        # Nämostuté - sanskrit word, tranlating to "May our minds meet"
+        self.setOrganizationName("Nämostuté Ltd.")
+        self.setOrganizationDomain("namostute.qtpyapps.in")
+
         # map of stylesheets
         self.styles = {}
         self.palettes = {}

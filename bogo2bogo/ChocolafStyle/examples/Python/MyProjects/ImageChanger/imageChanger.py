@@ -11,7 +11,7 @@ def main():
     app.setStyle("Chocolaf")
 
     mainWindow = MainWindow()
-    mainWindow.setWindowTitle(f"PyQt ImageChanger")
+    mainWindow.setWindowTitle(f"PyQt {PYQT_VERSION_STR} ImageChanger")
     mainWindow.resize(1024, 650)
     mainWindow.move(100, 100)
     mainWindow.show()

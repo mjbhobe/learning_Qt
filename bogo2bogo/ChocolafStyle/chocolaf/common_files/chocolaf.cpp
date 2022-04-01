@@ -7,14 +7,18 @@
 #include <QStyleFactory>
 #include <QTextStream>
 
+
 namespace Chocolaf {
 
-struct __ChocolafPalette ChocolafPalette;
+const struct __ChocolafPalette ChocolafPalette;
 const QString __version__ = "1.0";
-const QString __author__ = "Manish Bhobe";
+const QString __author__ = "Manish Bhobé";
 
 ChocolafApp::ChocolafApp(int argc, char **argv) : QApplication(argc, argv), _palette(nullptr), _styleSheet("")
 {
+   // Nämostuté - sanskrit word tranlating to "May our minds meet"
+   this->setOrganizationName("Nämostuté Ltd.");
+   this->setOrganizationDomain("namostute.qtpyapps.in");
    this->setFont(QApplication::font("QMenu"));
    _palette = getPalette();
    _styleSheet = loadStyleSheet();

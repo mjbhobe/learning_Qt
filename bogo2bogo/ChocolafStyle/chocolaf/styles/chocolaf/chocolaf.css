@@ -104,8 +104,8 @@ QWidget::item:selected {
 }
 
 QWidget::item:hover:!selected {
-  background: rgb(83, 88, 90); /* rgb(13, 41, 62); */ 
-  color: rgb(220, 220, 220); /* rgb(13, 41, 62); */ 
+  background: rgb(83, 88, 90); /* rgb(13, 41, 62); */
+  color: rgb(220, 220, 220); /* rgb(13, 41, 62); */
 }
 
 /*********************************/
@@ -113,15 +113,15 @@ QWidget::item:hover:!selected {
 /*********************************/
 
 QMainWindow::separator {
-  background-color: rgb(52, 52, 52); 
-  border: 1px solid rgb(42, 42, 42); 
+  background-color: rgb(52, 52, 52);
+  border: 1px solid rgb(42, 42, 42);
   spacing: 0px;
   padding: 2px;
 }
 
 QMainWindow::separator:hover {
-  background-color: rgb(62, 62, 62); 
-  border: 1px solid rgb(102, 102, 102); 
+  background-color: rgb(62, 62, 62);
+  border: 1px solid rgb(102, 102, 102);
 }
 
 QMainWindow::separator:horizontal {
@@ -409,7 +409,7 @@ QRadioButton::indicator:checked:disabled {
 /*********************************/
 
 QToolBar {
-  background-color: rgb(52, 52, 52); /* rgb(32, 32, 32); */ /* #455364; */
+  background-color: rgb(62, 62, 62); /* rgb(52, 52, 52); */ /* rgb(32, 32, 32); */ /* #455364; */
   border-top: 1px solid rgb(72, 72, 72); /* #19232D; */
   padding: 6px;
   font-weight: bold;
@@ -778,12 +778,10 @@ QAbstractItemView QLineEdit {
 /*********************************/
 
 /* QFrame -----------------------------------------------------------------
-
 https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 https://doc.qt.io/qt-5/qframe.html#-prop
 https://doc.qt.io/qt-5/qframe.html#details
 https://stackoverflow.com/questions/14581498/qt-stylesheet-for-hline-vline-color
-
 --------------------------------------------------------------------------- */
 /* (dot) .QFrame  fix #141, #126, #123 */
 QFrame {
@@ -801,13 +799,11 @@ QFrame {
   border-radius: 4px;
   border: 1px transparent rgb(127, 127, 127);
 }
-
 .QFrame[frameShape="4"] {
   max-height: 2px;
   border: none;
   background-color: rgb(127, 127, 127);
 }
-
 .QFrame[frameShape="5"] {
   max-width: 2px;
   border: none;
@@ -836,7 +832,6 @@ QAbstractScrollArea:disabled {
 QAbstractScrollArea:hover {
   border: 1px solid rgb(0, 114, 198); / * rgb(75, 110, 175); * /
 }
-
 QAbstractScrollArea:focus {
   border: 2px solid rgb(0, 114, 198); / * rgb(75, 110, 175); * /
 } */
@@ -899,7 +894,6 @@ QComboBox:!editable, QComboBox::drop-down:editable {
                                  stop: 0 rgb(92, 92, 92), stop: 0.4 rgb(64, 64, 64),
                                  stop: 0.5 rgb(65, 65, 65), stop: 1.0 rgb(52, 52, 52));
 }
-
 QComboBox:!editable:on, QComboBox::drop-down:editable:on {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0 rgb(52, 52, 52), stop: 0.4 rgb(65, 65, 65),
@@ -1009,7 +1003,7 @@ QComboBox QAbstractItemView::item:selected {
 
 QComboBox QAbstractItemView:alternate {
   background: rgb(52, 52, 52);
-} 
+}
 
 /*********************************/
 /* QScrollBar                    */
@@ -1903,8 +1897,8 @@ QTabWidget {
 }
 
 QTabWidget::tab-bar {
-  left: 3px; /* move first to the right by 5px */
-} 
+  left: 3px; /* move first to the right by 3px */
+}
 
 QTabWidget QWidget {
   border-radius: 4px;
@@ -1912,10 +1906,12 @@ QTabWidget QWidget {
 
 /* the tab widget's frame */
 QTabWidget::pane {
+  border-top: None;
   /* border: 1px solid rgb(127, 127, 127); */
-  border-radius: 4px;
+  border-radius: 2px;
   /* margin: 2px; */  /* space separating tabs from content */
   padding: 0px;
+  background-color: rgb(42, 42, 42); /* new */
 }
 
 QTabWidget::pane:selected {
@@ -1930,7 +1926,8 @@ QTabBar::tab {
     background: rgb(42, 42, 42);
     color: rgb(127, 127, 127);
     border: 1px solid rgb(102, 102, 102); /* rgb(48, 48, 48); */
-    /* border-bottom-color: rgb(52, 52, 52); */ /* same as the pane color */
+    /* border-bottom-color: rgb(127, 127, 127); */ /* same as the pane color */
+    border-bottom: None; /* new */
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     /*min-width: 14ex; */ /* 20ex; */    /* approx length of 20 x's */
@@ -1944,12 +1941,12 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                           stop: 0 rgb(84, 84, 84), stop: 0.4 rgb(74, 74, 74),
                           stop: 0.5 rgb(64, 64, 64), stop: 1.0 rgb(54, 54, 54));
   */
-  background: rgb(64, 64, 64);
+  background: rgb(62, 62, 62); /* rgb(64, 64, 64); */
   border: 1px solid rgb(127, 127, 127);
 }
 
 QTabBar::tab:hover {
-  border: 1px solid rgb(64, 64, 64);
+  border: 1px solid rgb(102, 102, 102); /* rgb(64, 64, 64); */
 }
 
 QTabBar::tab:selected {
@@ -1985,7 +1982,7 @@ QHeaderView:disabled {
 QHeaderView::section {
   background-color: rgb(62, 62, 62); /* #455364; */
   color: rgb(220, 220, 220); /* #E0E1E3; */
-  border-radius: 0; 
+  border-radius: 0;
   text-align: left;
   /* vertical-align: middle; */
   /* font-size: 13px; */
@@ -1998,18 +1995,18 @@ QHeaderView::section::horizontal {
   padding-right: 4px;
   /*border-left: 1px solid rgb(102, 102, 102); */
   border-right: 1px solid rgb(102, 102, 102);
-  border-radius: 0; 
+  border-radius: 0;
 }
 
-QHeaderView::section::horizontal::first, 
+QHeaderView::section::horizontal::first,
 QHeaderView::section::horizontal::only-one {
   border-left: 1px solid rgb(102, 102, 102);
-  border-radius: 0; 
+  border-radius: 0;
 }
 
 QHeaderView::section::horizontal:disabled {
   color: rgb(102, 102, 102); /* #9DA9B5; */
-  border-radius: 0; 
+  border-radius: 0;
 }
 
 QHeaderView::section::vertical {
@@ -2017,20 +2014,20 @@ QHeaderView::section::vertical {
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
-  /* border-top: 1px solid rgb(102, 102, 102); */ 
-  border-bottom: 1px solid rgb(102, 102, 102); 
-  border-radius: 0; 
+  /* border-top: 1px solid rgb(102, 102, 102); */
+  border-bottom: 1px solid rgb(102, 102, 102);
+  border-radius: 0;
 }
 
-QHeaderView::section::vertical::first, 
+QHeaderView::section::vertical::first,
 QHeaderView::section::vertical::only-one {
   border-top: 1px solid rgb(102, 102, 102); /* #455364; */
-  border-radius: 0; 
+  border-radius: 0;
 }
 
 QHeaderView::section::vertical:disabled {
   color: rgb(102, 102, 102); /* #9DA9B5; */
-  border-radius: 0; 
+  border-radius: 0;
 }
 
 QHeaderView::down-arrow {
@@ -2219,9 +2216,9 @@ QColumnView::item:!selected:hover {
 }
 
 QTableCornerButton::section {
-  background-color: rgb(62, 62, 62); 
+  background-color: rgb(62, 62, 62);
   /*
-  border-left: 1px solid rgb(102, 102, 102); 
+  border-left: 1px solid rgb(102, 102, 102);
   border-top: 1px solid rgb(102, 102, 102); */
   border: None;
   border-radius: 0px;
