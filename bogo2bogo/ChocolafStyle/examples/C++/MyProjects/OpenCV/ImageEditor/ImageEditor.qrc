@@ -15,8 +15,8 @@
       <file alias="zoomin_dark.png">images/dark/zoomin24.png</file>
       <file alias="zoomout_light.png">images/light/zoomout24.png</file>
       <file alias="zoomout_dark.png">images/dark/zoomout24.png</file>
-      <file alias="fit_to_size_light.png">images/light/fit2window24.png</file>
-      <file alias="fit_to_size_dark.png">images/dark/fit2window24.png</file>
+      <file alias="fit_to_size_light.png">images/light/fit2Window24.png</file>
+      <file alias="fit_to_size_dark.png">images/dark/fit2Window24.png</file>
       <file alias="blur_light.png">images/light/blur24.png</file>
       <file alias="blur_dark.png">images/dark/blur24.png</file>
       <file alias="sharpen_light.png">images/light/sharpen24.png</file>

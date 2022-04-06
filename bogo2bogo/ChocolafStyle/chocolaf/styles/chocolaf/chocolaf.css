@@ -1389,7 +1389,7 @@ QSlider::handle:vertical:focus {
 /*********************************/
 
 QMenuBar {
-  background-color: rgb(32, 32, 32); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
+  background-color: rgb(54, 54, 54); /* rgb(32, 32, 32); */ /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
   padding: 4px;
   border: none; /*1px solid rgb(102, 102, 102);*/
   color: rgb(220, 220, 220);
@@ -1397,7 +1397,7 @@ QMenuBar {
 }
 
 QMenuBar:focus {
-  border: 1px solid rgb(32, 32, 32);
+  border: 1px solid rgb(54, 54, 54); /* rgb(32, 32, 32); */
 }
 
 QMenuBar::item {
@@ -1407,7 +1407,7 @@ QMenuBar::item {
 
 QMenuBar::item:selected {
   padding: 4px;
-  background: rgb(42, 42, 42); /* transparent */
+  background: rgb(54, 54, 54); /* rgb(32, 32, 32); */ /* transparent */
   border: 0px solid rgb(102, 102, 102);
   background-color: rgb(0, 114, 198);
 }
@@ -1426,7 +1426,7 @@ QMenuBar::item:pressed {
 /*********************************/
 
 QMenu {
-  background-color: rgb(45, 45, 45); /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
+  background-color: rgb(54, 54, 54); /* rgb(45, 45, 45); */ /* rgb(54, 54, 54); */ /* rgb(25, 32, 48); */
   color: rgb(220, 220, 220);
   margin: 0px;
   border: 1px solid rgb(83, 88, 90); /* rgb(64, 64, 64); */ /*rgb(127, 127, 127);*/

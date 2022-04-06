@@ -9,15 +9,25 @@
 // Code is provided for illustration purposes only! Use at your own risk.
 // =============================================================================
 
+#include "DrawWindow.h"
+//#include "chocolaf.h"
 #include <QApplication>
 #include <QtGui>
-#include "chocolaf.h"
-#include "DrawWindow.h"
 
 int main(int argc, char **argv)
 {
-   Chocolaf::ChocolafApp app(argc, argv);
-   app.setStyle("Chocolaf");
+   QApplication app(argc, argv);
+
+   QFile f(":chocolaf/chocolaf.css");
+
+   if (!f.exists()) {
+      printf("Unable to open stylesheet!");
+   } else {
+      f.open(QFile::ReadOnly | QFile::Text);
+      QTextStream ts(&f);
+      app.setStyleSheet(ts.readAll());
+   }
+
    app.setApplicationName(app.translate("main", "Qt Scribble"));
 
    // create the GUI

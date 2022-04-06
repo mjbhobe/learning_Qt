@@ -206,16 +206,16 @@ void DrawWindow::fileNew()
 void DrawWindow::fileOpen()
 {
   if (canClose()) {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Qt Scribble File"),
-                                                    QCoreApplication::applicationDirPath(), ScribbleFiles);
-    if (!fileName.isEmpty() && _doodle->load(fileName)) {
-      //clearImage();
-      //_image.fill(qRgb(255,255,255));
-      _image.fill(Chocolaf::ChocolafPalette.Window_Color);
-      QPainter painter(&_image);
-      painter.setRenderHint(QPainter::Antialiasing);
-      _doodle->draw(painter);
-      update();
+     QString fileName = QFileDialog::getOpenFileName(
+        this, tr("Open Qt Scribble File"), QCoreApplication::applicationDirPath(), ScribbleFiles);
+     if (!fileName.isEmpty() && _doodle->load(fileName)) {
+        //clearImage();
+        //_image.fill(qRgb(255,255,255));
+        _image.fill(Chocolaf::ChocolafPalette.Window_Color);
+        QPainter painter(&_image);
+        painter.setRenderHint(QPainter::Antialiasing);
+        _doodle->draw(painter);
+        update();
     }
   }
 }

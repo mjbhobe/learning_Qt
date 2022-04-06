@@ -21,9 +21,6 @@ int main(void)
   Fraction f3 = Fraction(125,135) - Fraction(120, 270);
   cout << "Fraction(125,135) - Fraction(120, 270) = " << f3 << Qt::endl;
 
- 
-
-
   return 0;
 }
 

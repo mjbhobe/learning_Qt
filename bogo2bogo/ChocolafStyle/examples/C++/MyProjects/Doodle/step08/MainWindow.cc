@@ -120,5 +120,5 @@ void MainWindow::about()
         << "<small>Program developed for illustration purposes only! Use at your own "
         << "risk! Author is not responsible for any damages (direct or indirect) that "
         << "may result from the use of this program.</small></html>";
-   QMessageBox::information(this, AppTitle, str);
+   QMessageBox::about(this, AppTitle, str);
 }

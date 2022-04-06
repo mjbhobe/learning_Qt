@@ -14,28 +14,43 @@ const struct __ChocolafPalette ChocolafPalette;
 const QString __version__ = "1.0";
 const QString __author__ = "Manish Bhobé";
 
-ChocolafApp::ChocolafApp(int argc, char **argv) : QApplication(argc, argv), _palette(nullptr), _styleSheet("")
+ChocolafApp::ChocolafApp(int argc, char **argv) : QApplication(argc, argv)
 {
+   _palette = nullptr;
+   _styleSheet = QString("");
    // Nämostuté - sanskrit word tranlating to "May our minds meet"
-   this->setOrganizationName("Nämostuté Ltd.");
-   this->setOrganizationDomain("namostute.qtpyapps.in");
-   this->setFont(QApplication::font("QMenu"));
+   //setOrganizationName("Nämostuté Ltd.");
+   setOrganizationName("Namostute Ltd.");
+
+   setOrganizationDomain("namostute.qtpyapps.in");
+   setFont(font("QMenu"));
+   /*
    _palette = getPalette();
+   Q_ASSERT(_palette != nullptr);
    _styleSheet = loadStyleSheet();
+   */
 }
 
 ChocolafApp::~ChocolafApp() { delete _palette; }
 
 void ChocolafApp::setStyle(const QString &styleName /*= "Chocolaf" */)
 {
-   if (styleName == "Chocolaf") {
-      this->setStyleSheet(_styleSheet);
-      this->setPalette(*_palette);
-   }
-   else if (QStyleFactory::keys().count(styleName) > 0) {
-      this->setStyle(styleName);
-   }
-   else {
+   if (styleName == QString("Chocolaf")) {
+      //qApp->setStyleSheet(_styleSheet);
+      //qApp->setPalette(*_palette);
+
+      QFile f(":chocolaf/chocolaf.css");
+      if (!f.exists()) {
+         QMessageBox::critical(
+            nullptr, QString("FATAL ERROR"), QString("Unable to load chocolaf stylesheet from :chocolaf/chocolaf.css"));
+      } else {
+         f.open(QFile::ReadOnly | QFile::Text);
+         QTextStream ts(&f);
+         qApp->setStyleSheet(ts.readAll());
+      }
+   } else if (QStyleFactory::keys().count(styleName) > 0) {
+      QApplication::setStyle(styleName);
+   } else {
       QString err = QString("Error: unrecognized style \'%1\'").arg(styleName);
       QMessageBox::critical(nullptr, "FATAL ERROR", err);
       throw std::invalid_argument(err.toStdString().c_str());

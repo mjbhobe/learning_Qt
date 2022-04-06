@@ -2,6 +2,10 @@
 data
 debug
 release
+profile
+Debug
+Release
+Profile
 Makefile
 Makefile.Debug
 Makefile.Release
@@ -13,21 +17,25 @@ Makefile.Release
 .qt_for_python
 
 # ignore intermediate build files & "executables"
-.o
-.obj
-.exe
-.dll
-.pch
-.ilk
-.log
-.pdb
-.idb
-.tlog
-.recipe
-.pro.user
-.cache
-.qtc_clang
+moc_*.cpp
+*.o
+*.obj
+*.exe
+*.dll
+*.pch
+*.ilk
+*.log
+*.pdb
+*.idb
+*.tlog
+*.recipe
+*.pro.user
+*.cache
+*.qtc_clang
+*.user
+
 ui_*
+
 
 # ignore stash files
 .qmake.stash
@@ -40,3 +48,4 @@ __pycache__
 
 # ignore pt (checkpoint) files
 *.pt
+

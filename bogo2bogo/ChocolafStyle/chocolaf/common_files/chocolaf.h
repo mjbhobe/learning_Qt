@@ -56,8 +56,11 @@ extern const struct __ChocolafPalette ChocolafPalette;
 extern const QString __version__;
 extern const QString __author__;
 
-class ChocolafApp : public QApplication {
-public:
+class ChocolafApp : public QApplication
+{
+   Q_OBJECT
+
+   public:
    ChocolafApp(int, char **);
    ~ChocolafApp();
 

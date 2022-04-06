@@ -10,7 +10,7 @@
 // Code is provided for illustration purposes only! Use at your own risk.
 // =============================================================================
 #include "DrawWindow.h"
-#include "chocolaf.h"
+//#include "chocolaf.h"
 #include <QApplication>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -47,8 +47,18 @@ void DrawMainWindow::closeEvent(QCloseEvent *event)
 
 int main(int argc, char **argv)
 {
-   Chocolaf::ChocolafApp app(argc, argv);
-   app.setStyle("Chocolaf");
+   QApplication app(argc, argv);
+
+   QFile f(":chocolaf/chocolaf.css");
+
+   if (!f.exists()) {
+      printf("Unable to open stylesheet!");
+   } else {
+      f.open(QFile::ReadOnly | QFile::Text);
+      QTextStream ts(&f);
+      app.setStyleSheet(ts.readAll());
+   }
+   app.setApplicationName(app.translate("main", AppTitle.toStdString().c_str()));
 
    // create the GUI
    DrawWindow *drawWidget = new DrawWindow;
