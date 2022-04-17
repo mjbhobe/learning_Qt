@@ -54,11 +54,22 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // apply Chocolaf styling
+    QFile f(":chocolaf/chocolaf.css");
+    if (!f.exists()) {
+        printf("Unable to open stylesheet!");
+    }
+    else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+
     QTextEdit *textEdit = new QTextEdit;
+    textEdit->setText(QString("Hello World! Welcoem to Qt %1").arg(QT_VERSION_STR));
     QPushButton *quitButton = new QPushButton("&Quit");
 
-    QObject::connect(quitButton, &QPushButton::clicked,
-                     qApp, &QApplication::quit);
+    QObject::connect(quitButton, &QPushButton::clicked, qApp, &QApplication::quit);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(textEdit);
@@ -71,4 +82,3 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
-

@@ -1,9 +1,10 @@
 TARGET =   mv_readonly
-
 TEMPLATE = app
+INCLUDEPATH += .
 
-QT += widgets
-requires(qtConfig(tableview))
+include(../../../../../../../chocolaf/common_files/common.pro)
+
+#requires(qtConfig(tableview))
 
 SOURCES += main.cpp \
            mymodel.cpp

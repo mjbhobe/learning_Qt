@@ -54,9 +54,19 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // apply Chocolaf styling
+    QFile f(":chocolaf/chocolaf.css");
+    if (!f.exists()) {
+        printf("Unable to open stylesheet!");
+    }
+    else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+
     QTextEdit textEdit;
     textEdit.show();
 
     return app.exec();
 }
-

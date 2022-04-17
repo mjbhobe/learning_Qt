@@ -54,14 +54,14 @@ class Notepad : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     Notepad();
 
-private slots:
+  private slots:
     void open();
     void save();
 
-private:
+  private:
     QTextEdit *textEdit;
 
     QAction *openAction;
@@ -77,12 +77,9 @@ Notepad::Notepad()
     saveAction = new QAction(tr("&Save"), this);
     exitAction = new QAction(tr("E&xit"), this);
 
-    connect(openAction, &QAction::triggered,
-            this, &Notepad::open);
-    connect(saveAction, &QAction::triggered,
-            this, &Notepad::save);
-    connect(exitAction, &QAction::triggered,
-            qApp, &QApplication::quit);
+    connect(openAction, &QAction::triggered, this, &Notepad::open);
+    connect(saveAction, &QAction::triggered, this, &Notepad::save);
+    connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(openAction);
@@ -91,6 +88,9 @@ Notepad::Notepad()
     fileMenu->addAction(exitAction);
 
     textEdit = new QTextEdit;
+    textEdit->setObjectName("TextEdit");
+    textEdit->setStyleSheet("QTextEdit#TextEdit {border: None;}");
+    textEdit->setFont(QFont("SF Mono, Consolas, Source Code Pro Medium, Monospace", 11));
     setCentralWidget(textEdit);
 
     setWindowTitle(tr("Notepad"));
@@ -98,8 +98,8 @@ Notepad::Notepad()
 
 void Notepad::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
-        tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
+    QString fileName = QFileDialog::getOpenFileName(
+        this, tr("Open File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
 
     if (!fileName.isEmpty()) {
         QFile file(fileName);
@@ -116,14 +116,15 @@ void Notepad::open()
 void Notepad::save()
 {
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "",
-        tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
+    QString fileName = QFileDialog::getSaveFileName(
+        this, tr("Save File"), "", tr("Text Files (*.txt);;C++ Files (*.cpp *.h)"));
 
     if (!fileName.isEmpty()) {
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             // error message
-        } else {
+        }
+        else {
             QTextStream stream(&file);
             stream << textEdit->toPlainText();
             stream.flush();
@@ -136,6 +137,17 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
+    // apply Chocolaf styling
+    QFile f(":chocolaf/chocolaf.css");
+    if (!f.exists()) {
+        printf("Unable to open stylesheet!");
+    }
+    else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+
     Notepad notepad;
     notepad.show();
 
@@ -143,4 +155,3 @@ int main(int argc, char **argv)
 }
 
 #include "main.moc"
-

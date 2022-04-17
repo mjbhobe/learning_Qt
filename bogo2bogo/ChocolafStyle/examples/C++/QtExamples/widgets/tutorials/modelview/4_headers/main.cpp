@@ -48,16 +48,28 @@
 **
 ****************************************************************************/
 
+#include "mymodel.h"
 #include <QApplication>
 #include <QTableView>
-#include "mymodel.h"
+#include <QtCore>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QTableView tableView;
-    MyModel myModel;
-    tableView.setModel(&myModel);
-    tableView.show();
-    return a.exec();
+  QApplication app(argc, argv);
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
+
+  QTableView tableView;
+  MyModel myModel;
+  tableView.setModel(&myModel);
+  tableView.show();
+  return app.exec();
 }

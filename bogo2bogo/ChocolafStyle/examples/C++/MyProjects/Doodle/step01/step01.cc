@@ -15,24 +15,24 @@
 
 int main(int argc, char **argv)
 {
-   //Chocolaf::ChocolafApp app(argc, argv);
-   QApplication app(argc, argv);
-   //app.setStyle("Chocolaf");
-   QFile f(":chocolaf/chocolaf.css");
-   if (!f.exists()) {
-      printf("Unable to open stylesheet!");
-   } else {
-      f.open(QFile::ReadOnly | QFile::Text);
-      QTextStream ts(&f);
-      app.setStyleSheet(ts.readAll());
-   }
+  QApplication app(argc, argv);
+  // use Chocolaf style
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  } else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
 
-   // create the GUI
-   QMainWindow mainWindow;
-   QString title = QString("Qt %1 Doodle with Chocolaf - Step01: Basic Window").arg(QT_VERSION_STR);
-   mainWindow.setWindowTitle(title);
-   mainWindow.resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
-   mainWindow.show();
+  // create the GUI
+  QMainWindow mainWindow;
+  QString title =
+      QString("Qt %1 Doodle with Chocolaf - Step01: Basic Window").arg(QT_VERSION_STR);
+  mainWindow.setWindowTitle(title);
+  mainWindow.resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
+  mainWindow.show();
 
-   return app.exec();
+  return app.exec();
 }

@@ -27,6 +27,8 @@ INCLUDEPATH += $${COMMON_FILES_HOME}/common_files
 CONFIG += c++20 console
 QT += core gui xml sql network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QMAKE_CXXFLAGS_DEBUG += -O0 -g2
+QMAKE_CXXFLAGS_RELEASE += -O2 -g0
 
 win32 {
     CONFIG(msys2) {

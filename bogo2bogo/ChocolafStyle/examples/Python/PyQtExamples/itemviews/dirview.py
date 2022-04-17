@@ -1,5 +1,5 @@
 """
-* dirview.py - 
+* dirview.py -
 * @author (Chocolaf): Manish Bhobe
 *
 * PyQt demo code taken from https://github.com/baoboa/pyqt5/tree/master/examples/widgets
@@ -104,7 +104,7 @@ availableSize = QApplication.desktop().availableGeometry(tree).size()
 tree.resize(availableSize / 2)
 tree.setColumnWidth(0, tree.width() / 3)
 
-tree.setWindowTitle("Dir View")
+tree.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Dir View")
 tree.show()
 
 sys.exit(app.exec())

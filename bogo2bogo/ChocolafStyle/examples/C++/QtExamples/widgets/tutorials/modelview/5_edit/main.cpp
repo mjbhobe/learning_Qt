@@ -48,13 +48,25 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
 #include "mainwindow.h"
+#include <QApplication>
+#include <QtCore>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+  QApplication app(argc, argv);
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
+
+  MainWindow w;
+  w.show();
+  return app.exec();
 }

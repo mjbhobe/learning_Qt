@@ -49,18 +49,32 @@
 ****************************************************************************/
 
 //! [main program]
+#include "chocolaf.h"
 #include <QtWidgets>
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-//! [create, resize and show]
-    QWidget window;
-    window.resize(320, 240);
-    window.show();
-//! [create, resize and show]
-    window.setWindowTitle(
-        QApplication::translate("toplevel", "Top-level widget"));
-    return app.exec();
+  QApplication app(argc, argv);
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open chocolaf stylesheet!");
+    fflush(stdout);
+    // and fallback on backup style
+    app.setStyle("Fusion");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
+
+  //! [create, resize and show]
+  QWidget window;
+  window.resize(320, 240);
+  window.show();
+  //! [create, resize and show]
+  window.setWindowTitle(QApplication::translate("toplevel", "Top-level widget"));
+  return app.exec();
 }
 //! [main program]

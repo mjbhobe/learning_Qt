@@ -2033,7 +2033,7 @@ QHeaderView::section::vertical:disabled {
 QHeaderView::down-arrow {
   /* Those settings (border/width/height/background-color) solve bug */
   /* transparent arrow background and size */
-  background-color: rgb(62, 62, 62); /* #455364; */
+  background-color: transparent; /* rgb(62, 62, 62); */ /* #455364; */
   border: none;
   height: 12px;
   width: 12px;
@@ -2043,7 +2043,7 @@ QHeaderView::down-arrow {
 }
 
 QHeaderView::up-arrow {
-  background-color: rgb(62, 62, 62); /* #455364; */
+  background-color: transparent; /* rgb(62, 62, 62); */ /* #455364; */
   border: none;
   height: 12px;
   width: 12px;

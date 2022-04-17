@@ -86,7 +86,7 @@ void DrawWindow::clearImage(bool clearDoodle /*= true*/)
   if (clearDoodle)
     _doodle->clear();
   // _image.fill(qRgb(255, 255, 255));
-  _image.fill(Chocolaf::ChocolafPalette.Window_Color);
+  _image.fill(Chocolaf::ChocolafPalette::Window_Color);
   update();
 }
 
@@ -193,7 +193,7 @@ void DrawWindow::resizeImage(const QSize &newSize, bool force /*=false*/)
     qDebug() << "Resizing & repaining image as " << (force ? "forced" : "resized");
     QImage newImage(newSize, QImage::Format_RGB32);
     //newImage.fill(qRgb(255,255,255));
-    newImage.fill(Chocolaf::ChocolafPalette.Window_Color);
+    newImage.fill(Chocolaf::ChocolafPalette::Window_Color);
     // draw existing image over new image
     QPainter painter(&newImage);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -212,7 +212,7 @@ void DrawWindow::fileNew()
     _doodle->newDoodle();
     //clearImage(false);
     //_image.fill(qRgb(255, 255, 255));
-    _image.fill(Chocolaf::ChocolafPalette.Window_Color);
+    _image.fill(Chocolaf::ChocolafPalette::Window_Color);
     update();
   }
 }
@@ -226,7 +226,7 @@ void DrawWindow::fileOpen()
       //clearImage(false);
       //update();
       //_image.fill(qRgb(255,255,255));
-      _image.fill(Chocolaf::ChocolafPalette.Window_Color);
+      _image.fill(Chocolaf::ChocolafPalette::Window_Color);
       // clearImage(false);
 
       QPainter painter(&_image);

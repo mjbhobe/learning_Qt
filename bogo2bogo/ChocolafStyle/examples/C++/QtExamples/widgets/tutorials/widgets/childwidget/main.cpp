@@ -49,23 +49,34 @@
 ****************************************************************************/
 
 //! [main program]
+#include <QtCore>
 #include <QtWidgets>
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QWidget window;
-    window.resize(320, 240);
-    window.setWindowTitle
-          (QApplication::translate("childwidget", "Child widget"));
-    window.show();
+  QApplication app(argc, argv);
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
 
-//! [create, position and show]
-    QPushButton *button = new QPushButton(
-        QApplication::translate("childwidget", "Press me"), &window);
-    button->move(100, 100);
-    button->show();
-//! [create, position and show]
-    return app.exec();
+  QWidget window;
+  window.resize(320, 240);
+  window.setWindowTitle(QApplication::translate("childwidget", "Child widget"));
+  window.show();
+
+  //! [create, position and show]
+  QPushButton *button =
+      new QPushButton(QApplication::translate("childwidget", "Press me"), &window);
+  button->move(100, 100);
+  button->show();
+  //! [create, position and show]
+  return app.exec();
 }
 //! [main program]

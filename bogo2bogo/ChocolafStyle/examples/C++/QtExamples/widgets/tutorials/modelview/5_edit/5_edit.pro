@@ -1,9 +1,8 @@
 TARGET = mv_edit
-
 TEMPLATE = app
-
-QT += widgets
-requires(qtConfig(tableview))
+INCLUDEPATH += .
+include(../../../../../../../chocolaf/common_files/common.pro)
+# requires(qtConfig(tableview))
 
 SOURCES += main.cpp \
            mainwindow.cpp \

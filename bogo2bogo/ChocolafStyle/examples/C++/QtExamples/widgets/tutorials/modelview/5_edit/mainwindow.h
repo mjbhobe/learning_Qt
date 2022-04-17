@@ -54,19 +54,19 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QTableView; //forward declaration
+class QTableView; // forward declaration
 QT_END_NAMESPACE
-
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 private:
-    QTableView *tableView;
+  QTableView *tableView;
+
 public:
-    MainWindow(QWidget *parent = nullptr);
+  MainWindow(QWidget *parent = nullptr);
 public slots:
-    void showWindowTitle(const QString &title);
+  void showWindowTitle(const QString &title);
 };
 
 #endif // MAINWINDOW_H

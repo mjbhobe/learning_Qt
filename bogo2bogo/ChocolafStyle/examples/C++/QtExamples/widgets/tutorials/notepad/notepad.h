@@ -67,55 +67,40 @@ QT_END_NAMESPACE
 //! [3]
 class Notepad : public QMainWindow
 {
-    Q_OBJECT
-//! [3]
+  Q_OBJECT
+  //! [3]
 
-//! [4]
+  //! [4]
 public:
-    explicit Notepad(QWidget *parent = nullptr);
-//! [4]
-//! [5]
-    ~Notepad();
-//! [5]
+  explicit Notepad(QWidget *parent = nullptr);
+  //! [4]
+  //! [5]
+  ~Notepad();
+  //! [5]
 
 private slots:
-    void newDocument();
+  void newDocument();
+  void open();
+  void save();
+  void saveAs();
+  void print();
+  void exit();
+  void copy();
+  void cut();
+  void paste();
+  void undo();
+  void redo();
+  void selectFont();
+  void setFontBold(bool bold);
+  void setFontUnderline(bool underline);
+  void setFontItalic(bool italic);
+  void about();
 
-    void open();
-
-    void save();
-
-    void saveAs();
-
-    void print();
-
-    void exit();
-
-    void copy();
-
-    void cut();
-
-    void paste();
-
-    void undo();
-
-    void redo();
-
-    void selectFont();
-
-    void setFontBold(bool bold);
-
-    void setFontUnderline(bool underline);
-
-    void setFontItalic(bool italic);
-
-    void about();
-
-//! [6]
+  //! [6]
 private:
-    Ui::Notepad *ui;
-    QString currentFile;
-//! [6]
+  Ui::Notepad *ui;
+  QString currentFile;
+  //! [6]
 };
 //! [all]
 

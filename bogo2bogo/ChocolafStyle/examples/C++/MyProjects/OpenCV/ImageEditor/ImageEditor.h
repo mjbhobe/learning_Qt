@@ -22,66 +22,66 @@ QT_END_NAMESPACE
 
 class ImageEditor : public QMainWindow
 {
-   Q_OBJECT
+  Q_OBJECT
 
- public:
-   ImageEditor(QWidget *parent = nullptr);
-   ~ImageEditor();
+public:
+  ImageEditor(QWidget *parent = nullptr);
+  ~ImageEditor();
 
-   bool loadImage(const QString &imagePath);
-   void initializeFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
+  bool loadImage(const QString &imagePath);
+  void initializeFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
 
-   // save & restore state
-   void writeSettings();
-   void readSettings();
+  // save & restore state
+  void writeSettings();
+  void readSettings();
 
- private slots:
-   void open();
-   void print();
+private slots:
+  void open();
+  void print();
 
-   void blurImage();
-   void sharpenImage();
-   void erodeImage();
+  void blurImage();
+  void sharpenImage();
+  void erodeImage();
 
-   void zoomIn();
-   void zoomOut();
-   void normalSize();
-   void fitToWindow();
-   void prevImage();
-   void nextImage();
+  void zoomIn();
+  void zoomOut();
+  void normalSize();
+  void fitToWindow();
+  void prevImage();
+  void nextImage();
 
-   void about();
+  void about();
 
- private:
-   void createActions();
-   void createMenus();
-   void createToolbar();
-   void updateActions();
-   void scaleImage(double factor);
-   void adjustScrollBar(QScrollBar *scrollBar, double factor);
+private:
+  void createActions();
+  void createMenus();
+  void createToolbar();
+  void updateActions();
+  void scaleImage(double factor);
+  void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
-   // QPixmap *m_pixmap;
-   ImageSpinner *imageSpinner;
-   bool imageLoaded;
-   QLabel *imageLabel;
-   QScrollArea *scrollArea;
-   double scaleFactor;
+  // QPixmap *m_pixmap;
+  ImageSpinner *imageSpinner;
+  bool imageLoaded;
+  QLabel *imageLabel;
+  QScrollArea *scrollArea;
+  double scaleFactor;
 
-   // actions
-   QAction *openAction;
-   QAction *printAction;
-   QAction *blurAction;
-   QAction *sharpenAction;
-   QAction *erodeAction;
-   QAction *exitAction;
-   QAction *zoomInAction;
-   QAction *zoomOutAction;
-   //QAction *zoomNormalAction;
-   QAction *fitToWindowAction;
-   QAction *nextImageAction;
-   QAction *prevImageAction;
-   QAction *aboutAction;
-   QAction *aboutQtAction;
+  // actions
+  QAction *openAction;
+  QAction *printAction;
+  QAction *blurAction;
+  QAction *sharpenAction;
+  QAction *erodeAction;
+  QAction *exitAction;
+  QAction *zoomInAction;
+  QAction *zoomOutAction;
+  // QAction *zoomNormalAction;
+  QAction *fitToWindowAction;
+  QAction *nextImageAction;
+  QAction *prevImageAction;
+  QAction *aboutAction;
+  QAction *aboutQtAction;
 };
 
 #endif // IMAGEEDITOR_H

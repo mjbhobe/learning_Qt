@@ -54,14 +54,14 @@ class Notepad : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     Notepad();
 
-private slots:
+  private slots:
     void load();
     void save();
 
-private:
+  private:
     QTextEdit *textEdit;
 
     QAction *loadAction;
@@ -77,12 +77,9 @@ Notepad::Notepad()
     saveAction = new QAction(tr("&Save"), this);
     exitAction = new QAction(tr("E&xit"), this);
 
-    connect(loadAction, &QAction::triggered,
-            this, &Notepad::load);
-    connect(saveAction, &QAction::triggered,
-            this, &Notepad::save);
-    connect(exitAction, &QAction::triggered,
-            qApp, &QApplication::quit);
+    connect(loadAction, &QAction::triggered, this, &Notepad::load);
+    connect(saveAction, &QAction::triggered, this, &Notepad::save);
+    connect(exitAction, &QAction::triggered, qApp, &QApplication::quit);
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(loadAction);
@@ -91,24 +88,31 @@ Notepad::Notepad()
     fileMenu->addAction(exitAction);
 
     textEdit = new QTextEdit;
+    textEdit->setObjectName("TextEdit");
+    textEdit->setStyleSheet("QTextEdit#TextEdit {border: None;}");
     setCentralWidget(textEdit);
 
     setWindowTitle(tr("Notepad"));
 }
 
-void Notepad::load()
-{
+void Notepad::load() {}
 
-}
-
-void Notepad::save()
-{
-
-}
+void Notepad::save() {}
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
+
+    // apply Chocolaf styling
+    QFile f(":chocolaf/chocolaf.css");
+    if (!f.exists()) {
+        printf("Unable to open stylesheet!");
+    }
+    else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
 
     Notepad notepad;
     notepad.show();
@@ -117,4 +121,3 @@ int main(int argc, char **argv)
 };
 
 #include "main.moc"
-

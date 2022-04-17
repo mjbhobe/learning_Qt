@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -88,7 +88,7 @@
   <action name="actionNew">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+     <normaloff>:/images2/new.png</normaloff>:/images2/new.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -103,7 +103,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
+     <normaloff>:/images2/open.png</normaloff>:/images2/open.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -118,7 +118,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+     <normaloff>:/images2/save.png</normaloff>:/images2/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -133,7 +133,7 @@
   <action name="actionSave_as">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/save_as.png</normaloff>:/images/save_as.png</iconset>
+     <normaloff>:/images2/save_as.png</normaloff>:/images2/save_as.png</iconset>
    </property>
    <property name="text">
     <string>Save as</string>
@@ -141,14 +141,11 @@
    <property name="toolTip">
     <string>Save file as</string>
    </property>
-   <property name="shortcut">
-    <string>Alt+S</string>
-   </property>
   </action>
   <action name="actionPrint">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
+     <normaloff>:/images2/print.png</normaloff>:/images2/print.png</iconset>
    </property>
    <property name="text">
     <string>Print</string>
@@ -162,8 +159,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="exit.png" resource="notepad.qrc">
-     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+    <iconset resource="notepad.qrc">
+     <normaloff>:/images2/exit.png</normaloff>:/images2/exit.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -171,13 +168,11 @@
    <property name="toolTip">
     <string>Exit notepad</string>
    </property>
-   <property name="shortcut">
-   </property>
   </action>
   <action name="actionCopy">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/copy.png</normaloff>:/images/copy.png</iconset>
+     <normaloff>:/images2/copy.png</normaloff>:/images2/copy.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -189,7 +184,7 @@
   <action name="actionCut">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/cut.png</normaloff>:/images/cut.png</iconset>
+     <normaloff>:/images2/cut.png</normaloff>:/images2/cut.png</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -201,7 +196,7 @@
   <action name="actionPaste">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/paste.png</normaloff>:/images/paste.png</iconset>
+     <normaloff>:/images2/paste.png</normaloff>:/images2/paste.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -213,7 +208,7 @@
   <action name="actionUndo">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/edit_undo.png</normaloff>:/images/edit_undo.png</iconset>
+     <normaloff>:/images2/edit_undo.png</normaloff>:/images2/edit_undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -225,7 +220,7 @@
   <action name="actionRedo">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/edit_redo.png</normaloff>:/images/edit_redo.png</iconset>
+     <normaloff>:/images2/edit_redo.png</normaloff>:/images2/edit_redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -237,7 +232,7 @@
   <action name="actionFont">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/font.png</normaloff>:/images/font.png</iconset>
+     <normaloff>:/images2/font.png</normaloff>:/images2/font.png</iconset>
    </property>
    <property name="text">
     <string>Font</string>
@@ -252,7 +247,7 @@
    </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/italic.png</normaloff>:/images/italic.png</iconset>
+     <normaloff>:/images2/italic.png</normaloff>:/images2/italic.png</iconset>
    </property>
    <property name="text">
     <string>Italic</string>
@@ -270,7 +265,7 @@
    </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/bold.png</normaloff>:/images/bold.png</iconset>
+     <normaloff>:/images2/bold.png</normaloff>:/images2/bold.png</iconset>
    </property>
    <property name="text">
     <string>actionBold</string>
@@ -288,7 +283,7 @@
    </property>
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/underline.png</normaloff>:/images/underline.png</iconset>
+     <normaloff>:/images2/underline.png</normaloff>:/images2/underline.png</iconset>
    </property>
    <property name="text">
     <string>Underline</string>
@@ -303,7 +298,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="notepad.qrc">
-     <normaloff>:/images/info.png</normaloff>:/images/info.png</iconset>
+     <normaloff>:/images2/info.png</normaloff>:/images2/info.png</iconset>
    </property>
    <property name="text">
     <string>About</string>

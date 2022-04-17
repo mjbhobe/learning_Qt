@@ -16,23 +16,23 @@
 
 int main(int argc, char **argv)
 {
-   QApplication app(argc, argv);
+  QApplication app(argc, argv);
 
-   QFile f(":chocolaf/chocolaf.css");
+  // use Chocolaf style
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  } else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
 
-   if (!f.exists()) {
-      printf("Unable to open stylesheet!");
-   } else {
-      f.open(QFile::ReadOnly | QFile::Text);
-      QTextStream ts(&f);
-      app.setStyleSheet(ts.readAll());
-   }
+  app.setApplicationName(app.translate("main", "Qt Scribble"));
 
-   app.setApplicationName(app.translate("main", "Qt Scribble"));
+  // create the GUI
+  DrawWindow mainWindow;
+  mainWindow.show();
 
-   // create the GUI
-   DrawWindow mainWindow;
-   mainWindow.show();
-
-   return app.exec();
+  return app.exec();
 }

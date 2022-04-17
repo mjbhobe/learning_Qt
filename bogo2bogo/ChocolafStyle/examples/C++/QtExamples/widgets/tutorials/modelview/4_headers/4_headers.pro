@@ -1,9 +1,9 @@
 TARGET = mv_headers
-
 TEMPLATE = app
+INCLUDEPATH += .
+include(../../../../../../../chocolaf/common_files/common.pro)
 
-QT += widgets
-requires(qtConfig(tableview))
+# requires(qtConfig(tableview))
 
 SOURCES += main.cpp  \
            mymodel.cpp

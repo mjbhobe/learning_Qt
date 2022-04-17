@@ -54,25 +54,24 @@ class Notepad : public QWidget
 {
     Q_OBJECT
 
-public:
+  public:
     Notepad();
 
-private slots:
+  private slots:
     void quit();
 
-private:
+  private:
     QTextEdit *textEdit;
     QPushButton *quitButton;
-
 };
 
 Notepad::Notepad()
 {
     textEdit = new QTextEdit;
+    textEdit->setText(QString("Hello World! Welcoem to Qt %1").arg(QT_VERSION_STR));
     quitButton = new QPushButton(tr("Quit"));
 
-    connect(quitButton, &QPushButton::clicked,
-            this, &Notepad::quit);
+    connect(quitButton, &QPushButton::clicked, this, &Notepad::quit);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(textEdit);
@@ -98,6 +97,17 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
+    // apply Chocolaf styling
+    QFile f(":chocolaf/chocolaf.css");
+    if (!f.exists()) {
+        printf("Unable to open stylesheet!");
+    }
+    else {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+
     Notepad notepad;
     notepad.show();
 
@@ -105,4 +115,3 @@ int main(int argc, char **argv)
 }
 
 #include "main.moc"
-

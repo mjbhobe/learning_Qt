@@ -21,68 +21,68 @@ class ImageSpinner;
 
 class ImageViewer : public QMainWindow
 {
-   Q_OBJECT
+  Q_OBJECT
 
- public:
-   ImageViewer(QWidget *parent = nullptr);
-   ~ImageViewer();
+public:
+  ImageViewer(QWidget *parent = nullptr);
+  ~ImageViewer();
 
-   bool loadImage(const QString &imagePath);
-   void initializeFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
+  bool loadImage(const QString &imagePath);
+  void initializeFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
 
- private slots:
-   void open();
-   void print();
-   void zoomIn();
-   void zoomOut();
-   void normalSize();
-   void fitToWindow();
-   void prevImage();
-   void nextImage();
-   void about();
+private slots:
+  void open();
+  void print();
+  void zoomIn();
+  void zoomOut();
+  void normalSize();
+  void fitToWindow();
+  void prevImage();
+  void nextImage();
+  void about();
 
- private:
-   void createActions();
-   void createMenus();
-   void createToolbar();
-   void updateActions();
-   void scaleImage(double factor);
-   void adjustScrollBar(QScrollBar *scrollBar, double factor);
+private:
+  void createActions();
+  void createMenus();
+  void createToolbar();
+  void updateActions();
+  void scaleImage(double factor);
+  void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
-   QImage *image;
-   ImageSpinner *imageSpinner;
-   bool imageLoaded;
-   QLabel *imageLabel;
-   QScrollArea *scrollArea;
-   double scaleFactor;
+  QImage *image;
+  ImageSpinner *imageSpinner;
+  bool imageLoaded;
+  QLabel *imageLabel;
+  QScrollArea *scrollArea;
+  double scaleFactor;
 
-   // actions
-   QAction *openAction;
-   QAction *printAction;
-   QAction *exitAction;
-   QAction *zoomInAction;
-   QAction *zoomOutAction;
-   QAction *zoomNormalAction;
-   QAction *fitToWindowAction;
-   QAction *nextImageAction;
-   QAction *prevImageAction;
-   QAction *aboutAction;
-   QAction *aboutQtAction;
+  // actions
+  QAction *openAction;
+  QAction *printAction;
+  QAction *exitAction;
+  QAction *zoomInAction;
+  QAction *zoomOutAction;
+  QAction *zoomNormalAction;
+  QAction *fitToWindowAction;
+  QAction *nextImageAction;
+  QAction *prevImageAction;
+  QAction *aboutAction;
+  QAction *aboutQtAction;
 };
 
 class ImageSpinner : public QObject
 {
- public:
-   ImageSpinner(const QString &imagePath);
-   QString nextImage();
-   QString prevImage();
-   bool atFirst() const;
-   bool atLast() const;
+public:
+  ImageSpinner(const QString &imagePath);
+  QString nextImage();
+  QString prevImage();
+  bool atFirst() const;
+  bool atLast() const;
 
- protected:
-   int m_currIndex;
-   QDir m_dir;
-   QStringList m_fileNames;
+protected:
+  int m_currIndex;
+  QDir m_dir;
+  QStringList m_fileNames;
 };
 
 #endif // IMAGEVIEWER_H

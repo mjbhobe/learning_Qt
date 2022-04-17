@@ -54,22 +54,23 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QTreeView; //forward declarations
+class QTreeView; // forward declarations
 class QStandardItemModel;
 class QItemSelection;
 QT_END_NAMESPACE
 
-
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 private:
-    QTreeView *treeView;
-    QStandardItemModel *standardModel;
+  QTreeView *treeView;
+  QStandardItemModel *standardModel;
 private slots:
-    void selectionChangedSlot(const QItemSelection &newSelection, const QItemSelection &oldSelection);
+  void selectionChangedSlot(const QItemSelection &newSelection,
+                            const QItemSelection &oldSelection);
+
 public:
-    MainWindow(QWidget *parent = nullptr);
+  MainWindow(QWidget *parent = nullptr);
 };
 
 #endif // MAINWINDOW_H

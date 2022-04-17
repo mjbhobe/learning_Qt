@@ -54,61 +54,69 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QWidget window;
+  QApplication app(argc, argv);
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
 
-    QLabel *queryLabel = new QLabel(
-        QApplication::translate("nestedlayouts", "Query:"));
-    QLineEdit *queryEdit = new QLineEdit();
-    QTableView *resultView = new QTableView();
+  QWidget window;
 
-    QHBoxLayout *queryLayout = new QHBoxLayout();
-    queryLayout->addWidget(queryLabel);
-    queryLayout->addWidget(queryEdit);
+  QLabel *queryLabel = new QLabel(QApplication::translate("nestedlayouts", "Query:"));
+  QLineEdit *queryEdit = new QLineEdit();
+  QTableView *resultView = new QTableView();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->addLayout(queryLayout);
-    mainLayout->addWidget(resultView);
-    window.setLayout(mainLayout);
+  QHBoxLayout *queryLayout = new QHBoxLayout();
+  queryLayout->addWidget(queryLabel);
+  queryLayout->addWidget(queryEdit);
 
-    // Set up the model and configure the view...
-//! [first part]
+  QVBoxLayout *mainLayout = new QVBoxLayout();
+  mainLayout->addLayout(queryLayout);
+  mainLayout->addWidget(resultView);
+  window.setLayout(mainLayout);
 
-//! [set up the model]
-    QStandardItemModel model;
-    model.setHorizontalHeaderLabels({ QApplication::translate("nestedlayouts", "Name"),
-                                      QApplication::translate("nestedlayouts", "Office") });
+  // Set up the model and configure the view...
+  //! [first part]
 
-    const QStringList rows[] = {
-        QStringList{ QStringLiteral("Verne Nilsen"), QStringLiteral("123") },
-        QStringList{ QStringLiteral("Carlos Tang"), QStringLiteral("77") },
-        QStringList{ QStringLiteral("Bronwyn Hawcroft"), QStringLiteral("119") },
-        QStringList{ QStringLiteral("Alessandro Hanssen"), QStringLiteral("32") },
-        QStringList{ QStringLiteral("Andrew John Bakken"), QStringLiteral("54") },
-        QStringList{ QStringLiteral("Vanessa Weatherley"), QStringLiteral("85") },
-        QStringList{ QStringLiteral("Rebecca Dickens"), QStringLiteral("17") },
-        QStringList{ QStringLiteral("David Bradley"), QStringLiteral("42") },
-        QStringList{ QStringLiteral("Knut Walters"), QStringLiteral("25") },
-        QStringList{ QStringLiteral("Andrea Jones"), QStringLiteral("34") }
-    };
+  //! [set up the model]
+  QStandardItemModel model;
+  model.setHorizontalHeaderLabels({QApplication::translate("nestedlayouts", "Name"),
+                                   QApplication::translate("nestedlayouts", "Office")});
 
-    QList<QStandardItem *> items;
-    for (const QStringList &row : rows) {
-        items.clear();
-        for (const QString &text : row)
-            items.append(new QStandardItem(text));
-        model.appendRow(items);
-    }
+  const QStringList rows[] = {
+      QStringList{QStringLiteral("Verne Nilsen"), QStringLiteral("123")},
+      QStringList{QStringLiteral("Carlos Tang"), QStringLiteral("77")},
+      QStringList{QStringLiteral("Bronwyn Hawcroft"), QStringLiteral("119")},
+      QStringList{QStringLiteral("Alessandro Hanssen"), QStringLiteral("32")},
+      QStringList{QStringLiteral("Andrew John Bakken"), QStringLiteral("54")},
+      QStringList{QStringLiteral("Vanessa Weatherley"), QStringLiteral("85")},
+      QStringList{QStringLiteral("Rebecca Dickens"), QStringLiteral("17")},
+      QStringList{QStringLiteral("David Bradley"), QStringLiteral("42")},
+      QStringList{QStringLiteral("Knut Walters"), QStringLiteral("25")},
+      QStringList{QStringLiteral("Andrea Jones"), QStringLiteral("34")}};
 
-    resultView->setModel(&model);
-    resultView->verticalHeader()->hide();
-    resultView->horizontalHeader()->setStretchLastSection(true);
-//! [set up the model]
-//! [last part]
-    window.setWindowTitle(
-        QApplication::translate("nestedlayouts", "Nested layouts"));
-    window.show();
-    return app.exec();
+  QList<QStandardItem *> items;
+  for (const QStringList &row : rows) {
+    items.clear();
+    for (const QString &text : row)
+      items.append(new QStandardItem(text));
+    model.appendRow(items);
+  }
+
+  resultView->setModel(&model);
+  resultView->verticalHeader()->hide();
+  resultView->horizontalHeader()->setStretchLastSection(true);
+  //! [set up the model]
+  //! [last part]
+  window.setWindowTitle(QApplication::translate("nestedlayouts", "Nested layouts"));
+  window.show();
+  return app.exec();
 }
 //! [last part]
 //! [main program]

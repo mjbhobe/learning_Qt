@@ -78,4 +78,8 @@
 	<file alias="sql_manager.png">images/sql_icon.png</file>
 	<file alias="qt_logo.png">images/qt_logo.png</file>
   </qresource>
+  <!-- gnome icon set -->
+  <qresource prefix="gnome">
+
+  </qresource>
 </RCC>

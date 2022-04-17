@@ -50,12 +50,26 @@
 
 #include "notepad.h"
 #include <QApplication>
+#include <QtCore>
 
 int main(int argc, char *argv[])
 {
-    QApplication EditorApp(argc, argv);
-    Notepad Editor;
-    Editor.show();
+  QApplication app(argc, argv);
+  // app.setStyle("Fusion");
 
-    return EditorApp.exec();
+  // apply Chocolaf styling
+  QFile f(":chocolaf/chocolaf.css");
+  if (!f.exists()) {
+    printf("Unable to open stylesheet!");
+  }
+  else {
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    app.setStyleSheet(ts.readAll());
+  }
+
+  Notepad Editor;
+  Editor.show();
+
+  return app.exec();
 }

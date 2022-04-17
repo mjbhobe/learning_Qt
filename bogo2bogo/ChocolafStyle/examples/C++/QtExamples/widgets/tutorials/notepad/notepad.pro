@@ -1,10 +1,10 @@
 TEMPLATE = app
 TARGET = notepad
-
-QT += widgets
+INCLUDEPATH += .
+include(../../../../../../chocolaf/common_files/common.pro)
 
 qtHaveModule(printsupport): QT += printsupport
-requires(qtConfig(fontdialog))
+#requires(qtConfig(fontdialog))
 
 SOURCES += \
     main.cpp\
@@ -20,4 +20,3 @@ RESOURCES += \
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/tutorials/notepad
 INSTALLS += target
-

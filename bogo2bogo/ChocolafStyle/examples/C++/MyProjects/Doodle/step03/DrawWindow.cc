@@ -36,7 +36,7 @@ void DrawWindow::drawPoint(const QPoint &pt)
    QFont font("Source Code Pro, Consolas, SF Mono, Monospace", 11);
    painter.setFont(font);
    //painter.setPen(getPaletteColor(QPalette::WindowText));
-   painter.setPen(Chocolaf::ChocolafPalette.WindowText_Color);
+   painter.setPen(Chocolaf::ChocolafPalette::WindowText_Color);
    painter.drawText(pt.x(), pt.y(), str);
    update();
 }
@@ -45,7 +45,7 @@ void DrawWindow::clearImage()
 {
    //_image.fill(qRgb(255, 255, 255));
    //QColor color = getPaletteColor(QPalette::Window);
-   QColor color = Chocolaf::ChocolafPalette.Window_Color;
+   QColor color = Chocolaf::ChocolafPalette::Window_Color;
    qDebug("clearImage() -> Color from palette %s", qPrintable(color.name()));
    _image.fill(color);
    update();
@@ -93,7 +93,7 @@ void DrawWindow::resizeImage(const QSize &newSize)
    // create a  new image matching the new size
    QImage newImage(newSize, QImage::Format_RGB32);
    //QColor color = getPaletteColor(QPalette::Window);
-   QColor color = Chocolaf::ChocolafPalette.Window_Color;
+   QColor color = Chocolaf::ChocolafPalette::Window_Color;
    qDebug("resizeImage() -> Color from palette %s", qPrintable(color.name()));
    newImage.fill(color);
 

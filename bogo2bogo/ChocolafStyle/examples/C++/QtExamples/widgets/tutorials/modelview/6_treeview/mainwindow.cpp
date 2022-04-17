@@ -52,36 +52,33 @@
 // modelview.cpp
 #include "mainwindow.h"
 
-#include <QTreeView>
-#include <QStandardItemModel>
 #include <QStandardItem>
+#include <QStandardItemModel>
+#include <QTreeView>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , treeView(new QTreeView(this))
-    , standardModel(new QStandardItemModel(this))
+    : QMainWindow(parent),
+      treeView(new QTreeView(this)),
+      standardModel(new QStandardItemModel(this))
 {
-    setCentralWidget(treeView);
+  setCentralWidget(treeView);
 
-    QList<QStandardItem *> preparedRow = prepareRow("first", "second", "third");
-    QStandardItem *item = standardModel->invisibleRootItem();
-    // adding a row to the invisible root item produces a root element
-    item->appendRow(preparedRow);
+  QList<QStandardItem *> preparedRow = prepareRow("first", "second", "third");
+  QStandardItem *item = standardModel->invisibleRootItem();
+  // adding a row to the invisible root item produces a root element
+  item->appendRow(preparedRow);
 
-    QList<QStandardItem *> secondRow = prepareRow("111", "222", "333");
-    // adding a row to an item starts a subtree
-    preparedRow.first()->appendRow(secondRow);
+  QList<QStandardItem *> secondRow = prepareRow("111", "222", "333");
+  // adding a row to an item starts a subtree
+  preparedRow.first()->appendRow(secondRow);
 
-    treeView->setModel(standardModel);
-    treeView->expandAll();
+  treeView->setModel(standardModel);
+  treeView->expandAll();
 }
 
-QList<QStandardItem *> MainWindow::prepareRow(const QString &first,
-                                              const QString &second,
+QList<QStandardItem *> MainWindow::prepareRow(const QString &first, const QString &second,
                                               const QString &third) const
 {
-    return {new QStandardItem(first),
-            new QStandardItem(second),
-            new QStandardItem(third)};
+  return {new QStandardItem(first), new QStandardItem(second), new QStandardItem(third)};
 }
 //! [Quoting ModelView Tutorial]
