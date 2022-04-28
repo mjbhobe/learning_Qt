@@ -59,24 +59,8 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
   Chocolaf::setStyleSheet(app);
 
-  /*
-  QPalette *chocolafPalette = Chocolaf::getPalette();
-
-  // apply Chocolaf styling
-  QFile f(":chocolaf/chocolaf.css");
-  if (!f.exists()) {
-    printf("Unable to open stylesheet!");
-  } else {
-    f.open(QFile::ReadOnly | QFile::Text);
-    QTextStream ts(&f);
-    app.setStyleSheet(ts.readAll());
-    if (chocolafPalette)
-      app.setPalette(*chocolafPalette);
-  } */
-
   Window window;
   window.show();
-  auto ret = app.exec();
-  // delete chocolafPalette;
-  return ret;
+
+  return app.exec();
 }

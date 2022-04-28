@@ -139,8 +139,8 @@ class DisplayGraph(QWidget):
 
 if __name__ == '__main__':
     app = ChocolafApp(sys.argv)
-    app.setStyle("Chocolaf")
-    print(os.path.dirname(__file__), flush=True)
+    # app.setStyle("Chocolaf")
+    # print(os.path.dirname(__file__), flush=True)
 
     window = DisplayGraph()
     window.show()

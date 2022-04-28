@@ -42,3 +42,13 @@ MatOp::erode(cv::Point anchor /*= cv::Point(-1, -1)*/, int iterations /*= 1*/,
                     QImage::Format_RGB888);
   return QPixmap::fromImage(erodeImage);
 }
+
+QPixmap MatOp::cartoon()
+{
+  int num_down = 2;
+  int num_bilateral = 7;
+
+  cv::Mat copy1, copy2;
+
+  // copy1 =
+}

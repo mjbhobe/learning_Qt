@@ -11,7 +11,9 @@ class MatOp : public QObject
 {
 public:
   MatOp(const QPixmap &pixMap, QObject *parent = nullptr);
-  ~MatOp() {}
+  ~MatOp()
+  {
+  }
 
   // operations
   QPixmap blur(cv::Size ksize = cv::Size(8, 8), cv::Point anchor = cv::Point(-1, -1),
@@ -21,8 +23,9 @@ public:
   QPixmap erode(cv::Point anchor = cv::Point(-1, -1), int iterations = 1,
                 int borderType = 0,
                 const cv::Scalar &borderValue = cv::morphologyDefaultBorderValue());
+  QPixmap cartoon();
 
-private:
+  private:
   QImage m_image;
   cv::Mat m_srcMat;
 };

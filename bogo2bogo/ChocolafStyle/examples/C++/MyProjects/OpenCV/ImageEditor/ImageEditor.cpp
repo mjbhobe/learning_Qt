@@ -312,34 +312,48 @@ void ImageEditor::blurImage()
 {
   // qDebug() << "This will blur the image...";
   if (imageLoaded) {
-    MatOp blurOp(*(imageLabel->pixmap()));
-    imageLabel->setPixmap(blurOp.blur());
-    imageLabel->adjustSize();
-  }
-  else
-    qDebug() << "blurImage() should not be called if image is not loaded!";
+#if QT_VERSION > 0x060000
+     // signature is const QPixmap* pixmap const
+     MatOp matOp((imageLabel->pixmap()));
+#else
+     MatOp matOp(*(imageLabel->pixmap()));
+#endif
+     imageLabel->setPixmap(matOp.blur());
+     imageLabel->adjustSize();
+  } else
+     qDebug() << "blurImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::sharpenImage()
 {
-  if (imageLoaded) {
-    MatOp sharpenOp(*(imageLabel->pixmap()));
-    imageLabel->setPixmap(sharpenOp.sharpen());
-    imageLabel->adjustSize();
-  }
-  else
-    qDebug() << "sharpenImage() should not be called if image is not loaded!";
+   if (imageLoaded) {
+#if QT_VERSION > 0x060000
+      // signature is const QPixmap* pixmap const
+      MatOp matOp((imageLabel->pixmap()));
+#else
+      MatOp matOp(*(imageLabel->pixmap()));
+#endif
+      imageLabel->setPixmap(matOp.sharpen());
+      imageLabel->adjustSize();
+   } else
+      qDebug() << "sharpenImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::erodeImage()
 {
-  if (imageLoaded) {
-    MatOp erodeOp(*(imageLabel->pixmap()));
-    imageLabel->setPixmap(erodeOp.erode());
-    imageLabel->adjustSize();
-  }
-  else
-    qDebug() << "erodeImage() should not be called if image is not loaded!";
+   if (imageLoaded) {
+      // NOTE: signature of QLabel::pixmap() function has changed
+      // from Qt 5.X to 6.x
+#if QT_VERSION > 0x060000
+      // signature is const QPixmap* pixmap const
+      MatOp matOp((imageLabel->pixmap()));
+#else
+      MatOp matOp(*(imageLabel->pixmap()));
+#endif
+      imageLabel->setPixmap(matOp.erode());
+      imageLabel->adjustSize();
+   } else
+      qDebug() << "erodeImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::zoomIn()

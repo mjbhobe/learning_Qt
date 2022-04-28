@@ -49,39 +49,40 @@
 ##
 #############################################################################
 
-from re import A
 import sys
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtPrintSupport import *
 from PyQt5.QtChart import *
 
 import chocolaf
 from chocolaf.utils.chocolafapp import ChocolafApp
 
 
-class AreaChartWindow(QMainWindow):
+class AreaChart(QWidget):
     def __init__(self, parent: QWidget = None):
-        super(AreaChartWindow, self).__init__(parent)
-        self.chartView = self.setupChart()
-        self.setCentralWidget(self.chartView)
-        self.resize(400, 300)
+        super(AreaChart, self).__init__(parent)
+        self.initializeUi()
 
-    def setupChart(self) -> QWidget:
+    def initializeUi(self):
+        self.setMinimumSize(600, 400)
+        self.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Area Chart Demo")
+        self.setupChart()
+
+    def setupChart(self):
         series0: QLineSeries = QLineSeries()
         series1: QLineSeries = QLineSeries()
 
-        points0 = [(1, 5), (3, 7), (7, 6), (9, 7), (12, 6), (16, 7), (18, 5)]
+        points0 = [QPointF(1, 5), QPointF(3, 7), QPointF(7, 6), QPointF(9, 7), QPointF(12, 6), QPointF(16, 7), QPointF(18, 5)]
         for point in points0:
-            series0.append(point[0], point[1])
+            series0.append(point)
 
         points1 = [(1, 3), (3, 4), (7, 3), (8, 2), (12, 3), (16, 4), (18, 3)]
         for point in points1:
             series1.append(point[0], point[1])
 
-        series: QAreaSeries = QAreaSeries(series0, series1)
+        series = QAreaSeries(series0, series1)
         series.setName("Batman")
         pen = QPen(QColor("#059605"))
         pen.setWidth(3)
@@ -97,29 +98,35 @@ class AreaChartWindow(QMainWindow):
         # setup chart
         chart: QChart = QChart()
         chart.addSeries(series)
-        chart.setTitle("Simple areachart example")
+        chart.legend().hide()   # no legend
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+        chart.setTitle("Batman")
+
         axes_x = QValueAxis()
+        axes_x.setLabelFormat("%i")
         axes_x.setRange(0, 20)
         chart.addAxis(axes_x, Qt.AlignBottom)
+        series.attachAxis(axes_x)
+
         axes_y = QValueAxis()
+        axes_y.setLabelFormat("%i")
         axes_y.setRange(0, 10)
         chart.addAxis(axes_y, Qt.AlignLeft)
+        series.attachAxis(axes_y)
 
         chartView: QChartView = QChartView(chart)
         chartView.setRenderHint(QPainter.Antialiasing)
 
-        widget = QWidget()
         layout = QVBoxLayout()
         layout.addWidget(chartView)
-        widget.setLayout(layout)
-        return widget
+        self.setLayout(layout)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
 
-    chartWindow = AreaChartWindow()
+    chartWindow = AreaChart()
     chartWindow.show()
 
     sys.exit(app.exec())

@@ -1,11 +1,11 @@
 # ignore data folder & all sub-folders
 data
-debug
-release
-profile
-Debug
-Release
-Profile
+debug/
+release/
+profile/
+Debug/
+Release/
+Profile/
 Makefile
 Makefile.Debug
 Makefile.Release
@@ -18,6 +18,10 @@ Makefile.Release
 
 # ignore intermediate build files & "executables"
 moc_*.cpp
+qrc_*.cpp
+ui_*.h
+ui_*.cpp
+*~
 *.o
 *.obj
 *.exe
@@ -29,13 +33,16 @@ moc_*.cpp
 *.idb
 *.tlog
 *.recipe
-*.pro.user
 *.cache
 *.qtc_clang
+*.pro.user
 *.user
+PROJECT
 
-ui_*
-
+# Windows & Mac specific files
+Thumbs.db
+desktop.ini 
+.DS_Store
 
 # ignore stash files
 .qmake.stash

@@ -56,16 +56,11 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtXml import *
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import ChocolafApp
 import chocolaf
 from chocolaf.utils.chocolafapp import ChocolafApp
 
-
 app = ChocolafApp(sys.argv)
 app.setStyle("Chocolaf")
-# appFont = QFont("Roboto Sans, SF UI Text", 11)
-# app.setFont(appFont)
 
 QCoreApplication.setApplicationVersion(QT_VERSION_STR)
 parser = QCommandLineParser()

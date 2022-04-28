@@ -229,7 +229,7 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf")
-    app.setFont(QFont("SF UI Text", 11))
+    # app.setFont(QFont("SF UI Text", 11))
 
     window = MainWindow()
     window.resize(640, 480)

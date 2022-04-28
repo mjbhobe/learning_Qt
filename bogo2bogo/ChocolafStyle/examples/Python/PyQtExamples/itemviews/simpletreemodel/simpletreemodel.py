@@ -56,14 +56,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtXml import *
 
-# sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[2], 'common_files'))
-# from pyqt5_utils import ChocolafApp
 import chocolaf
 from chocolaf.utils.chocolafapp import ChocolafApp
 
-
 import simpletreemodel_rc
-
 
 class TreeItem(object):
     def __init__(self, data, parent=None):
@@ -95,7 +91,6 @@ class TreeItem(object):
     def row(self):
         if self.parentItem:
             return self.parentItem.childItems.index(self)
-
         return 0
 
 
@@ -223,5 +218,6 @@ if __name__ == '__main__':
     view = QTreeView()
     view.setModel(model)
     view.setWindowTitle("Simple Tree Model")
+    view.resize(800, 600)
     view.show()
     sys.exit(app.exec())
