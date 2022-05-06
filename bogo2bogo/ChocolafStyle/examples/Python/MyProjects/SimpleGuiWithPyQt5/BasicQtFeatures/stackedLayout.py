@@ -31,7 +31,7 @@ class Color(QWidget):
         palette = self.palette()
         clr = QColor(color)
         if self.darken:
-            clr = clr.darker(factor=150)
+            clr = clr.darker(factor=100)
         palette.setColor(QPalette.Window, clr)
         self.setPalette(palette)
 
@@ -63,7 +63,7 @@ class Window(QWidget):
         self.timer.start(1000)  # fire every 2 second
 
     def pick_random_index(self):
-        rand_index = random.randint(0, len(self.rainbow))
+        rand_index = random.randint(0, len(self.rainbow) - 1)
         self.setWindowTitle(
             f"PyQt {PYQT_VERSION_STR} random colors \'{self.rainbow[rand_index]}\'")
         self.layout.setCurrentIndex(rand_index)

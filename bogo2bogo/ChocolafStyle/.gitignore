@@ -19,8 +19,6 @@ Makefile.Release
 # ignore intermediate build files & "executables"
 moc_*.cpp
 qrc_*.cpp
-ui_*.h
-ui_*.cpp
 *~
 *.o
 *.obj

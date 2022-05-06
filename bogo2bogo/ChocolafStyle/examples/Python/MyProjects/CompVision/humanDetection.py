@@ -211,6 +211,7 @@ class DisplayVideoWindow(QMainWindow):
 if __name__ == "__main__":
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf")
+    # app.setStyle("Fusion")
 
     win = DisplayVideoWindow()
     win.show()

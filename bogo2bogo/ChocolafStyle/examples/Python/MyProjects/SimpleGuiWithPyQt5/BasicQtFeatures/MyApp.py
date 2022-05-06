@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
 
 
 app = ChocolafApp(sys.argv)
-# app.setStyle("QDarkStyle-dark")
+app.setStyle("Fusion")
 
 win = MainWindow()
 win.show()
