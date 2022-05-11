@@ -134,7 +134,7 @@ class SQLManager(QMainWindow):
 
 if __name__ == "__main__":
     app = ChocolafApp(sys.argv)
-    app.setStyle("Chocolaf")
+    # app.setStyle("Chocolaf")
     #app = QApplication(sys.argv)
 
     try:

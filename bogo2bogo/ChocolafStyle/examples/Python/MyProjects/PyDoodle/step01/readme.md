@@ -1,7 +1,7 @@
 # PyQt5 Doodle Tutorial
 
 ## Step 1 - Creating the basic window
-In this step, we will create the basic window within which the doodles will be drawn. Our main window will be a class derived from the `PyQt5.QtWidgets.QMainWindow` class.
+In this step, we will create the basic window within which the doodles will be drawn. Our main window will be a class derived from the `PyQt5.QtWidgets.QMainWindow`.
 
 In this step, the application does nothing else but display the main window, which can be minimized, maximized, resized and moved around. In the subsequent steps, we will gradually add more and more functionality to the application.
 
@@ -46,6 +46,9 @@ def main():
     # NOTE: ChocolafApp is a class derived from QApplication
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf") # use Chocolaf theme
+    # alternately, if you do not wish to use Chocolaf styling, you
+    # can replace the above 2 lines with the line below
+    # app = QApplication(sys.argv)
 
     mainWindow = MainWindow()
     mainWindow.show()

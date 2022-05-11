@@ -11,6 +11,7 @@
 // ============================================================================
 """
 import sys
+import platform
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -22,6 +23,8 @@ from chocolaf.utils.chocolafapp import ChocolafApp
 
 
 def main():
+    print(f"PyQt Doodle - running with Python {platform.python_version()}, " +
+          f"Qt {QT_VERSION_STR}, PyQt {PYQT_VERSION_STR} on {platform.system()}")
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf")
 

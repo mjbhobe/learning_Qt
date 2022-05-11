@@ -23,7 +23,7 @@ __version__ = "1.0"
 def main():
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf")
-    print(f"PyQt Doodle - developed with Python {platform.python_version()}, " +
+    print(f"PyQt Doodle - running with Python {platform.python_version()}, " +
           f"Qt {QT_VERSION_STR}, PyQt {PYQT_VERSION_STR} on {platform.system()}")
 
     mainWindow = MainWindow()

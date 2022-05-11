@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.label = QLabel()
         self.label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-        self.canvas = QPixmap(1024, 768)
+        self.canvas = QPixmap(800, 600)
         self.canvas.fill(ChocolafPalette.Window_Color)
         self.label.setPixmap(self.canvas)
         self.setCentralWidget(self.label)
@@ -48,16 +48,16 @@ class MainWindow(QMainWindow):
         self.pen = QPen(ChocolafPalette.WindowText_Color, 2)
         self.label.setMouseTracking(True)
 
-    def mousePressEvent(self, e: QMouseEvent) -> None:
+    def mousePressEvent(self, e: QMouseEvent):
         self.dragging = True
         self.old_x, self.old_y = e.pos().x(), e.pos().y()
         e.accept()
 
-    def mouseReleaseEvent(self, e: QMouseEvent) -> None:
+    def mouseReleaseEvent(self, e: QMouseEvent):
         self.dragging = False
         e.accept()
 
-    def mouseMoveEvent(self, e: QMouseEvent) -> None:
+    def mouseMoveEvent(self, e: QMouseEvent):
         if ((e.buttons() == Qt.LeftButton) and (self.dragging)):
             painter = QPainter(self.label.pixmap())
             try:
