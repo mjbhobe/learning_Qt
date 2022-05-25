@@ -1010,8 +1010,8 @@ QComboBox QAbstractItemView:alternate {
 /*********************************/
 
 QScrollBar:horizontal {
-    height: 16px;
-    margin: 2px 16px 2px 16px;
+    height: 14px;
+    margin: 2px 14px 2px 14px;
     border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
     background-color: rgb(64, 64, 64);
@@ -1038,8 +1038,8 @@ QScrollBar::handle:horizontal:focus {
 }
 
 QScrollBar:vertical {
-    width: 16px;
-    margin: 16px 2px 16px 2px;
+    width: 14px;
+    margin: 14px 2px 14px 2px;
     border: none; /* 1px solid rgb(127, 127, 127); */
     border-radius: 4px;
     background-color: rgb(64, 64, 64);

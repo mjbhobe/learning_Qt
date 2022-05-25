@@ -74,7 +74,7 @@ class Example(QMainWindow):
         self.textEdit = QTextEdit()
         # remove border
         self.textEdit.setStyleSheet("QTextEdit {border: 0;}")
-        self.editorFont = QFont("Consolas, SF Mono, Source Code Pro Medium, DejaVu Sans Mono, Monospace", 12)
+        self.editorFont = QFont("Courier 10 Pitch, Consolas, SF Mono, Source Code Pro Medium, DejaVu Sans Mono, Monospace", 11)
         self.textEdit.setFont(self.editorFont)
         self.setCentralWidget(self.textEdit)
         self.textEdit.setText(" ")

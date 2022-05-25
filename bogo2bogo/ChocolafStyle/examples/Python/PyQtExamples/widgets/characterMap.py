@@ -235,6 +235,7 @@ class Window(QWidget):
         self.styleCombo.activated[str].connect(self.characterWidget.updateStyle)
         self.sizeCombo.currentIndexChanged[str].connect(self.characterWidget.updateSize)
         self.characterWidget.characterSelected.connect(self.insertCharacter)
+        clipboardButton.clicked.connect(self.updateClipboard)
 
         filterLayout = QHBoxLayout()
         filterLayout.addWidget(filterLabel)

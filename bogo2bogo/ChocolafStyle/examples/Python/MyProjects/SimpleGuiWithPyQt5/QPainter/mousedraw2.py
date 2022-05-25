@@ -20,7 +20,7 @@ from chocolaf.palettes import ChocolafPalette
 from chocolaf.utils.chocolafapp import ChocolafApp
 
 App_Path = os.path.dirname(__file__)
-Window_Title = f"PyQt {PYQT_VERSION_STR} QPainter - mouse draw with colors"
+Window_Title = f"PyQt {PYQT_VERSION_STR} QPainter - drawing with the mouse"
 
 # add some custom styling above & beyond stysheet set
 STYLE_SHEET = """
