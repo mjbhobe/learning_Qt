@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# open_save_img.py - open & save images with OpenCV
+"""
+* open_save_img.py - open & save images with OpenCV
+*
+* @author: Manish Bhobe
+* My experiments with Python, C++, OpenCV, Data Science & ML
+* Code is provided for learning purposes only! Use at your own risk!!
+"""
 import os
 from argparse import ArgumentParser
 
@@ -11,7 +17,8 @@ import numpy as np
 
 
 def cv2_imshow(img, title=None, fig_size=None, show_grid=False):
-    """ show cv2 image in a matplotlib plot window """
+    """ show cv2 image in a matplotlib plot output window """
+    # convert from default BGR to RGB schema
     rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     if fig_size is not None:
         plt.figure(figsize=fig_size)
