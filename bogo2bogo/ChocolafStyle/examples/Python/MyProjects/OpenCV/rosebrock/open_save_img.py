@@ -41,8 +41,8 @@ def main():
         image = cv2.imread(args["image"])
 
         # display some info on image
-        print(f"Image dims -> h: {image.shape[0]} pix - w: {image.shape[1]} pix"
-              f" - c: {image.shape[2]} channels", flush=True)
+        h, w, c = image.shape
+        print(f"Image dims -> h: {h} pix - w: {w} pix - c: {c} channels", flush=True)
 
         # cv2.imshow(f"Image : {args['image']}", image)
         # cv2.waitKey()

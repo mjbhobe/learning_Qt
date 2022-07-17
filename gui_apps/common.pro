@@ -10,7 +10,7 @@ win32 {
   CONFIG += console
   LIBS += -lUser32 -lGdi32 -lKernel32
 }
-CONFIG += c++17
+CONFIG += c++20
 
 QT += core gui xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

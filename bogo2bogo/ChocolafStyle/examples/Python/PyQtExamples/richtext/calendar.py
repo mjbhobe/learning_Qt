@@ -126,7 +126,8 @@ class MainWindow(QMainWindow):
 
         tableFormat = QTextTableFormat()
         tableFormat.setAlignment(Qt.AlignHCenter)
-        tableFormat.setBackground(ChocolafPalette.Window_Color)  # QColor('#e0e0e0'))
+        # QColor('#e0e0e0'))
+        tableFormat.setBackground(ChocolafPalette.Window_Color)
         tableFormat.setForeground(ChocolafPalette.WindowText_Color)
         tableFormat.setCellPadding(4)
         tableFormat.setCellSpacing(0)
@@ -155,7 +156,8 @@ class MainWindow(QMainWindow):
         boldFormat.setFontWeight(QFont.Bold)
 
         highlightedFormat = QTextCharFormat(boldFormat)
-        highlightedFormat.setBackground(ChocolafPalette.Highlight_Color)  # Qt.yellow)
+        highlightedFormat.setBackground(
+            ChocolafPalette.Highlight_Color)  # Qt.yellow)
 
         for weekDay in range(1, 8):
             cell = table.cellAt(0, weekDay - 1)

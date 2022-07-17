@@ -82,7 +82,7 @@ Notepad::Notepad(QWidget *parent) : QMainWindow(parent), ui(new Ui::Notepad)
 #elif defined Q_OS_MACOS
   QString fontName = {"SF Mono, Menlo, Monaco, Monospace"};
 #else
-  QString fontName = {"Source Code Pro Medium, DejaVu Sans Mono, Noto Mono, Monospace"};
+  QString fontName = {"Courier 10 Pitch, Source Code Pro Medium, DejaVu Sans Mono, Noto Mono, Monospace"};
 #endif
   ui->textEdit->setFont(QFont(fontName, 11));
 
