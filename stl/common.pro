@@ -12,7 +12,6 @@ INCLUDEPATH += .
 DEFINES += QT_DEPRECATED_WARNINGS
 CHOCOLAF_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/ChocolafStyle/chocolaf
 COMMON_FILES_HOME = c:/Dev/Code/git-projects/learning_Qt/bogo2bogo/common_files
-FMT_LIB_HOME=C:/Dev/GNULibs/fmt
 INCLUDEPATH += $${COMMON_FILES_HOME}
 
 # You can also make your code fail to compile if you use deprecated APIs.
@@ -31,7 +30,6 @@ CONFIG(msys2) {
    message("Using MSYS2 configuration...")
    INCLUDEPATH += C:/Dev/msys64/mingw64/include
    INCLUDEPATH += C:/Dev/msys64/mingw64/include/opencv4
-   INCLUDEPATH += C:/Dev/GNULibs/fmt/include
    QMAKE_LIB_DIRS = -LC:/Dev/msys64/mingw64/lib
    OPENCV_LIBS = -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video \
      -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_videoio -lopencv_imgcodecs -lopencv_flann
@@ -39,14 +37,12 @@ CONFIG(msys2) {
    message("**NOT** using MSYS2 configuration...")
    INCLUDEPATH += C:/Dev/GNULibs/gmp-6.2.1/bin/include
    INCLUDEPATH += C:/Dev/OpenCV/build/x86/mingw/install/include
-   INCLUDEPATH += C:/Dev/GNULibs/fmt/include
    QMAKE_LIB_DIRS = -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -LC:/Dev/OpenCV/build/x86/mingw/install/x64/mingw/lib
    OPENCV_LIBS = -lopencv_core451 -lopencv_imgproc451 -lopencv_highgui451 -lopencv_ml451 -lopencv_video451 \
      -lopencv_features2d451 -lopencv_calib3d451 -lopencv_objdetect451 -lopencv_videoio451 -lopencv_imgcodecs451 -lopencv_flann451
 }
 STD_LIBS = -lm -lstdc++
 GMP_LIBS = -lgmp -lgmpxx
-SOURCES += $${FMT_LIB_HOME}/src/format.cc
 
 QMAKE_CXXFLAGS += -pedantic -Wall
 QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}

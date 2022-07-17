@@ -45,7 +45,7 @@ STD_LIBS = -lm -lstdc++
 GMP_LIBS = -lgmp -lgmpxx
 SOURCES += $${FMT_LIB_HOME}/src/format.cc
 
-QMAKE_CXXFLAGS += -pedantic -Wall
+QMAKE_CXXFLAGS += -pedantic -Wall -std=c++20
 QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 
 # disable qDebug() output in release builds

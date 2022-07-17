@@ -26,7 +26,7 @@ def cv2_imshow(img, title=None, fig_size=None, show_grid=False):
 def main():
     ap = ArgumentParser()
     ap.add_argument("-i", "--image", required=True,
-                    help="Full path to image")
+                    help="Full path to image to be displayed")
     args = vars(ap.parse_args())
 
     # read in the image
@@ -39,6 +39,7 @@ def main():
 
         # cv2.imshow(f"Image : {args['image']}", image)
         # cv2.waitKey()
+        # display in matplotlib window
         cv2_imshow(image, title=f"Image: {args['image']}")
 
         # now let's set top left rectangle to blue

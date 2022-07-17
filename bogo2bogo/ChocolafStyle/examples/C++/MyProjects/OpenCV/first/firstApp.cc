@@ -3,17 +3,18 @@
 // @author Manish Bhobe
 // ==================================================================================
 #include "argparse/argparse.hpp"
-#include <QTextStream>
 #include <cstdlib>
 #include <filesystem>
+#include <fmt/core.h>
 #include <opencv2/opencv.hpp>
+#include <QTextStream>
 
 using namespace cv;
 namespace fs = std::filesystem;
 
-static QTextStream cout(stdout, QIODevice::WriteOnly);
-static QTextStream cerr(stderr, QIODevice::WriteOnly);
-static QTextStream cin(stdin, QIODevice::ReadOnly);
+static QTextStream cout(stdout, QIODeviceBase::WriteOnly);
+static QTextStream cerr(stderr, QIODeviceBase::WriteOnly);
+static QTextStream cin(stdin, QIODeviceBase::ReadOnly);
 
 // define command line arguments
 // @see: https://github.com/morrisfranken/argparse
@@ -57,8 +58,8 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  QString dispWin =
-      QString("Display Image: %1").arg(args.image_path.c_str() /* argv[1] */);
+  QString dispWin = QString("Display Image: %1").arg(args.image_path.c_str() /* argv[1] */);
+  cout << fmt::format("Displaying {}\n", args.image_path).c_str();
 
   namedWindow(dispWin.toStdString().c_str(), WINDOW_NORMAL); // WINDOW_AUTOSIZE
   imshow(dispWin.toStdString().c_str(), image);
