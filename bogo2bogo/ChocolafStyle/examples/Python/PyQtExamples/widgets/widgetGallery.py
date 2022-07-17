@@ -319,19 +319,19 @@ def main():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     app = ChocolafApp(sys.argv)
-    app.setStyle("Fusion")
+    # app.setStyle("Fusion")
 
     w = WidgetGallery()
-    w.setStyleSheet(app.getStyleSheet("Chocolaf"))
+    # w.setStyleSheet(app.getStyleSheet("Chocolaf"))
     w.move(20, 20)
     w.show()
 
-    rect = w.geometry()
-    w1 = WidgetGallery()
-    # w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
-    w1.move(rect.left() + rect.width() + 50,
-            rect.top() + rect.height() // 4 + 50)
-    w1.show()
+    # rect = w.geometry()
+    # w1 = WidgetGallery()
+    # # w1.setStyleSheet(app.getStyleSheet("QDarkStyle-dark"))
+    # w1.move(rect.left() + rect.width() + 50,
+    #         rect.top() + rect.height() // 4 + 50)
+    # w1.show()
 
     return app.exec()
 

@@ -21,10 +21,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-sys.path.append(os.path.join(pathlib.Path(__file__).absolute().parents[3], 'common_files'))
-from pyqt5_utils import ChocolafApp
-
-
 class Form(QDialog):
 
     def __init__(self, parent=None):
@@ -120,4 +116,14 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import requests
+
+    # Where USD is the base currency you want to use
+    url = 'https://v6.exchangerate-api.com/v6/336ccxxxxxxxxx8e74eac/latest/USD'
+
+    # Making our request
+    response = requests.get(url)
+    data = response.json()
+
+    # Your JSON object
+    print(data)

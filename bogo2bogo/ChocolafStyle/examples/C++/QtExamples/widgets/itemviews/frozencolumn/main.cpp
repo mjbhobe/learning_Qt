@@ -58,35 +58,37 @@
 
 int main(int argc, char *argv[])
 {
-  Q_INIT_RESOURCE(grades);
+   Q_INIT_RESOURCE(grades);
 
-  QApplication app(argc, argv);
-  // set Chocolaf styling
-  Chocolaf::setStyleSheet(app);
+   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-  QStandardItemModel *model = new QStandardItemModel();
+   QApplication app(argc, argv);
+   // set Chocolaf styling
+   Chocolaf::setStyleSheet(app);
 
-  QFile file(":/grades.txt");
-  if (file.open(QFile::ReadOnly)) {
-    QTextStream stream(&file);
+   QStandardItemModel *model = new QStandardItemModel();
 
-    QString line = stream.readLine();
-    QStringList list = line.simplified().split(',');
-    model->setHorizontalHeaderLabels(list);
+   QFile file(":/grades.txt");
+   if (file.open(QFile::ReadOnly)) {
+      QTextStream stream(&file);
 
-    int row = 0;
-    QStandardItem *newItem = nullptr;
-    while (!stream.atEnd()) {
-      line = stream.readLine();
-      if (!line.startsWith('#') && line.contains(',')) {
-        list = line.simplified().split(',');
-        for (int col = 0; col < list.length(); ++col) {
-          newItem = new QStandardItem(list.at(col));
-          model->setItem(row, col, newItem);
-        }
-        ++row;
+      QString line = stream.readLine();
+      QStringList list = line.simplified().split(',');
+      model->setHorizontalHeaderLabels(list);
+
+      int row = 0;
+      QStandardItem *newItem = nullptr;
+      while (!stream.atEnd()) {
+         line = stream.readLine();
+         if (!line.startsWith('#') && line.contains(',')) {
+            list = line.simplified().split(',');
+            for (int col = 0; col < list.length(); ++col) {
+               newItem = new QStandardItem(list.at(col));
+               model->setItem(row, col, newItem);
+            }
+            ++row;
+         }
       }
-    }
   }
   file.close();
 
