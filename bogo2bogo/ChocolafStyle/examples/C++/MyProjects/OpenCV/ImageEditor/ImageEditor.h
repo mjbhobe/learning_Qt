@@ -42,6 +42,7 @@ private slots:
   void blurImage();
   void sharpenImage();
   void erodeImage();
+  void cartoonifyImage();
 
   void zoomIn();
   void zoomOut();
@@ -57,13 +58,18 @@ private:
   void createMenus();
   void createToolbar();
   void updateActions();
-  void scaleImage(double factor);
+  void scaleImage(double factor = -1);
   void adjustScrollBar(QScrollBar *scrollBar, double factor);
+  void setupStatusBar();
+  void updateStatusBar();
 
   // QPixmap *m_pixmap;
   ImageSpinner *imageSpinner;
   bool imageLoaded;
   QLabel *imageLabel;
+  QLabel *imageInfoLabel;
+  QLabel *imageCountLabel;
+  QLabel *scaleFactorLabel;
   QScrollArea *scrollArea;
   double scaleFactor;
 
@@ -73,6 +79,7 @@ private:
   QAction *blurAction;
   QAction *sharpenAction;
   QAction *erodeAction;
+  QAction *cartoonAction;
   QAction *exitAction;
   QAction *zoomInAction;
   QAction *zoomOutAction;

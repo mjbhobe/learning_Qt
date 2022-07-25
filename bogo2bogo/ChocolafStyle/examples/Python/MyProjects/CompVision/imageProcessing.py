@@ -73,7 +73,7 @@ class ImageProcessingWindow(QMainWindow):
         self.brightnessSpinBox = QSpinBox()
         self.brightnessSpinBox.setMinimumWidth(100)
         self.brightnessSpinBox.setRange(-127, 127)
-        self.brightnessSpinBox.setValue(1.0)
+        self.brightnessSpinBox.setValue(1)
         self.brightnessSpinBox.setSingleStep(1)
         self.brightnessSpinBox.valueChanged.connect(self.adjustBrightness)
 

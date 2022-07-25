@@ -44,3 +44,6 @@ class ImageSpinner(QObject):
 
     def atLastPath(self):
         return self.currIndex == len(self.fileNames) - 1
+
+    def size(self):
+        return len(self.fileNames)

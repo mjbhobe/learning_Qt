@@ -45,7 +45,7 @@ class SQLManager(QMainWindow):
 
     def initializeUi(self):
         """ initialize the Ui """
-        self.setMinimumSize(800, 650)
+        self.setMinimumSize(800, 550)
         # center on screen
         self.move(QApplication.desktop().screen().rect().center() -
                   self.rect().center())
@@ -57,7 +57,7 @@ class SQLManager(QMainWindow):
 
     def setupWindow(self):
         self.queryField = QTextEdit()
-        self.queryField.setFont(QFont("Source Code Pro Medium, Consolas, SF Mono, Monospace", 11))
+        self.queryField.setFont(QFont("Consolas, SF Mono, Monospace", 10))
         self.queryField.setPlaceholderText("Enter your SQL query here and press Ctrl+R to run...")
 
         self.results = QTableView()

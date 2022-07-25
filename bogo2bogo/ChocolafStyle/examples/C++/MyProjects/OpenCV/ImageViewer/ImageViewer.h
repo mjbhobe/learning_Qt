@@ -1,10 +1,12 @@
 #ifndef IMAGEVIEWER_H
 #define IMAGEVIEWER_H
 
+#include "ImageSpinner.h"
 #include <QDir>
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QStringList>
+
 class QLabel;
 class QScrollArea;
 class QScrollBar;
@@ -16,8 +18,6 @@ namespace Ui {
 class ImageViewer;
 }
 QT_END_NAMESPACE
-
-class ImageSpinner;
 
 class ImageViewer : public QMainWindow
 {
@@ -46,13 +46,18 @@ private:
   void createMenus();
   void createToolbar();
   void updateActions();
-  void scaleImage(double factor);
+  void scaleImage(double factor = -1);
   void adjustScrollBar(QScrollBar *scrollBar, double factor);
+  void setupStatusBar();
+  void updateStatusBar();
 
   QImage *image;
   ImageSpinner *imageSpinner;
   bool imageLoaded;
   QLabel *imageLabel;
+  QLabel *imageInfoLabel;
+  QLabel *imageCountLabel;
+  QLabel *scaleFactorLabel;
   QScrollArea *scrollArea;
   double scaleFactor;
 
@@ -68,21 +73,6 @@ private:
   QAction *prevImageAction;
   QAction *aboutAction;
   QAction *aboutQtAction;
-};
-
-class ImageSpinner : public QObject
-{
-public:
-  ImageSpinner(const QString &imagePath);
-  QString nextImage();
-  QString prevImage();
-  bool atFirst() const;
-  bool atLast() const;
-
-protected:
-  int m_currIndex;
-  QDir m_dir;
-  QStringList m_fileNames;
 };
 
 #endif // IMAGEVIEWER_H

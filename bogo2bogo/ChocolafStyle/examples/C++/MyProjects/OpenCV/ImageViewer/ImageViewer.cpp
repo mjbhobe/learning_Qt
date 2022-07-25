@@ -1,54 +1,20 @@
 #include "ImageViewer.h"
+#include "ImageSpinner.h"
 #include "common_funcs.h"
 #include "ui_ImageViewer.h"
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
 
-ImageSpinner::ImageSpinner(const QString &imagePath) : m_currIndex(-1)
+class VLine : public QFrame
 {
-  QFileInfo current(imagePath);
-  m_dir = current.absoluteDir();
-  QStringList imageFilters;
-  imageFilters << "*.tiff"
-               << "*.tif"
-               << "*.jpg"
-               << "*.jpeg"
-               << "*.gif"
-               << "*.bmp"
-               << "*.png";
-  m_fileNames = m_dir.entryList(imageFilters, QDir::Files, QDir::Name);
-  m_currIndex = m_fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
-}
-
-QString ImageSpinner::prevImage()
-{
-  m_currIndex = m_currIndex - 1;
-  if (m_currIndex < 0)
-    m_currIndex = 0; // keep at 0th index
-  QString prevImagePath =
-      m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
-  qDebug() << "Will display (prev): " << prevImagePath;
-  // return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
-  return prevImagePath;
-}
-
-QString ImageSpinner::nextImage()
-{
-  m_currIndex = m_currIndex + 1;
-  if (m_currIndex > m_fileNames.count() - 1)
-    m_currIndex = m_fileNames.count() - 1; // keep at last index
-
-  QString nextImagePath =
-      m_dir.absolutePath() + QDir::separator() + m_fileNames.at(m_currIndex);
-  qDebug() << "Will display (next): " << nextImagePath;
-  // return dir.absoluteFilePath(m_fileNames.at(m_currIndex));
-  return nextImagePath;
-}
-
-bool ImageSpinner::atFirst() const { return m_currIndex == 0; }
-
-bool ImageSpinner::atLast() const { return m_currIndex == m_fileNames.count() - 1; }
+public:
+  VLine(QWidget *parent = nullptr) : QFrame(parent)
+  {
+    setFrameShape(QFrame::VLine);
+    setFrameShadow(QFrame::Sunken);
+  }
+};
 
 ImageViewer::ImageViewer(QWidget *parent)
     : QMainWindow(parent), image(nullptr), imageSpinner(nullptr)
@@ -57,6 +23,9 @@ ImageViewer::ImageViewer(QWidget *parent)
   scaleFactor = 1.0;
   imageLoaded = false;
   imageLabel = new QLabel("");
+  imageInfoLabel = new QLabel("");
+  imageCountLabel = new QLabel("");
+  scaleFactorLabel = new QLabel("");
   scrollArea = new QScrollArea();
 
   // imageLabel->setBackgroundRole(QPalette::Base);
@@ -73,21 +42,16 @@ ImageViewer::ImageViewer(QWidget *parent)
   createToolbar();
   statusBar()->showMessage(
       QString("Qt %1 ImageViewer with Chocolaf theme").arg(QT_VERSION_STR));
-  /*
-  if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
-     statusBar()->setStyleSheet(
-        "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}");
-  else
-     statusBar()->setStyleSheet(
-        "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}");
-  */
+  setupStatusBar();
 
   // set initial size to 3/5 of screen
   resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
   setWindowIcon(QIcon(":/app_icon.png")); // load an image
 }
 
-ImageViewer::~ImageViewer() {}
+ImageViewer::~ImageViewer()
+{
+}
 
 // helper function
 QString getIconPath(QString baseName, bool darkTheme = false)
@@ -100,12 +64,6 @@ QString getIconPath(QString baseName, bool darkTheme = false)
 
 void ImageViewer::createActions()
 {
-  bool usingDarkTheme = true;
-  /*
-#ifdef Q_OS_WINDOWS
-  usingDarkTheme = (windowsDarkThemeAvailable() && windowsIsInDarkTheme());
-#endif
-*/
   openAction = new QAction("&Open...", this);
   openAction->setShortcut(QKeySequence::Open);
   // openAction->setIcon(QIcon(":/open.png"));
@@ -210,17 +168,10 @@ void ImageViewer::createMenus()
 void ImageViewer::createToolbar()
 {
   QToolBar *toolBar = addToolBar("&Main");
-  /*
-  QPalette palette = toolBar->palette();
-  if (windowsDarkThemeAvailable() && windowsIsInDarkTheme())
-     palette.setColor(QPalette::Window, QColor(66, 66, 66)); //QColor(77, 77, 77));
-  //QColor(59, 59, 59)); else palette.setColor(QPalette::Window, QColor(240, 240, 240));
-  toolBar->setPalette(palette);
-  */
 
   toolBar->addAction(openAction);
   toolBar->addAction(printAction);
-
+  toolBar->addSeparator();
   toolBar->addAction(zoomInAction);
   toolBar->addAction(zoomOutAction);
   toolBar->addAction(fitToWindowAction);
@@ -238,9 +189,46 @@ void ImageViewer::updateActions()
   nextImageAction->setEnabled(imageLoaded);
 }
 
-void ImageViewer::scaleImage(double factor)
+void ImageViewer::setupStatusBar()
 {
-  scaleFactor *= factor;
+  // statusBar()->reformat();
+  statusBar()->setStyleSheet("QStatusBar::item {border: none;}");
+  // statusBar()->addPermanentWidget(new VLine());
+  statusBar()->addPermanentWidget(imageInfoLabel);
+  statusBar()->addPermanentWidget(imageCountLabel);
+  statusBar()->addPermanentWidget(scaleFactorLabel);
+}
+
+void ImageViewer::updateStatusBar()
+{
+  if (imageSpinner) {
+    QImage image = imageLabel->pixmap()->toImage();
+    auto imageInfoText = QString("%1 x %2 %3")
+                             .arg(image.width())
+                             .arg(image.height())
+                             .arg(image.isGrayscale() ? "grayscale" : "color");
+    imageInfoLabel->setText(imageInfoText);
+    auto sizeWidth = QString("%1").arg(imageSpinner->size()).length();
+    QString status = QString("%1 of %2 images")
+                         .arg(imageSpinner->currIndex() + 1, sizeWidth)
+                         .arg(imageSpinner->size(), sizeWidth);
+    qDebug() << status;
+    imageCountLabel->setText(status);
+    if (fitToWindowAction->isChecked()) {
+      scaleFactorLabel->setText(QString("Zoom: %1").arg("Fit"));
+    } else {
+      auto currZoomFactor = int(scaleFactor * 100);
+      scaleFactorLabel->setText(QString("Zoom: %1%").arg(currZoomFactor));
+    }
+  }
+}
+
+void ImageViewer::scaleImage(double factor /*= -1*/)
+{
+  // NOTE: factor == -1 is used to scale a newly loaded image to same
+  // scaleFactor as last loaded image
+  if (factor != -1)
+    scaleFactor *= factor;
   imageLabel->resize(scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size());
 
   adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
@@ -268,11 +256,12 @@ bool ImageViewer::loadImage(const QString &imagePath)
     return false;
   }
 
-  scaleFactor = 1.0;
+  // scaleFactor = 1.0;
   imageLoaded = true;
   scrollArea->setVisible(true);
   imageLabel->setPixmap(QPixmap::fromImage(newImage));
   imageLabel->adjustSize();
+  scaleImage();
 
   QString title;
   QTextStream ostr(&title);
@@ -282,6 +271,7 @@ bool ImageViewer::loadImage(const QString &imagePath)
   // add ImageSpinner
   delete imageSpinner;
   imageSpinner = new ImageSpinner(imagePath);
+  updateStatusBar();
 
   return true;
 }
@@ -325,17 +315,20 @@ void ImageViewer::print()
 void ImageViewer::zoomIn()
 {
   scaleImage(1.25); // zoom in by 25%
+  updateStatusBar();
 }
 
 void ImageViewer::zoomOut()
 {
   scaleImage(0.75); // zoom out by 25%
+  updateStatusBar();
 }
 
 void ImageViewer::normalSize()
 {
   imageLabel->adjustSize();
   scaleFactor = 1.0;
+  updateStatusBar();
 }
 
 void ImageViewer::fitToWindow()
@@ -345,32 +338,39 @@ void ImageViewer::fitToWindow()
   if (!fitToWindow)
     normalSize();
   updateActions();
+  updateStatusBar();
 }
 
 void ImageViewer::prevImage()
 {
-  QString imagePath = imageSpinner->prevImage();
-  if (loadImage(imagePath))
-    updateActions();
-  if (imageSpinner->atFirst())
-    QMessageBox::information(this, "ImageViewer", "Displaying first image in folder!");
+  if (!imageSpinner->atFirst()) {
+    QString imagePath = imageSpinner->prevImage();
+    if (loadImage(imagePath))
+      updateActions();
+  } else {
+    if (imageSpinner->atFirst())
+      QMessageBox::information(this, "ImageViewer", "Displaying first image in folder!");
+  }
 }
 
 void ImageViewer::nextImage()
 {
-  QString imagePath = imageSpinner->nextImage();
-  if (loadImage(imagePath))
-    updateActions();
-  if (imageSpinner->atLast())
-    QMessageBox::information(this, "ImageViewer", "Displaying last image in folder!");
+  if (!imageSpinner->atLast()) {
+    QString imagePath = imageSpinner->nextImage();
+    if (loadImage(imagePath))
+      updateActions();
+  } else {
+    if (imageSpinner->atLast())
+      QMessageBox::information(this, "ImageViewer", "Displaying last image in folder!");
+  }
 }
 
 void ImageViewer::about()
 {
-  QString str =
-      QString("<p><b>Image Viewer</b> application to view images on desktop.</p>"
-              "<p>Developed with Qt %1 by Manish Bhobe</p>"
-              "<p>Free to use, but use at your own risk!!")
-          .arg(QT_VERSION_STR);
+  QString str = QString("<b>Image Viewer</b> application to view images on desktop.<br/>"
+                        "Created with Qt %1 and Chocolaf theme<br/><br/>"
+                        "Developed by Manish Bhobe<br/>"
+                        "Free to use, but use at your own risk!!")
+                    .arg(QT_VERSION_STR);
   QMessageBox::about(this, tr("About Image Viewer"), str);
 }

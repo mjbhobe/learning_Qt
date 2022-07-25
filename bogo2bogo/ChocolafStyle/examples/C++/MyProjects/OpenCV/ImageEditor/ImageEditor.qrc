@@ -7,6 +7,7 @@
     <file alias="blur.png">images2/blur_effect.png</file>
     <file alias="sharpen.png">images2/sharpen_effect.png</file>
     <file alias="erode.png">images2/erode.png</file>
+    <file alias="cartoon.png">images2/cartoon.png</file>
     <file alias="zoom_in.png">images2/zoom_in.png</file>
     <file alias="zoom_out.png">images2/zoom_out.png</file>
     <file alias="zoom_fit.png">images2/zoom_fit.png</file>

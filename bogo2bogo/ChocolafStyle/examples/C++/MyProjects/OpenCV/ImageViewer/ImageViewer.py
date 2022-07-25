@@ -4,21 +4,16 @@
 import os
 import pathlib
 import sys
+import cv2
 from argparse import ArgumentParser
 
-# using qdarkstyle (@see: https://github.com/ColinDuquesnoy/QDarkStyleSheet)
-# to detect dark themes (@see: https://pypi.org/project/darkdetect/)
-import darkdetect
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from chocolaf.utils.chocolafapp import ChocolafApp
 from ImageSpinner import ImageSpinner
-
-# thisPath = pathlib.Path(__file__)
-# print(thisPath.parents[0], thisPath.parents[1], os.path.join(thisPath.parents[1], 'common_files'))
-sys.path.append(os.path.join(pathlib.Path(__file__).parents[2], 'common_files'))
-from mypyqt5_utils import ChocolafApp
+import ImageViewer_rc
 
 
 class ImageViewer(QMainWindow):
@@ -26,8 +21,12 @@ class ImageViewer(QMainWindow):
         super().__init__(parent)
         self.imageLoaded = False
         self.imageLabel = QLabel("")
+        self.imageCountLabel = QLabel("")
+        self.scaleFactorLabel = QLabel("")
+        self.imageInfoLabel = QLabel("")
         self.scrollArea = QScrollArea()
-        self.image = None
+        self.cv2image = None        # OpenCV Mat
+        self.image = None           # QImage
         self.scaleFactor = 1.0
         self.firstDialog = True
         self.imageSpinner = None
@@ -47,44 +46,25 @@ class ImageViewer(QMainWindow):
         self.createMenu()
         self.createToolbar()
         # and status bar
-        # if darkdetect.isDark():
-        #     self.statusBar().setStyleSheet(
-        #         "QStatusBar{padding-left:8px;background:rgb(66,66,66);color:rgb(255,255,255);}")
-        # else:
-        #     self.statusBar().setStyleSheet(
-        #         "QStatusBar{padding-left:8px;background:rgb(240,240,240);color:rgb(54,54,54);}")
         self.statusBar().showMessage(
             f"Image Viewer: developed with PyQt {PYQT_VERSION_STR} by Manish Bhobe")
+        self.setupStatusBar()
 
         self.resize(QGuiApplication.primaryScreen().availableSize() * (4 / 5))
-        windowIconPath = os.path.join(ImageViewer.getImagesPath(), "ImageViewer-icon.png")
-        self.setWindowIcon(QIcon(windowIconPath))
-
-    def getImagesPath():
-        p = pathlib.Path(__file__)
-        images_path = os.path.join(os.path.split(str(p))[0], "images")
-        return images_path
-
-    def iconFromName(self, imageName, useDark=True):
-        iconPath = os.path.join(ImageViewer.getImagesPath(), 'dark' if useDark else 'light')
-        iconName = f"{imageName}24.png"
-        iconPath = os.path.join(iconPath, iconName)
-        assert os.path.exists(iconPath), f"{iconPath} - icon does not exist!"
-        return QIcon(iconPath)
+        self.setWindowIcon(QIcon(":/app_icon.png"))
 
     def createActions(self):
-        usingDarkTheme = darkdetect.isDark()
         # open image
         self.openAction = QAction("&Open...", self)
         self.openAction.setShortcut(QKeySequence.New)
-        self.openAction.setIcon(self.iconFromName("open", usingDarkTheme))
+        self.openAction.setIcon(QIcon(":/open.png"))
         self.openAction.setStatusTip("Open a new image file to view")
         self.openAction.triggered.connect(self.open)
 
         # print image
         self.printAction = QAction("&Print...", self)
         self.printAction.setShortcut(QKeySequence.Print)
-        self.printAction.setIcon(self.iconFromName("print", usingDarkTheme))
+        self.printAction.setIcon(QIcon(":/print.png"))
         self.printAction.setStatusTip("Print the current image")
         self.printAction.triggered.connect(self.print)
         self.printAction.setEnabled(False)
@@ -98,28 +78,27 @@ class ImageViewer(QMainWindow):
         # View category...
         self.zoomInAction = QAction("Zoom &in (25%)", self)
         self.zoomInAction.setShortcut(QKeySequence("Ctrl++"))
-        self.zoomInAction.setIcon(self.iconFromName("zoomin", usingDarkTheme))
+        self.zoomInAction.setIcon(QIcon(":/zoom_in.png"))
         self.zoomInAction.setStatusTip("Zoom into the image by 25%")
         self.zoomInAction.triggered.connect(self.zoomIn)
         self.zoomInAction.setEnabled(False)
 
         self.zoomOutAction = QAction("Zoom &out (25%)", self)
         self.zoomOutAction.setShortcut(QKeySequence("Ctrl++"))
-        self.zoomOutAction.setIcon(self.iconFromName("zoomout", usingDarkTheme))
+        self.zoomOutAction.setIcon(QIcon(":/zoom_out.png"))
         self.zoomOutAction.setStatusTip("Zoom out of the image by 25%")
         self.zoomOutAction.triggered.connect(self.zoomOut)
         self.zoomOutAction.setEnabled(False)
 
         self.zoomNormalAction = QAction("&Normal size", self)
         self.zoomNormalAction.setShortcut(QKeySequence("Ctrl+0"))
-        # self.zoomNormalAction.setIcon(QIcon("./images/zoom_out.png"))
         self.zoomNormalAction.setStatusTip("Zoom to normal size")
         self.zoomNormalAction.triggered.connect(self.zoomNormal)
         self.zoomNormalAction.setEnabled(False)
 
         self.fitToWindowAction = QAction("Fit to &window", self)
         self.fitToWindowAction.setShortcut(QKeySequence("Ctrl+1"))
-        self.fitToWindowAction.setIcon(self.iconFromName("fit2window", usingDarkTheme))
+        self.fitToWindowAction.setIcon(QIcon(":/zoom_fit.png"))
         self.fitToWindowAction.setStatusTip("Fit image to size of window")
         self.fitToWindowAction.triggered.connect(self.fitToWindow)
         self.fitToWindowAction.setEnabled(False)
@@ -127,14 +106,14 @@ class ImageViewer(QMainWindow):
 
         self.prevImageAction = QAction("&Previous Image", self)
         self.prevImageAction.setShortcut(QKeySequence.MoveToPreviousChar)
-        self.prevImageAction.setIcon(self.iconFromName("prev", usingDarkTheme))
+        self.prevImageAction.setIcon(QIcon(":/go_prev.png"))
         self.prevImageAction.setStatusTip("View previous image in folder")
         self.prevImageAction.triggered.connect(self.prevImage)
         self.prevImageAction.setEnabled(False)
 
         self.nextImageAction = QAction("&Next Image", self)
         self.nextImageAction.setShortcut(QKeySequence.MoveToNextChar)
-        self.nextImageAction.setIcon(self.iconFromName("next", usingDarkTheme))
+        self.nextImageAction.setIcon(QIcon(":/go_next.png"))
         self.nextImageAction.setStatusTip("View next image in folder")
         self.nextImageAction.triggered.connect(self.nextImage)
         self.nextImageAction.setEnabled(False)
@@ -175,12 +154,6 @@ class ImageViewer(QMainWindow):
 
     def createToolbar(self):
         toolBar = self.addToolBar("Main")
-        # palette = toolBar.palette()
-        # if darkdetect.isDark():
-        #     palette.setColor(QPalette.Window, QColor(66, 66, 66))
-        # else:
-        #     palette.setColor(QPalette.Window, QColor(240, 240, 240))
-        # toolBar.setPalette(palette)
         toolBar.addAction(self.openAction)
         toolBar.addAction(self.printAction)
         toolBar.addSeparator()
@@ -198,20 +171,48 @@ class ImageViewer(QMainWindow):
         self.prevImageAction.setEnabled(not (self.image is None))
         self.nextImageAction.setEnabled(not (self.image is None))
 
+    def setupStatusBar(self):
+        self.statusBar().setStyleSheet("QStatusBar::item {border: none;}")
+        self.statusBar().addPermanentWidget(self.imageInfoLabel)
+        self.statusBar().addPermanentWidget(self.imageCountLabel)
+        self.statusBar().addPermanentWidget(self.scaleFactorLabel)
+
+    def updateStatusBar(self):
+        """ update the various permanent widgets on the status bar """
+        if self.imageSpinner is not None:
+            imageInfoText = f"{self.image.width():4d} x {self.image.height():4d} {'grayscale' if self.image.isGrayscale() else 'color'}"
+            self.imageInfoLabel.setText(imageInfoText)
+            selImageText = f"{self.imageSpinner.currIndex+1:3d} of {self.imageSpinner.size():3d} images"
+            self.imageCountLabel.setText(selImageText)
+            scaleFactorText = "Zoom: Fit" if self.fitToWindowAction.isChecked() \
+                else f"Zoom: {int(self.scaleFactor * 100)} %"
+            self.scaleFactorLabel.setText(scaleFactorText)
+
+    def openCV2QImage(self, cv2image):
+        """ convert an OpenCV2 image read using cv2.imread to QImage """
+        height, width, channels = cv2image.shape
+        bytes_per_line = width * channels
+        qimage = QImage(cv2image, width, height, bytes_per_line, QImage.Format_RGB888)
+        return qimage
+
     def displayImageInfo(self):
         if self.image.isNull():
             return
         print(f"Image info -> width: {self.image.width()} - height: {self.image.height()} " +
-              f"- bits/pixel: {self.image.depth()}")
+              f"- bits/pixel: {self.image.depth()} - color: {not self.image.isGrayscale()}")
 
-    def scaleImage(self, factor):
-        self.scaleFactor *= factor
+    def scaleImage(self, factor=-1):
+        """scale image to a certain scaling factor. Default value of -1 is 
+           only used to scale a newly loaded image to same scale factor as prev image
+        """
+        if factor != -1:
+            self.scaleFactor *= factor
         self.imageLabel.resize(self.scaleFactor * self.imageLabel.pixmap().size())
         self.adjustScrollbar(self.scrollArea.horizontalScrollBar(), factor)
         self.adjustScrollbar(self.scrollArea.verticalScrollBar(), factor)
         self.zoomInAction.setEnabled(self.scaleFactor < 5.0)
         self.zoomOutAction.setEnabled(self.scaleFactor > 0.10)
-        print(f"Scalefactor = {self.scaleFactor}")
+        #print(f"Scalefactor = {self.scaleFactor}")
 
     def adjustScrollbar(self, scrollBar: QScrollBar, factor):
         scrollBar.setValue(int(factor * scrollBar.value() +
@@ -233,27 +234,46 @@ class ImageViewer(QMainWindow):
 
     def loadImage(self, imagePath):
         assert os.path.exists(imagePath), f"FATAL: could not load file {filePath}"
-        reader = QImageReader(imagePath)
-        reader.setAutoTransform(True)
-        self.image = reader.read()
-        if self.image is None:
-            QMessageBox.error(self, "ImageViewer", f"Could not load {imagePath}")
-            return False
+        # reader = QImageReader(imagePath)
+        # reader.setAutoTransform(True)
+        # self.image = reader.read()
+        # if self.image is None:
+        #     QMessageBox.error(self, "ImageViewer", f"Could not load {imagePath}")
+        #     return False
 
-        self.scaleFactor = 1.0
+        self.cv2image = cv2.imread(imagePath)
+        if self.cv2image.size == 0:
+            QMessageBox.error(self, "ImageEditor", f"Could not load {imagePath}")
+            return False
+        else:
+            self.cv2image = cv2.cvtColor(self.cv2image, cv2.COLOR_BGR2RGB)
+
+        self.image = self.openCV2QImage(self.cv2image)
+
+        # self.scaleFactor = 1.0
         self.scrollArea.setVisible(True)
-        self.imageLabel.setPixmap(QPixmap.fromImage(self.image))
-        self.imageLabel.adjustSize()
+
+        # self.imageLabel.setPixmap(QPixmap.fromImage(self.image))
+        # self.imageLabel.adjustSize()
+        # # self.fitToWindow()
+        # self.scaleImage()
+        self.showImage(self.image)
+
         self.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer: {imagePath}")
-        self.fitToWindow()
 
         # image spinner
         if (self.imageSpinner is not None):
             del self.imageSpinner
-            self.imageSpinner = None
         self.imageSpinner = ImageSpinner(imagePath)
+        self.updateStatusBar()
 
         return True
+
+    def showImage(self, image: QImage):
+        self.imageLabel.setPixmap(QPixmap.fromImage(image))
+        self.imageLabel.adjustSize()
+        # self.fitToWindow()
+        self.scaleImage()
 
     def open(self):
         openDialog = QFileDialog(self, "Open Image")
@@ -270,13 +290,16 @@ class ImageViewer(QMainWindow):
 
     def zoomIn(self):
         self.scaleImage(1.25)
+        self.updateStatusBar()
 
     def zoomOut(self):
         self.scaleImage(0.75)
+        self.updateStatusBar()
 
     def zoomNormal(self):
         self.imageLabel.adjustSize()
         self.scaleFactor = 1.0
+        self.updateStatusBar()
 
     def fitToWindow(self):
         fitToWindow = self.fitToWindowAction.isChecked()
@@ -286,26 +309,29 @@ class ImageViewer(QMainWindow):
         self.updateActions()
 
     def prevImage(self):
-        assert (self.imageSpinner is not None)
-        imagePath = self.imageSpinner.prevImagePath()
-        if (self.loadImage(imagePath)):
-            self.updateActions()
-        if (self.imageSpinner.atFirstPath()):
+        if not self.imageSpinner.atFirstPath():
+            assert (self.imageSpinner is not None)
+            imagePath = self.imageSpinner.prevImagePath()
+            if (self.loadImage(imagePath)):
+                self.updateActions()
+        else:
             QMessageBox.information(self, "ImageViewer", "Displaying first image in folder!")
 
     def nextImage(self):
-        assert (self.imageSpinner is not None)
-        imagePath = self.imageSpinner.nextImagePath()
-        if (self.loadImage(imagePath)):
-            self.updateActions()
-        if (self.imageSpinner.atLastPath()):
+        if not self.imageSpinner.atLastPath():
+            assert (self.imageSpinner is not None)
+            imagePath = self.imageSpinner.nextImagePath()
+            if (self.loadImage(imagePath)):
+                self.updateActions()
+        else:
             QMessageBox.information(self, "ImageViewer", "Displaying last image in folder!")
 
     def about(self):
         QMessageBox.about(self, "About Image Viewer",
-                          f"<p><b>Image Viewer</b> application to view images on desktop.</p>"
-                          f"<p>Developed with PyQt {PYQT_VERSION_STR} by Manish Bhobe</p>"
-                          f"<p>Free to use, but use at your own risk!!")
+                          f"<b>Image Viewer</b> application to view images on desktop.<br/>"
+                          f"Developed with PyQt {PYQT_VERSION_STR} and Chocolaf theme<br/><br/>"
+                          f"Version 1.0, by Manish Bhobe<br/>"
+                          f"Free to use, but use at your own risk!!")
 
 
 def main():
@@ -323,6 +349,7 @@ def main():
                     help="Full path to image")
     args = vars(ap.parse_args())
     app = ChocolafApp(sys.argv)
+    app.setStyle("Chocolaf")
 
     w = ImageViewer()
     w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer")

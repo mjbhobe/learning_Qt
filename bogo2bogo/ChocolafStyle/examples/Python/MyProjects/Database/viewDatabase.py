@@ -62,7 +62,7 @@ class DisplayDatabase(QMainWindow):
 
     def initializeUi(self):
         """ initialize the Ui """
-        self.setMinimumSize(1000, 500)
+        self.setMinimumSize(800, 500)
         self.setWindowTitle(f"PyQt {PYQT_VERSION_STR}: Displaying SQL Data in Tables")
         self.setupTable(args["data_model"], args["query"])
 
@@ -77,7 +77,7 @@ class DisplayDatabase(QMainWindow):
         tableView.setModel(self.model)
         # comment line below if you want to see row numbers in first col of QTableView
         # (most won't want to see this)
-        tableView.hideColumn(0)
+        # tableView.hideColumn(0)
         tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.setCentralWidget(tableView)
 

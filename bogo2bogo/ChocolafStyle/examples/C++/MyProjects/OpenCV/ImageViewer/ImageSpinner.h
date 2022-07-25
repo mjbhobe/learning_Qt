@@ -1,8 +1,7 @@
-#ifndef __ImageSpinner_h__
-#define __ImageSpinner_h__
+#ifndef IMAGESPINNER_H
+#define IMAGESPINNER_H
 
-#include <QDir>
-#include <QStringList>
+#include <QtCore>
 
 class ImageSpinner : public QObject
 {
@@ -22,9 +21,9 @@ public:
   }
 
 protected:
-  int m_currIndex;
+  qsizetype m_currIndex;
   QDir m_dir;
   QStringList m_fileNames;
 };
 
-#endif // __ImageSpinner_h__
+#endif // IMAGESPINNER_H

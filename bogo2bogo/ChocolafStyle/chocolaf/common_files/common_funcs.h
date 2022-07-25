@@ -1,6 +1,8 @@
 #ifndef __common_funcs_h__
 #define __common_funcs_h__
 
+#pragma GCC diagnostic ignored "-Wc++17-attribute-extensions"
+
 #include <QTextStream>
 #include <QtCore>
 

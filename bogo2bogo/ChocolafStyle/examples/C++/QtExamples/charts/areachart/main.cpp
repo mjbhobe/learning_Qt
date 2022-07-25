@@ -43,9 +43,8 @@ int main(int argc, char *argv[])
   // apply Chocolaf styling
   QFile f(":chocolaf/chocolaf.css");
   if (!f.exists()) {
-    printf("Unable to open stylesheet!");
-  }
-  else {
+    printf("Unable to open Chocolaf stylesheet! Using default LAF.");
+  } else {
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream ts(&f);
     app.setStyleSheet(ts.readAll());
@@ -80,7 +79,7 @@ int main(int argc, char *argv[])
   //![4]
   QChart *chart = new QChart();
   chart->addSeries(series);
-  chart->setTitle("Simple areachart example");
+  chart->setTitle("<b>I am...Batman!</b>");
   chart->createDefaultAxes();
   chart->axes(Qt::Horizontal).first()->setRange(0, 20);
   chart->axes(Qt::Vertical).first()->setRange(0, 10);
@@ -93,8 +92,9 @@ int main(int argc, char *argv[])
 
   //![6]
   QMainWindow window;
+  window.setWindowTitle(QString("Qt %1 charts example").arg(QT_VERSION_STR));
   window.setCentralWidget(chartView);
-  window.resize(400, 300);
+  window.resize(640, 480);
   window.show();
   //![6]
 
