@@ -335,19 +335,11 @@ class ImageViewer(QMainWindow):
 
 
 def main():
-    # app = QApplication(sys.argv)
-    # # app.setFont(QApplication.font("QMenu"))
-    # app.setStyle("Fusion")
-    # # palSwitcher = utils.PaletteSwitcher(app)
-    #
-    # if darkdetect.isDark():
-    #     ThemeSetter.setDarkTheme(app)
-    # else:
-    #     ThemeSetter.setLightTheme(app)
     ap = ArgumentParser()
     ap.add_argument("-i", "--image", required=False,
                     help="Full path to image")
     args = vars(ap.parse_args())
+
     app = ChocolafApp(sys.argv)
     app.setStyle("Chocolaf")
 
