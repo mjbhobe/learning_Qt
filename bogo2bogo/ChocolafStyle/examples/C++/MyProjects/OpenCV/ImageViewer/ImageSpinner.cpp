@@ -1,9 +1,9 @@
 #include "ImageSpinner.h"
+#include "common_funcs.h"
+#include "ui_ImageViewer.h"
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
-#include "common_funcs.h"
-#include "ui_ImageViewer.h"
 
 ImageSpinner::ImageSpinner(const QString &imagePath) : m_currIndex(-1)
 {
@@ -18,7 +18,9 @@ ImageSpinner::ImageSpinner(const QString &imagePath) : m_currIndex(-1)
                << "*.bmp"
                << "*.png";
   m_fileNames = m_dir.entryList(imageFilters, QDir::Files, QDir::Name);
-  m_currIndex = m_fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+  // m_currIndex = m_fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+  m_currIndex = m_fileNames.indexOf(
+      QRegularExpression(QRegularExpression::escape(current.fileName())));
 }
 
 QString ImageSpinner::prevImage()
@@ -48,10 +50,10 @@ QString ImageSpinner::nextImage()
 
 bool ImageSpinner::atFirst() const
 {
-    return m_currIndex == 0;
+  return m_currIndex == 0;
 }
 
 bool ImageSpinner::atLast() const
 {
-    return m_currIndex == m_fileNames.count() - 1;
+  return m_currIndex == m_fileNames.count() - 1;
 }

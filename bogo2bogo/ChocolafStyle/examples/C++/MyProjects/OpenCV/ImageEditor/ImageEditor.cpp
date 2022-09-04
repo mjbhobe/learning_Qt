@@ -51,7 +51,9 @@ ImageEditor::ImageEditor(QWidget *parent)
   setWindowIcon(QIcon(":/app_icon.png")); // set the main window icon
 }
 
-ImageEditor::~ImageEditor() {}
+ImageEditor::~ImageEditor()
+{
+}
 
 // helper function
 QString getIconPath(QString baseName, bool darkTheme = false)
@@ -173,7 +175,6 @@ void ImageEditor::createMenus()
   QMenu *viewMenu = menuBar()->addMenu("&View");
   viewMenu->addAction(zoomInAction);
   viewMenu->addAction(zoomOutAction);
-  // viewMenu->addAction(zoomNormalAction);
   viewMenu->addSeparator();
   viewMenu->addAction(fitToWindowAction);
   viewMenu->addSeparator();
@@ -207,15 +208,16 @@ void ImageEditor::createToolbar()
 
 void ImageEditor::updateActions()
 {
+  // actions to be enabled only if image is loaded & being displayed
   blurAction->setEnabled(imageLoaded);
   sharpenAction->setEnabled(imageLoaded);
   erodeAction->setEnabled(imageLoaded);
   cartoonAction->setEnabled(imageLoaded);
 
+  // so also the image viewing actions
   fitToWindowAction->setEnabled(imageLoaded);
   zoomInAction->setEnabled(!fitToWindowAction->isChecked());
   zoomOutAction->setEnabled(!fitToWindowAction->isChecked());
-  // zoomNormalAction->setEnabled(!fitToWindowAction->isChecked());
   prevImageAction->setEnabled(imageLoaded);
   nextImageAction->setEnabled(imageLoaded);
 }
@@ -233,7 +235,11 @@ void ImageEditor::setupStatusBar()
 void ImageEditor::updateStatusBar()
 {
   if (imageSpinner) {
+#ifdef USING_QT6
+    QImage image = imageLabel->pixmap().toImage();
+#else
     QImage image = imageLabel->pixmap()->toImage();
+#endif
     auto imageInfoText = QString("%1 x %2 %3")
                              .arg(image.width())
                              .arg(image.height())
@@ -369,50 +375,50 @@ void ImageEditor::blurImage()
   // qDebug() << "This will blur the image...";
   if (imageLoaded) {
 #if QT_VERSION > 0x060000
-     // signature is const QPixmap* pixmap const
-     MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-     MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-     imageLabel->setPixmap(matOp.blur());
-     imageLabel->adjustSize();
-     scaleImage();
+    imageLabel->setPixmap(matOp.blur());
+    imageLabel->adjustSize();
+    scaleImage();
   } else
-     qDebug() << "blurImage() should not be called if image is not loaded!";
+    qDebug() << "blurImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::sharpenImage()
 {
-   if (imageLoaded) {
+  if (imageLoaded) {
 #if QT_VERSION > 0x060000
-      // signature is const QPixmap* pixmap const
-      MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-      MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-      imageLabel->setPixmap(matOp.sharpen());
-      imageLabel->adjustSize();
-      scaleImage();
-   } else
-     qDebug() << "sharpenImage() should not be called if image is not loaded!";
+    imageLabel->setPixmap(matOp.sharpen());
+    imageLabel->adjustSize();
+    scaleImage();
+  } else
+    qDebug() << "sharpenImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::erodeImage()
 {
-   if (imageLoaded) {
-      // NOTE: signature of QLabel::pixmap() function has changed
-      // from Qt 5.X to 6.x
+  if (imageLoaded) {
+    // NOTE: signature of QLabel::pixmap() function has changed
+    // from Qt 5.X to 6.x
 #if QT_VERSION > 0x060000
-      // signature is const QPixmap* pixmap const
-      MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-      MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-      imageLabel->setPixmap(matOp.erode());
-      imageLabel->adjustSize();
-      scaleImage();
-   } else
-     qDebug() << "erodeImage() should not be called if image is not loaded!";
+    imageLabel->setPixmap(matOp.erode());
+    imageLabel->adjustSize();
+    scaleImage();
+  } else
+    qDebug() << "erodeImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::cartoonifyImage()

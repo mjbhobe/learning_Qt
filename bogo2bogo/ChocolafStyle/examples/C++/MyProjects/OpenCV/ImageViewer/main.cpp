@@ -1,11 +1,22 @@
+#include "argparse/argparse.hpp"
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
+#include <filesystem>
+#include <fmt/core.h>
 
 #include "ImageViewer.h"
 #include "common_funcs.h"
+namespace fs = std::filesystem;
 
 const QString AppTitle("Qt with OpenCV ImageViewer");
+
+// define expected command line args
+// @see: https://github.com/morrisfranken/argparse
+struct MyArgs : public argparse::Args {
+  // -i | --image <image_path>
+  std::string &image_path = kwargs("i,image", "Full path to image file to display.");
+};
 
 int main(int argc, char **argv)
 {
@@ -15,8 +26,7 @@ int main(int argc, char **argv)
 
   if (!f.exists()) {
     printf("Unable to open stylesheet!");
-  }
-  else {
+  } else {
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream ts(&f);
     app.setStyleSheet(ts.readAll());

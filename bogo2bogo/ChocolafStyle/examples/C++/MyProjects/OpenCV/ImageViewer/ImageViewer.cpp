@@ -101,6 +101,20 @@ void ImageViewer::createActions()
   QObject::connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
   zoomOutAction->setEnabled(false);
 
+  rotateLeftAction = new QAction("Rotate &left", this);
+  rotateLeftAction->setShortcut(QKeySequence("Ctrl+<"));
+  rotateLeftAction->setIcon(QIcon(":/rotate_left.png"));
+  rotateLeftAction->setStatusTip("Rotate image counter-clockwise by 90 degrees");
+  QObject::connect(rotateLeftAction, SIGNAL(triggered()), this, SLOT(rotateLeft()));
+  rotateLeftAction->setEnabled(false);
+
+  rotateRightAction = new QAction("Rotate &right", this);
+  rotateRightAction->setShortcut(QKeySequence("Ctrl+>"));
+  rotateRightAction->setIcon(QIcon(":/rotate_right.png"));
+  rotateRightAction->setStatusTip("Rotate image clockwise by 90 degrees");
+  QObject::connect(rotateRightAction, SIGNAL(triggered()), this, SLOT(rotateRight()));
+  rotateRightAction->setEnabled(false);
+
   zoomNormalAction = new QAction("&Normal size", this);
   zoomNormalAction->setShortcut(QKeySequence("Ctrl+0"));
   zoomNormalAction->setStatusTip("Zoom to normal size (reset zoom)");
@@ -154,8 +168,10 @@ void ImageViewer::createMenus()
   viewMenu->addAction(zoomInAction);
   viewMenu->addAction(zoomOutAction);
   viewMenu->addAction(zoomNormalAction);
-  viewMenu->addSeparator();
   viewMenu->addAction(fitToWindowAction);
+  viewMenu->addSeparator();
+  viewMenu->addAction(rotateLeftAction);
+  viewMenu->addAction(rotateRightAction);
   viewMenu->addSeparator();
   viewMenu->addAction(prevImageAction);
   viewMenu->addAction(nextImageAction);
@@ -175,6 +191,9 @@ void ImageViewer::createToolbar()
   toolBar->addAction(zoomInAction);
   toolBar->addAction(zoomOutAction);
   toolBar->addAction(fitToWindowAction);
+  toolBar->addAction(rotateLeftAction);
+  toolBar->addAction(rotateRightAction);
+  toolBar->addSeparator();
   toolBar->addAction(prevImageAction);
   toolBar->addAction(nextImageAction);
 }
@@ -202,7 +221,11 @@ void ImageViewer::setupStatusBar()
 void ImageViewer::updateStatusBar()
 {
   if (imageSpinner) {
+#ifdef USING_QT6
+    QImage image = imageLabel->pixmap().toImage();
+#else
     QImage image = imageLabel->pixmap()->toImage();
+#endif
     auto imageInfoText = QString("%1 x %2 %3")
                              .arg(image.width())
                              .arg(image.height())
@@ -339,6 +362,16 @@ void ImageViewer::fitToWindow()
     normalSize();
   updateActions();
   updateStatusBar();
+}
+
+void ImageViewer::rotateLeft()
+{
+  // TODO
+}
+
+void ImageViewer::rotateRight()
+{
+  // TODO
 }
 
 void ImageViewer::prevImage()

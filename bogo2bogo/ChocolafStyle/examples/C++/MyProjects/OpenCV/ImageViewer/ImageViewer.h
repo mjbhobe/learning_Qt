@@ -35,6 +35,8 @@ private slots:
   void print();
   void zoomIn();
   void zoomOut();
+  void rotateLeft();
+  void rotateRight();
   void normalSize();
   void fitToWindow();
   void prevImage();
@@ -69,6 +71,8 @@ private:
   QAction *zoomOutAction;
   QAction *zoomNormalAction;
   QAction *fitToWindowAction;
+  QAction *rotateLeftAction;
+  QAction *rotateRightAction;
   QAction *nextImageAction;
   QAction *prevImageAction;
   QAction *aboutAction;

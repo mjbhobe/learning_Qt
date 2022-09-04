@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# ImageViewer.py: Image viewer application with PyQt
+"""
+* ImageViewer.py: Image viewer application with PyQt and OpenCV
+* @author (Chocolaf): Manish Bhobe
+*
+* My experiments with Python, PyQt, Data Science & Deep Learning
+* The code is made available for illustration purposes only.
+* Use at your own risk!!
+"""
 import os
-import pathlib
 import sys
 import cv2
 from argparse import ArgumentParser
@@ -17,6 +23,7 @@ import ImageViewer_rc
 
 
 class ImageViewer(QMainWindow):
+    """ main display window """
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
         self.imageLoaded = False
@@ -33,8 +40,11 @@ class ImageViewer(QMainWindow):
         self.setupUi()
 
     def setupUi(self):
+        """ helper function to layout UI elements """
         self.imageLabel.setBackgroundRole(QPalette.Base)
+        # don't automatically resize label
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        # scale label to fit image
         self.imageLabel.setScaledContents(True)
 
         self.scrollArea.setBackgroundRole(QPalette.Dark)
@@ -84,7 +94,7 @@ class ImageViewer(QMainWindow):
         self.zoomInAction.setEnabled(False)
 
         self.zoomOutAction = QAction("Zoom &out (25%)", self)
-        self.zoomOutAction.setShortcut(QKeySequence("Ctrl++"))
+        self.zoomOutAction.setShortcut(QKeySequence("Ctrl+-"))
         self.zoomOutAction.setIcon(QIcon(":/zoom_out.png"))
         self.zoomOutAction.setStatusTip("Zoom out of the image by 25%")
         self.zoomOutAction.triggered.connect(self.zoomOut)
@@ -95,6 +105,20 @@ class ImageViewer(QMainWindow):
         self.zoomNormalAction.setStatusTip("Zoom to normal size")
         self.zoomNormalAction.triggered.connect(self.zoomNormal)
         self.zoomNormalAction.setEnabled(False)
+
+        self.rotateLeftAction = QAction("Rotate &left", self)
+        self.rotateLeftAction.setShortcut(QKeySequence("Ctrl+<"))
+        self.rotateLeftAction.setIcon(QIcon(":/rotate_left.png"))
+        self.rotateLeftAction.setStatusTip("Rotate image left by 90 degrees")
+        self.rotateLeftAction.triggered.connect(self.rotateLeft)
+        self.rotateLeftAction.setEnabled(False)
+
+        self.rotateRightAction = QAction("Rotate &right", self)
+        self.rotateRightAction.setShortcut(QKeySequence("Ctrl+>"))
+        self.rotateRightAction.setIcon(QIcon(":/rotate_right.png"))
+        self.rotateRightAction.setStatusTip("Rotate image right by 90 degrees")
+        self.rotateRightAction.triggered.connect(self.rotateRight)
+        self.rotateRightAction.setEnabled(False)
 
         self.fitToWindowAction = QAction("Fit to &window", self)
         self.fitToWindowAction.setShortcut(QKeySequence("Ctrl+1"))
@@ -141,8 +165,10 @@ class ImageViewer(QMainWindow):
         viewMenu.addAction(self.zoomInAction)
         viewMenu.addAction(self.zoomOutAction)
         viewMenu.addAction(self.zoomNormalAction)
-        viewMenu.addSeparator()
         viewMenu.addAction(self.fitToWindowAction)
+        viewMenu.addSeparator()
+        viewMenu.addAction(self.rotateLeftAction)
+        viewMenu.addAction(self.rotateRightAction)
         viewMenu.addSeparator()
         viewMenu.addAction(self.prevImageAction)
         viewMenu.addAction(self.nextImageAction)
@@ -160,6 +186,9 @@ class ImageViewer(QMainWindow):
         toolBar.addAction(self.zoomInAction)
         toolBar.addAction(self.zoomOutAction)
         toolBar.addAction(self.fitToWindowAction)
+        toolBar.addAction(self.rotateLeftAction)
+        toolBar.addAction(self.rotateRightAction)
+        toolBar.addSeparator()
         toolBar.addAction(self.prevImageAction)
         toolBar.addAction(self.nextImageAction)
 
@@ -168,6 +197,8 @@ class ImageViewer(QMainWindow):
         self.zoomInAction.setEnabled(not self.fitToWindowAction.isChecked())
         self.zoomOutAction.setEnabled(not self.fitToWindowAction.isChecked())
         self.zoomNormalAction.setEnabled(not self.fitToWindowAction.isChecked())
+        self.rotateLeftAction.setEnabled(not (self.image is None))
+        self.rotateRightAction.setEnabled(not (self.image is None))
         self.prevImageAction.setEnabled(not (self.image is None))
         self.nextImageAction.setEnabled(not (self.image is None))
 
@@ -233,7 +264,7 @@ class ImageViewer(QMainWindow):
             dialog.setDefaultSuffix("jpg")
 
     def loadImage(self, imagePath):
-        assert os.path.exists(imagePath), f"FATAL: could not load file {filePath}"
+        assert os.path.exists(imagePath), f"FATAL: could not load file {imagePath}"
         # reader = QImageReader(imagePath)
         # reader.setAutoTransform(True)
         # self.image = reader.read()
@@ -307,6 +338,16 @@ class ImageViewer(QMainWindow):
         if not fitToWindow:
             self.zoomNormal()
         self.updateActions()
+
+    def rotateLeft(self):
+        self.cv2image = cv2.rotate(self.cv2image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        self.image = self.openCV2QImage(self.cv2image)
+        self.showImage(self.image)
+
+    def rotateRight(self):
+        self.cv2image = cv2.rotate(self.cv2image, cv2.ROTATE_90_CLOCKWISE)
+        self.image = self.openCV2QImage(self.cv2image)
+        self.showImage(self.image)
 
     def prevImage(self):
         if not self.imageSpinner.atFirstPath():

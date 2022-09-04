@@ -173,8 +173,8 @@ class ImageProcessingWindow(QMainWindow):
         if self.contrastAdjusted == True or self.brightnessAdjusted == True:
             contrast = self.contrastSpinBox.value()
             brightness = self.brightnessSpinBox.value()
-            self.cv_image = cv2.convertScaleAbs(self.cv_image,
-                                                self.processed_cv_image, contrast, brightness)
+            self.cv_image = cv2.convertScaleAbs(self.cv_image, self.processed_cv_image,
+                                                contrast, brightness)
         if self.imageSmoothingChecked == True:
             kernel = np.ones((5, 5), np.float32) / 25
             self.cv_image = cv2.filter2D(self.cv_image, -1, kernel)

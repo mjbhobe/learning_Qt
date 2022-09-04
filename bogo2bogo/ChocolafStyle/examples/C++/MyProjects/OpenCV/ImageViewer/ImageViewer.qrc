@@ -7,13 +7,14 @@
     <file alias="blur.png">images2/blur_effect.png</file>
     <file alias="sharpen.png">images2/sharpen_effect.png</file>
     <file alias="erode.png">images2/erode.png</file>
+    <file alias="rotate_left.png">images2/rotate_left.png</file>
+    <file alias="rotate_right.png">images2/rotate_right.png</file>
     <file alias="zoom_in.png">images2/zoom_in.png</file>
     <file alias="zoom_out.png">images2/zoom_out.png</file>
     <file alias="zoom_fit.png">images2/zoom_fit.png</file>
     <file alias="go_prev.png">images2/go_previous.png</file>
     <file alias="go_next.png">images2/go_next.png</file>
     <file alias="app_icon.png">images2/ImageViewer-icon.png</file>
-
 
     <!-- older icons -->
     <file alias="open_light.png">images/light/open24.png</file>

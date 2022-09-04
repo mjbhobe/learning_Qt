@@ -27,7 +27,7 @@ from datetime import datetime, timedelta, date
 
 # some global constants
 START_DATE = '2000-01-01'
-END_DATE = '2022-06-30'
+END_DATE = '2022-07-31'
 STOCKS = ['BAJAJ-AUTO.NS', 'BAJFINANCE.NS', 'DIVISLAB.NS', 'DIXON.NS', 'HDFCBANK.NS', 'HEROMOTOCO.NS',
           'INFY.NS', 'LT.NS', 'PIDILITIND.NS', 'RELIANCE.NS', 'SUNPHARMA.NS', 'TCS.NS', 'TITAN.NS', 'ULTRACEMCO.NS']
 
@@ -74,6 +74,7 @@ class LineChartWidget(QWidget):
         filters = self.setupFilters()
         self.currStock = self.stocks_combo.currentText()
         start_date, end_date = self.start_date.date(), self.end_date.date()
+        print(f"Start date: {start_date} - End date: {end_date}")
         chart = self.setupChart(self.stocks_combo.currentText(), start_date, end_date)
         self.chartView = QChartView(chart)
         layout = QVBoxLayout()
@@ -135,6 +136,8 @@ class LineChartWidget(QWidget):
         xVals = stock_df2['Date'].values
         yVals = stock_df2['Close'].values
         minY, maxY = yVals.min() - 20, yVals.max() + 20
+        print(f"xVals.min() {xVals.min()} - xVals.max() {xVals.max()}")
+        print(f"yVals.min() {minY} - yVals.max() {maxY}")
 
         # setup the line series
         series = QLineSeries()
@@ -168,7 +171,7 @@ class LineChartWidget(QWidget):
 
 if __name__ == "__main__":
     # re-run the following line if you want to download stocks data
-    # download_datasets(start_date='2000-01-01', end_date='2022-06-30')
+    # download_datasets(start_date=START_DATE, end_date=END_DATE)
     # sys.exit(-1)
 
     stocks_list = [stock.split('.')[0].title() for stock in STOCKS]

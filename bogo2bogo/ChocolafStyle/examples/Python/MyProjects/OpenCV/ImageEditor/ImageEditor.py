@@ -271,7 +271,7 @@ class ImageEditor(QMainWindow):
         dialog.setMimeTypeFilters(mimeTypeFilters)
         dialog.selectMimeTypeFilter("image/jpeg")
         dialog.setAcceptMode(acceptMode)
-        if (acceptMode == QFileDialog.AcceptMode.AcceptSave):
+        if acceptMode == QFileDialog.AcceptMode.AcceptSave:
             dialog.setDefaultSuffix("jpg")
 
     def loadImage(self, imagePath: str) -> bool:
@@ -301,10 +301,10 @@ class ImageEditor(QMainWindow):
         # self.scaleImage()
         self.showImage(self.image)
 
-        self.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer: {imagePath}")
+        self.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Editor: {imagePath}")
 
         # image spinner
-        if (self.imageSpinner is not None):
+        if self.imageSpinner is not None:
             del self.imageSpinner
         self.imageSpinner = ImageSpinner(imagePath)
         self.updateStatusBar()
@@ -373,19 +373,19 @@ class ImageEditor(QMainWindow):
         if not self.imageSpinner.atFirstPath():
             assert (self.imageSpinner is not None)
             imagePath = self.imageSpinner.prevImagePath()
-            if (self.loadImage(imagePath)):
+            if self.loadImage(imagePath):
                 self.updateActions()
         else:
-            QMessageBox.information(self, "ImageViewer", "Displaying first image in folder!")
+            QMessageBox.information(self, "ImageEditor", "Displaying first image in folder!")
 
     def nextImage(self):
         if not self.imageSpinner.atLastPath():
             assert (self.imageSpinner is not None)
             imagePath = self.imageSpinner.nextImagePath()
-            if (self.loadImage(imagePath)):
+            if self.loadImage(imagePath):
                 self.updateActions()
         else:
-            QMessageBox.information(self, "ImageViewer", "Displaying last image in folder!")
+            QMessageBox.information(self, "ImageEditor", "Displaying last image in folder!")
 
     def about(self):
         QMessageBox.about(self, "About Image Editor",
@@ -403,7 +403,7 @@ def main():
     app = ChocolafApp(sys.argv)
 
     w = ImageEditor()
-    w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Viewer")
+    w.setWindowTitle(f"PyQt {PYQT_VERSION_STR} Image Editor")
     if args['image'] is not None:
         # check if image path provided
         if os.path.exists(args['image']):
