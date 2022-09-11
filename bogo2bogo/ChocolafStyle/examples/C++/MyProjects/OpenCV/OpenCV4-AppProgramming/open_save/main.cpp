@@ -15,11 +15,11 @@ void onMouse(int event, int x, int y, int flags, void *param);
 
 void displayImage(cv::Mat &image, const QString &window_name)
 {
-  const char *win_name = window_name.toStdString().c_str();
-  cv::namedWindow(win_name);
+  cv::namedWindow(window_name.toStdString().c_str());
   // mouse callback
-  cv::setMouseCallback(win_name, onMouse, reinterpret_cast<void *>(&image));
-  cv::imshow(win_name, image);
+  cv::setMouseCallback(window_name.toStdString().c_str(), onMouse,
+                       reinterpret_cast<void *>(&image));
+  cv::imshow(window_name.toStdString().c_str(), image);
   cv::waitKey(0);
 }
 

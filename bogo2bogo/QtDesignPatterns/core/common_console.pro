@@ -70,4 +70,5 @@ QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += $${COMMON_FILES_HOME}/common_files/common_funcs.cpp
-HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h $${COMMON_FILES_HOME}/common_files/common_funcs.argparse/argparse.hpp
+HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h 
+HEADERS += $${COMMON_FILES_HOME}/common_files/argparse/argparse.hpp
