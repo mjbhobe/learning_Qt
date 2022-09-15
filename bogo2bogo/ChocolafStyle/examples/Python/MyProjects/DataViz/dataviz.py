@@ -44,6 +44,7 @@ def read_data(data_file_path):
         times = df["time"].apply(lambda x: transform_date(x, timezone))
         return times, magnitudes
     else:
+        
         raise ValueError(f"Invalid path! {data_file_path} - does not exist.")
 
 
@@ -151,7 +152,7 @@ class MainWindow(QMainWindow):
 
         # Window dimensions
         geometry = qApp.desktop().availableGeometry(self)
-        self.setFixedSize(geometry.width() * 0.8, geometry.height() * 0.7)
+        self.setFixedSize(int(geometry.width() * 0.8), int(geometry.height() * 0.7))
 
 
 def main():

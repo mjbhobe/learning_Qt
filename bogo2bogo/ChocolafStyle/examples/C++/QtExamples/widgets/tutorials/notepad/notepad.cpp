@@ -72,7 +72,7 @@ Notepad::Notepad(QWidget *parent) : QMainWindow(parent), ui(new Ui::Notepad)
   ui->setupUi(this);
   this->setCentralWidget(ui->textEdit);
   ui->textEdit->setObjectName("TextEdit");
-  ui->textEdit->setStyleSheet("QTextEdit#TextEdit {border:None;}");
+  ui->textEdit->setStyleSheet("QTextEdit#TextEdit {border:None;line-height:1.75;}");
   // make toolbar a little lighter than Chocolaf createDefault
   ui->mainToolBar->setStyleSheet(
       "QToolBar#mainToolBar {background-color: rgb(74, 74, 74);}");
@@ -82,7 +82,8 @@ Notepad::Notepad(QWidget *parent) : QMainWindow(parent), ui(new Ui::Notepad)
 #elif defined Q_OS_MACOS
   QString fontName = {"SF Mono, Menlo, Monaco, Monospace"};
 #else
-  QString fontName = {"Courier 10 Pitch, Source Code Pro Medium, DejaVu Sans Mono, Noto Mono, Monospace"};
+  QString fontName = {"MonacoB, Courier 10 Pitch, Source Code Pro Medium, DejaVu Sans "
+                      "Mono, Noto Mono, Monospace"};
 #endif
   ui->textEdit->setFont(QFont(fontName, 11));
 
@@ -116,7 +117,10 @@ Notepad::Notepad(QWidget *parent) : QMainWindow(parent), ui(new Ui::Notepad)
   setWindowIcon(QIcon(":/app-icon.png"));
 }
 
-Notepad::~Notepad() { delete ui; }
+Notepad::~Notepad()
+{
+  delete ui;
+}
 
 void Notepad::newDocument()
 {
@@ -147,8 +151,7 @@ void Notepad::save()
   if (currentFile.isEmpty()) {
     fileName = QFileDialog::getSaveFileName(this, "Save");
     currentFile = fileName;
-  }
-  else {
+  } else {
     fileName = currentFile;
   }
   QFile file(fileName);
@@ -193,7 +196,10 @@ void Notepad::print()
 #endif // QT_CONFIG(printer)
 }
 
-void Notepad::exit() { QCoreApplication::quit(); }
+void Notepad::exit()
+{
+  QCoreApplication::quit();
+}
 
 void Notepad::copy()
 {
@@ -216,14 +222,23 @@ void Notepad::paste()
 #endif
 }
 
-void Notepad::undo() { ui->textEdit->undo(); }
+void Notepad::undo()
+{
+  ui->textEdit->undo();
+}
 
-void Notepad::redo() { ui->textEdit->redo(); }
+void Notepad::redo()
+{
+  ui->textEdit->redo();
+}
 
 void Notepad::selectFont()
 {
   bool fontSelected;
-  QFont font = QFontDialog::getFont(&fontSelected, this);
+  QFont editorFont = ui->textEdit->currentFont();
+  // QFont font = QFontDialog::getFont(&fontSelected, this);
+  QFont font =
+      QFontDialog::getFont(&fontSelected, editorFont, this, "Select edtitor font");
   if (fontSelected)
     ui->textEdit->setFont(font);
 }
@@ -233,7 +248,10 @@ void Notepad::setFontUnderline(bool underline)
   ui->textEdit->setFontUnderline(underline);
 }
 
-void Notepad::setFontItalic(bool italic) { ui->textEdit->setFontItalic(italic); }
+void Notepad::setFontItalic(bool italic)
+{
+  ui->textEdit->setFontItalic(italic);
+}
 
 void Notepad::setFontBold(bool bold)
 {
@@ -243,7 +261,7 @@ void Notepad::setFontBold(bool bold)
 
 void Notepad::about()
 {
-  QMessageBox::about(this, tr("About MDI"),
-                     tr("The <b>Notepad</b> example demonstrates how to code a basic "
-                        "text editor using QtWidgets"));
+  QMessageBox::about(this, tr("About Notepad"),
+                     tr("<b>Notepad</b> - a simple text editor<br/>"
+                        "developed with QtWidgets"));
 }

@@ -1,3 +1,7 @@
+TEMPLATE = app
+TARGET = polarchart
+INCLUDEPATH += .
+include(../../../../../chocolaf/common_files/common.pro)
 QT += charts
 
 HEADERS += \

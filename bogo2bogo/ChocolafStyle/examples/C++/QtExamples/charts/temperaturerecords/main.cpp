@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Temperature records in celcius");
+    chart->setTitle("<b>Temperature records in &deg; Celcius</b>");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 //![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(600, 300);
+    window.resize(800, 400);
     window.show();
 //![7]
 

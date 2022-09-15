@@ -19,9 +19,6 @@ class ImageSpinner(QObject):
         imageFilters = ["*.tiff", "*.tif", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.png"]
         self.fileNames = self.dir.entryList(imageFilters, QDir.Files, QDir.Name)
         self.currIndex = self.fileNames.index(fileName)
-        # self.currIndex = self.fileNames.index(
-        #     QRegExp(QRegExp.escape(fileInfo.fileName()))
-        # )
 
     def prevImagePath(self) -> str:
         self.currIndex = self.currIndex - 1
@@ -44,3 +41,6 @@ class ImageSpinner(QObject):
 
     def atLastPath(self):
         return self.currIndex == len(self.fileNames) - 1
+
+    def size(self):
+        return len(self.fileNames)

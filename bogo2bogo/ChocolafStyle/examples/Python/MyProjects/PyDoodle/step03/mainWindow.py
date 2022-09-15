@@ -18,7 +18,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.setWindowTitle("PyQt5 Doodle - Step03: Drawing points")
-        #self.setGeometry(QRect(100, 100, 640, 480))
+        labelText = "Left click anywhere in client area to see position. Right click to clear"
+        self.messageLabel = QLabel(labelText, parent=self)
+        self.messageLabel.setGeometry(10, 5, 500, 50)
         self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
         self.modified = False
         self.points = []

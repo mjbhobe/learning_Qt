@@ -9,9 +9,11 @@ include (../../../../../chocolaf/common_files/common.pro)
 
 SOURCES += \
     main.cpp \
+    ImageSpinner.cpp \
     ImageViewer.cpp
 
 HEADERS += \
+    ImageSpinner.h \
     ImageViewer.h
 
 FORMS += \

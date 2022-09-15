@@ -45,7 +45,7 @@ class SQLManager(QMainWindow):
 
     def initializeUi(self):
         """ initialize the Ui """
-        self.setMinimumSize(800, 650)
+        self.setMinimumSize(800, 550)
         # center on screen
         self.move(QApplication.desktop().screen().rect().center() -
                   self.rect().center())
