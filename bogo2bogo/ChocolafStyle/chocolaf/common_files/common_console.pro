@@ -28,16 +28,9 @@ CONFIG += c++20 console
 QT += core xml sql network
 QT -= gui
 greaterThan(QT_MAJOR_VERSION, 4): QT -= widgets
-<<<<<<< HEAD
 QMAKE_CXXFLAGS += -pedantic -Wall -std=c++20
 QMAKE_CXXFLAGS_DEBUG += -O0 -g2
 QMAKE_CXXFLAGS_RELEASE += -O2 -g0
-=======
-CONFIG -= app_bundle
-QMAKE_CXXFLAGS += -Wno-c11-extensions -Wno-deprecated-anon-enum-enum-conversion -Wno-unused-variable -Wno-unused-parameter
-QMAKE_CXXFLAGS_DEBUG += -O0 -g2 -Wall -pedantic
-QMAKE_CXXFLAGS_RELEASE += -O2 -g0 -Wall
->>>>>>> master
 
 win32 {
     FMT_LIB_HOME=C:/Dev/GNULibs/fmt
@@ -45,11 +38,7 @@ win32 {
        message("Using MSYS2 configuration...")
        INCLUDEPATH += C:/Dev/msys64/mingw64/include
        INCLUDEPATH += C:/Dev/msys64/mingw64/include/opencv4
-<<<<<<< HEAD
        INCLUDEPATH += C:/Dev/GNULibs/fmt/include
-=======
-       INCLUDEPATH += $${FMT_LIB_HOME}/include
->>>>>>> master
        QMAKE_LIB_DIRS = -LC:/Dev/msys64/mingw64/lib
        OPENCV_LIBS = -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video \
          -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_videoio -lopencv_imgcodecs -lopencv_flann
@@ -57,11 +46,7 @@ win32 {
        message("**NOT** using MSYS2 configuration...")
        INCLUDEPATH += C:/Dev/GNULibs/gmp-6.2.1/bin/include
        INCLUDEPATH += C:/Dev/OpenCV/build/x86/mingw/install/include
-<<<<<<< HEAD
        INCLUDEPATH += C:/Dev/GNULibs/fmt/include
-=======
-       INCLUDEPATH += $${FMT_LIB_HOME}/include
->>>>>>> master
        QMAKE_LIB_DIRS = -LC:/Dev/GNULibs/gmp-6.2.1/bin/lib -LC:/Dev/OpenCV/build/x86/mingw/install/x64/mingw/lib
        OPENCV_LIBS = -lopencv_core451 -lopencv_imgproc451 -lopencv_highgui451 -lopencv_ml451 -lopencv_video451 \
          -lopencv_features2d451 -lopencv_calib3d451 -lopencv_objdetect451 -lopencv_videoio451 -lopencv_imgcodecs451 -lopencv_flann451
@@ -82,10 +67,6 @@ unix {
 STD_LIBS = -lm -lstdc++ -lfmt
 GMP_LIBS = -lgmp -lgmpxx
 
-<<<<<<< HEAD
-=======
-# QMAKE_CXXFLAGS += -pedantic -Wall
->>>>>>> master
 QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 
 # disable qDebug() output in release builds
@@ -93,8 +74,4 @@ CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += $${COMMON_FILES_HOME}/common_files/common_funcs.cpp
 HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h 
-<<<<<<< HEAD
 HEADERS += $${COMMON_FILES_HOME}/common_files/argparse/argparse.hpp
-=======
-HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs/argparse/argparse.hpp
->>>>>>> master
