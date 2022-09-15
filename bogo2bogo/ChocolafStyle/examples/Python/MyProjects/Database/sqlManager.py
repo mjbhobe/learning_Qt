@@ -45,7 +45,7 @@ class SQLManager(QMainWindow):
 
     def initializeUi(self):
         """ initialize the Ui """
-        self.setMinimumSize(800, 650)
+        self.setMinimumSize(800, 550)
         # center on screen
         self.move(QApplication.desktop().screen().rect().center() -
                   self.rect().center())
@@ -57,7 +57,8 @@ class SQLManager(QMainWindow):
 
     def setupWindow(self):
         self.queryField = QTextEdit()
-        self.queryField.setFont(QFont("Source Code Pro Medium, Consolas, SF Mono, Monospace", 11))
+        font_name = "Source Code Pro Medium, Consolas, SF Mono, Monospace"
+        self.queryField.setFont(QFont("Noto Mono", 10))
         self.queryField.setPlaceholderText("Enter your SQL query here and press Ctrl+R to run...")
 
         self.results = QTableView()
@@ -112,21 +113,29 @@ class SQLManager(QMainWindow):
         toolbar.addAction(quitAction)
 
     def executeQueries(self):
-        sqlQueryTexts = self.queryField.toPlainText().strip()  # str(self.queryField.textCursor().selectedText())
-        sqlQueryTexts = sqlQueryTexts.split("\n")
+        selectedText = self.queryField.textCursor().selectedText()
+        if (len(selectedText) != 0):
+            # QMessageBox.information(self, "Query to execute", selectedText)
+            sqlQueryText = " ".join(selectedText.split("\n"))
+            print(f"Exec: {sqlQueryText}")
+            query = QSqlQuery(sqlQueryText, self.conn)
+            self.model.setQuery(query)
+        else:
+            sqlQueryTexts = self.queryField.toPlainText().strip()  # str(self.queryField.textCursor().selectedText())
+            sqlQueryTexts = sqlQueryTexts.split("\n")
 
-        if sqlQueryTexts != "":
-            # queries cannot have \n characters in them (strange!)
-            for sqlQueryText in sqlQueryTexts:
-                if sqlQueryText == "":
-                    pass
-                else:
-                    #sqlQueryText = " ".join(sqlQueryText.split("\n"))
-                    print(f"Exec: {sqlQueryText}")
-                    query = QSqlQuery(sqlQueryText, self.conn)
-                    self.model.setQuery(query)
-                    # self.results.setModel(self.model)
-                    # self.results.hideColumn(0)
+            if sqlQueryTexts != "":
+                # queries cannot have \n characters in them (strange!)
+                for sqlQueryText in sqlQueryTexts:
+                    if sqlQueryText == "":
+                        pass
+                    else:
+                        # sqlQueryText = " ".join(sqlQueryText.split("\n"))
+                        print(f"Exec: {sqlQueryText}")
+                        query = QSqlQuery(sqlQueryText, self.conn)
+                        self.model.setQuery(query)
+                        # self.results.setModel(self.model)
+                        # self.results.hideColumn(0)
 
     def clearText(self):
         self.queryField.clear()
@@ -134,8 +143,8 @@ class SQLManager(QMainWindow):
 
 if __name__ == "__main__":
     app = ChocolafApp(sys.argv)
-    # app.setStyle("Chocolaf")
-    #app = QApplication(sys.argv)
+    app.setStyle("Chocolaf")
+    # app = QApplication(sys.argv)
 
     try:
         conn = connectToDatabase()

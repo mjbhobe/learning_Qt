@@ -18,7 +18,6 @@ unix {
     COMMON_FILES_HOME = /home/mjbhobe/code/git-projects/learning_Qt/bogo2bogo/ChocolafStyle/chocolaf
 }
 INCLUDEPATH += $${COMMON_FILES_HOME}/common_files
-FMT_LIB_HOME=C:/Dev/GNULibs/fmt
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -34,6 +33,7 @@ QMAKE_CXXFLAGS_DEBUG += -O0 -g2
 QMAKE_CXXFLAGS_RELEASE += -O2 -g0
 
 win32 {
+    FMT_LIB_HOME=C:/Dev/GNULibs/fmt
     CONFIG(msys2) {
        message("Using MSYS2 configuration...")
        INCLUDEPATH += C:/Dev/msys64/mingw64/include
@@ -51,20 +51,21 @@ win32 {
        OPENCV_LIBS = -lopencv_core451 -lopencv_imgproc451 -lopencv_highgui451 -lopencv_ml451 -lopencv_video451 \
          -lopencv_features2d451 -lopencv_calib3d451 -lopencv_objdetect451 -lopencv_videoio451 -lopencv_imgcodecs451 -lopencv_flann451
     }
+    SOURCES += $${FMT_LIB_HOME}/src/format.cc
 }
 unix {
    message("Settings for Linux build")
+   # FMT_LIB_HOME=C:/Dev/GNULibs/fmt
 # include for gmp.h & gmpxx.h
-    INCLUDEPATH += /usr/local/include
+   INCLUDEPATH += /usr/local/include
 # for opencv includes
    INCLUDEPATH += /usr/include/opencv4
    OPENCV_LIBS = -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video \
          -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_videoio -lopencv_imgcodecs -lopencv_flann
 }
 
-STD_LIBS = -lm -lstdc++
+STD_LIBS = -lm -lstdc++ -lfmt
 GMP_LIBS = -lgmp -lgmpxx
-SOURCES += $${FMT_LIB_HOME}/src/format.cc
 
 QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 
@@ -72,4 +73,5 @@ QMAKE_LIBS += $${QMAKE_LIB_DIRS} $${STD_LIBS} $${GMP_LIBS} $${OPENCV_LIBS}
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += $${COMMON_FILES_HOME}/common_files/common_funcs.cpp
-HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h $${COMMON_FILES_HOME}/common_files/common_funcs.argparse/argparse.hpp
+HEADERS += $${COMMON_FILES_HOME}/common_files/common_funcs.h 
+HEADERS += $${COMMON_FILES_HOME}/common_files/argparse/argparse.hpp

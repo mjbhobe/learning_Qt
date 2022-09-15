@@ -12,11 +12,13 @@
 #include <cstdio>
 #include <gmpxx.h> // GNU arbit precision numbers
 using namespace std;
+#include "common_funcs.h"
 
 QTextStream cout(stdout, QIODevice::WriteOnly);
 QTextStream cin(stdin, QIODevice::ReadOnly);
 QTextStream cerr(stderr, QIODevice::WriteOnly);
 
+/*
 QTextStream &operator<<(QTextStream &ost, const mpz_class &c)
 {
    QString qstr(c.get_str().c_str());
@@ -24,7 +26,6 @@ QTextStream &operator<<(QTextStream &ost, const mpz_class &c)
    return ost;
 }
 
-/*
 mpz_class factorial(mpz_class &num)
 {
    mpz_class ans = 1;

@@ -12,6 +12,14 @@ public:
   QString prevImage();
   bool atFirst() const;
   bool atLast() const;
+  qsizetype currIndex() const
+  {
+    return m_currIndex;
+  }
+  qsizetype size() const
+  {
+    return m_fileNames.size();
+  }
 
 protected:
   int m_currIndex;

@@ -56,7 +56,7 @@ class DisplayImageWindow(QMainWindow):
 
         opencv_img_header = QLabel("OpenCV Image")
         self.opencv_label = QLabel()
-        self.opencv_label.setObjectName("ImageLabel")
+        self.opencv_label.setObjectName("OpenCvImageLabel")
 
         # layout the widgets in 2 QVBoxLayout columns
         orig_layout = QVBoxLayout()

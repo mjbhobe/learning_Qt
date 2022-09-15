@@ -44,7 +44,7 @@ if __name__ == "__main__":
     splitter.setWindowTitle("Two views onto the same file system model")
     w = splitter.size().width()
     # splitter.setSizes([0.6 * splitter.width(), 0.4 * splitter.width()])
-    splitter.setSizes([0.7 * w, 0.3 * w])
+    splitter.setSizes([int(0.7 * w), int(0.3 * w)])
     splitter.show()
 
     sys.exit(app.exec())

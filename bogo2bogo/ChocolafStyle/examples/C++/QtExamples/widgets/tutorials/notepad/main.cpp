@@ -61,15 +61,15 @@ int main(int argc, char *argv[])
   QFile f(":chocolaf/chocolaf.css");
   if (!f.exists()) {
     printf("Unable to open stylesheet!");
-  }
-  else {
+  } else {
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream ts(&f);
     app.setStyleSheet(ts.readAll());
   }
 
-  Notepad Editor;
-  Editor.show();
+  Notepad editor;
+  editor.setWindowTitle(QString("Qt %1 Notepad").arg(QT_VERSION_STR));
+  editor.show();
 
   return app.exec();
 }

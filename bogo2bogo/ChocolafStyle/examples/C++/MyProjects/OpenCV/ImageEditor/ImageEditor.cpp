@@ -8,6 +8,16 @@
 #include <QtWidgets>
 #include <opencv2/opencv.hpp>
 
+class VLine : public QFrame
+{
+public:
+  VLine(QWidget *parent = nullptr) : QFrame(parent)
+  {
+    setFrameShape(QFrame::VLine);
+    setFrameShadow(QFrame::Sunken);
+  }
+};
+
 ImageEditor::ImageEditor(QWidget *parent)
     : QMainWindow(parent) /*, m_pixmap(nullptr) */, imageSpinner(nullptr)
 {
@@ -15,6 +25,9 @@ ImageEditor::ImageEditor(QWidget *parent)
   scaleFactor = 1.0;
   imageLoaded = false;
   imageLabel = new QLabel("");
+  imageInfoLabel = new QLabel("");
+  imageCountLabel = new QLabel("");
+  scaleFactorLabel = new QLabel("");
   scrollArea = new QScrollArea();
 
   imageLabel->setBackgroundRole(QPalette::Base);
@@ -31,13 +44,16 @@ ImageEditor::ImageEditor(QWidget *parent)
   createToolbar();
   statusBar()->showMessage(
       QString("ImageViewer with Qt %1 and Chocolaf theme").arg(QT_VERSION_STR));
+  setupStatusBar();
 
   // set initial size to 4/5 of screen
   resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
   setWindowIcon(QIcon(":/app_icon.png")); // set the main window icon
 }
 
-ImageEditor::~ImageEditor() {}
+ImageEditor::~ImageEditor()
+{
+}
 
 // helper function
 QString getIconPath(QString baseName, bool darkTheme = false)
@@ -50,17 +66,14 @@ QString getIconPath(QString baseName, bool darkTheme = false)
 
 void ImageEditor::createActions()
 {
-  bool usingDarkTheme = true;
   openAction = new QAction("&Open...", this);
   openAction->setShortcut(QKeySequence::Open);
-  // openAction->setIcon(QIcon(":/open.png"));
   openAction->setIcon(QIcon(":/open.png"));
   openAction->setStatusTip("Open a new image file to view");
   QObject::connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
 
   printAction = new QAction("&Print...", this);
   printAction->setShortcut(QKeySequence::Print);
-  // printAction->setIcon(QIcon(":/print.png"));
   printAction->setIcon(QIcon(":/print.png"));
   printAction->setStatusTip("Print the current image");
   QObject::connect(printAction, SIGNAL(triggered()), this, SLOT(print()));
@@ -90,6 +103,12 @@ void ImageEditor::createActions()
   QObject::connect(erodeAction, SIGNAL(triggered()), this, SLOT(erodeImage()));
   erodeAction->setEnabled(false);
 
+  cartoonAction = new QAction("&Cartoon effect", this);
+  // erodeAction->setIcon(QIcon(":/erode.png"));
+  cartoonAction->setStatusTip("Cartoonify active image");
+  QObject::connect(cartoonAction, SIGNAL(triggered()), this, SLOT(cartoonifyImage()));
+  cartoonAction->setEnabled(false);
+
   zoomInAction = new QAction("Zoom &in (25%)", this);
   zoomInAction->setShortcut(QKeySequence("Ctrl++"));
   // zoomInAction->setIcon(QIcon(":/zoom_in.png"));
@@ -100,7 +119,6 @@ void ImageEditor::createActions()
 
   zoomOutAction = new QAction("Zoom &out (25%)", this);
   zoomOutAction->setShortcut(QKeySequence("Ctrl+-"));
-  // zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
   zoomOutAction->setIcon(QIcon(":/zoom_out.png"));
   zoomOutAction->setStatusTip("Zoom out of the image by 25%");
   QObject::connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
@@ -117,7 +135,6 @@ void ImageEditor::createActions()
 
   prevImageAction = new QAction("&Previous image", this);
   prevImageAction->setShortcut(QKeySequence::MoveToPreviousChar); // left arrow (usually)
-  // prevImageAction->setIcon(QIcon(":/previous.png"));
   prevImageAction->setIcon(QIcon(":/go_prev.png"));
   prevImageAction->setStatusTip("View previous image in folder");
   QObject::connect(prevImageAction, SIGNAL(triggered()), this, SLOT(prevImage()));
@@ -153,11 +170,11 @@ void ImageEditor::createMenus()
   editMenu->addAction(blurAction);
   editMenu->addAction(sharpenAction);
   editMenu->addAction(erodeAction);
+  editMenu->addAction(cartoonAction);
 
   QMenu *viewMenu = menuBar()->addMenu("&View");
   viewMenu->addAction(zoomInAction);
   viewMenu->addAction(zoomOutAction);
-  // viewMenu->addAction(zoomNormalAction);
   viewMenu->addSeparator();
   viewMenu->addAction(fitToWindowAction);
   viewMenu->addSeparator();
@@ -191,16 +208,56 @@ void ImageEditor::createToolbar()
 
 void ImageEditor::updateActions()
 {
+  // actions to be enabled only if image is loaded & being displayed
   blurAction->setEnabled(imageLoaded);
   sharpenAction->setEnabled(imageLoaded);
   erodeAction->setEnabled(imageLoaded);
+  cartoonAction->setEnabled(imageLoaded);
 
+  // so also the image viewing actions
   fitToWindowAction->setEnabled(imageLoaded);
   zoomInAction->setEnabled(!fitToWindowAction->isChecked());
   zoomOutAction->setEnabled(!fitToWindowAction->isChecked());
-  // zoomNormalAction->setEnabled(!fitToWindowAction->isChecked());
   prevImageAction->setEnabled(imageLoaded);
   nextImageAction->setEnabled(imageLoaded);
+}
+
+void ImageEditor::setupStatusBar()
+{
+  // statusBar()->reformat();
+  statusBar()->setStyleSheet("QStatusBar::item {border: none;}");
+  // statusBar()->addPermanentWidget(new VLine());
+  statusBar()->addPermanentWidget(imageInfoLabel);
+  statusBar()->addPermanentWidget(imageCountLabel);
+  statusBar()->addPermanentWidget(scaleFactorLabel);
+}
+
+void ImageEditor::updateStatusBar()
+{
+  if (imageSpinner) {
+#ifdef USING_QT6
+    QImage image = imageLabel->pixmap().toImage();
+#else
+    QImage image = imageLabel->pixmap()->toImage();
+#endif
+    auto imageInfoText = QString("%1 x %2 %3")
+                             .arg(image.width())
+                             .arg(image.height())
+                             .arg(image.isGrayscale() ? "grayscale" : "color");
+    imageInfoLabel->setText(imageInfoText);
+    auto sizeWidth = QString("%1").arg(imageSpinner->size()).length();
+    QString status = QString("%1 of %2 images")
+                         .arg(imageSpinner->currIndex() + 1, sizeWidth)
+                         .arg(imageSpinner->size(), sizeWidth);
+    qDebug() << status;
+    imageCountLabel->setText(status);
+    if (fitToWindowAction->isChecked()) {
+      scaleFactorLabel->setText(QString("Zoom: %1").arg("Fit"));
+    } else {
+      auto currZoomFactor = int(scaleFactor * 100);
+      scaleFactorLabel->setText(QString("Zoom: %1%").arg(currZoomFactor));
+    }
+  }
 }
 
 void ImageEditor::writeSettings()
@@ -225,9 +282,12 @@ void ImageEditor::readSettings()
   qDebug() << "ImageEditor settings loaded";
 }
 
-void ImageEditor::scaleImage(double factor)
+void ImageEditor::scaleImage(double factor /*=-1*/)
 {
-  scaleFactor *= factor;
+  // NOTE: factor = -1 is used to scale a newly loaded image
+  // to same scaling level as previously loaded image!
+  if (factor != -1)
+    scaleFactor *= factor;
   imageLabel->resize(scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size());
 
   adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
@@ -255,11 +315,12 @@ bool ImageEditor::loadImage(const QString &imagePath)
     return false;
   }
 
-  scaleFactor = 1.0;
+  // scaleFactor = 1.0;
   imageLoaded = true;
   scrollArea->setVisible(true);
   imageLabel->setPixmap(QPixmap::fromImage(newImage));
   imageLabel->adjustSize();
+  scaleImage();
 
   QString title;
   QTextStream ostr(&title);
@@ -269,6 +330,7 @@ bool ImageEditor::loadImage(const QString &imagePath)
   // add ImageSpinner
   delete imageSpinner;
   imageSpinner = new ImageSpinner(imagePath);
+  updateStatusBar();
 
   return true;
 }
@@ -313,47 +375,68 @@ void ImageEditor::blurImage()
   // qDebug() << "This will blur the image...";
   if (imageLoaded) {
 #if QT_VERSION > 0x060000
-     // signature is const QPixmap* pixmap const
-     MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-     MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-     imageLabel->setPixmap(matOp.blur());
-     imageLabel->adjustSize();
+    imageLabel->setPixmap(matOp.blur());
+    imageLabel->adjustSize();
+    scaleImage();
   } else
-     qDebug() << "blurImage() should not be called if image is not loaded!";
+    qDebug() << "blurImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::sharpenImage()
 {
-   if (imageLoaded) {
+  if (imageLoaded) {
 #if QT_VERSION > 0x060000
-      // signature is const QPixmap* pixmap const
-      MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-      MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-      imageLabel->setPixmap(matOp.sharpen());
-      imageLabel->adjustSize();
-   } else
-      qDebug() << "sharpenImage() should not be called if image is not loaded!";
+    imageLabel->setPixmap(matOp.sharpen());
+    imageLabel->adjustSize();
+    scaleImage();
+  } else
+    qDebug() << "sharpenImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::erodeImage()
 {
-   if (imageLoaded) {
-      // NOTE: signature of QLabel::pixmap() function has changed
-      // from Qt 5.X to 6.x
+  if (imageLoaded) {
+    // NOTE: signature of QLabel::pixmap() function has changed
+    // from Qt 5.X to 6.x
 #if QT_VERSION > 0x060000
-      // signature is const QPixmap* pixmap const
-      MatOp matOp((imageLabel->pixmap()));
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
 #else
-      MatOp matOp(*(imageLabel->pixmap()));
+    MatOp matOp(*(imageLabel->pixmap()));
 #endif
-      imageLabel->setPixmap(matOp.erode());
-      imageLabel->adjustSize();
-   } else
-      qDebug() << "erodeImage() should not be called if image is not loaded!";
+    imageLabel->setPixmap(matOp.erode());
+    imageLabel->adjustSize();
+    scaleImage();
+  } else
+    qDebug() << "erodeImage() should not be called if image is not loaded!";
+}
+
+void ImageEditor::cartoonifyImage()
+{
+  if (imageLoaded) {
+    // NOTE: signature of QLabel::pixmap() function has changed
+    // from Qt 5.X to 6.x
+#if QT_VERSION > 0x060000
+    // signature is const QPixmap* pixmap const
+    MatOp matOp((imageLabel->pixmap()));
+#else
+    MatOp matOp(*(imageLabel->pixmap()));
+#endif
+    imageLabel->setPixmap(matOp.cartoonify());
+    imageLabel->adjustSize();
+    scaleImage();
+  } else
+    qDebug() << "cartoonifyImage() should not be called if image is not loaded!";
 }
 
 void ImageEditor::zoomIn()
@@ -379,24 +462,31 @@ void ImageEditor::fitToWindow()
   if (!fitToWindow)
     normalSize();
   updateActions();
+  updateStatusBar();
 }
 
 void ImageEditor::prevImage()
 {
-  QString imagePath = imageSpinner->prevImage();
-  if (loadImage(imagePath))
-    updateActions();
-  if (imageSpinner->atFirst())
-    QMessageBox::information(this, "ImageEditor", "Displaying first image in folder!");
+  if (!imageSpinner->atFirst()) {
+    QString imagePath = imageSpinner->prevImage();
+    if (loadImage(imagePath))
+      updateActions();
+  } else {
+    if (imageSpinner->atFirst())
+      QMessageBox::information(this, "ImageEditor", "Displaying first image in folder!");
+  }
 }
 
 void ImageEditor::nextImage()
 {
-  QString imagePath = imageSpinner->nextImage();
-  if (loadImage(imagePath))
-    updateActions();
-  if (imageSpinner->atLast())
-    QMessageBox::information(this, "ImageEditor", "Displaying last image in folder!");
+  if (!imageSpinner->atLast()) {
+    QString imagePath = imageSpinner->nextImage();
+    if (loadImage(imagePath))
+      updateActions();
+  } else {
+    if (imageSpinner->atLast())
+      QMessageBox::information(this, "ImageEditor", "Displaying last image in folder!");
+  }
 }
 
 void ImageEditor::about()

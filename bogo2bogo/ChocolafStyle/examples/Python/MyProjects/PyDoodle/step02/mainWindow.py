@@ -18,7 +18,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle("PyQt5 Doodle - Step02: Handling Events")
-        #self.setGeometry(QRect(100, 100, 640, 480))
+        self.messageLabel = QLabel("Left or Right click anywhere inside the client area of window", parent=self)
+        self.messageLabel.setGeometry(10, 5, 500, 50)
         self.resize(QGuiApplication.primaryScreen().availableSize() * 4 / 5)
 
     # operating system Events
